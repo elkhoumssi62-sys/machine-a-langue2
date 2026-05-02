@@ -1,128 +1,55 @@
-/* Variables de thème basées sur l'identité de Machine à Langue */
-:root {
-    --primary-blue: #1877f2;
-    --accent-yellow: #ffc107;
-    --glass-white: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --text-light: #f8f9fa;
-    --transition: all 0.3s ease;
-}
-
+/* --- RESET ET BASE --- */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
+html, body {
+    width: 100%;
+    max-width: 100vw; /* Empêche le débordement horizontal */
+    overflow-x: hidden;
     font-family: 'Poppins', sans-serif;
     background: #0f0f0f;
     color: var(--text-light);
-    line-height: 1.6;
-    overflow-x: hidden;
-    width: 100%;
 }
 
+/* --- LE CONTENEUR PRINCIPAL --- */
 .container {
-    width: 100%;
+    width: 100% !important; /* Force la largeur */
     max-width: 1100px;
-    margin: 20px auto;
-    padding: 0 15px; /* Évite que le contenu touche les bords du téléphone */
+    margin: 0 auto;
+    padding: 15px; /* Marge interne pour ne pas toucher les bords */
 }
 
-/* TITRE OPTIMISÉ POUR MOBILE */
+/* --- LE TITRE (Correction du débordement) --- */
 h1 {
-    /* clamp permet une taille fluide : minimum 1.5rem, idéal 6vw, maximum 2.5rem */
-    font-size: clamp(1.5rem, 6vw, 2.5rem);
-    margin-bottom: 25px;
+    font-size: 1.8rem; /* Taille plus petite par défaut pour mobile */
+    line-height: 1.3;
     text-align: center;
+    word-wrap: break-word; /* Coupe les mots trop longs */
+    overflow-wrap: break-word;
     background: linear-gradient(to right, #fff, var(--accent-yellow));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    padding: 0 10px;
-    word-wrap: break-word; /* Force le retour à la ligne si le mot est trop long */
+    margin-bottom: 20px;
 }
 
-/* Accordéon Glassmorphism */
-.accordion-item {
-    background: var(--glass-white);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    margin-bottom: 15px;
-    transition: var(--transition);
-    width: 100%;
-}
-
-.accordion-header {
-    padding: 15px 20px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    gap: 10px; /* Espace entre le texte et l'icône sur petit écran */
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.accordion-content.active {
-    max-height: fit-content; 
-    padding: 20px;
-    border-top: 1px solid var(--glass-border);
-    transition: max-height 0.5s ease-in;
-}
-
-/* Éléments de cours */
-.badge {
-    font-size: 0.7rem;
-    padding: 4px 8px;
-    border-radius: 20px;
-    background: var(--primary-blue);
-    white-space: nowrap; /* Empêche le badge de se casser bizarrement */
-}
-
-.btn-action {
-    background: var(--accent-yellow);
-    color: #1a1a1a;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 15px;
-    transition: var(--transition);
-    display: inline-block;
-    text-align: center;
-    width: auto;
-}
-
-/* MEDIA QUERIES : CORRECTIONS SPÉCIFIQUES TÉLÉPHONE */
-@media (max-width: 768px) {
+/* --- MEDIA QUERIES (Pour écrans larges) --- */
+@media (min-width: 768px) {
+    h1 {
+        font-size: 2.5rem; /* Reprend sa taille sur ordinateur */
+    }
     .container {
-        margin: 10px auto;
+        padding: 20px;
+        margin: 40px auto;
     }
+}
 
-    /* On empile les boutons et on les met à 100% de large */
-    .btn-action, .btn-group button {
-        width: 100%;
-        margin-right: 0;
-    }
-
-    .accordion-header {
-        font-size: 0.95rem; /* Texte légèrement plus petit pour tenir sur une ligne */
-        padding: 12px 15px;
-    }
-
-    textarea, select {
-        width: 100% !important;
-        font-size: 16px !important; /* Important : évite le zoom automatique sur iOS */
-        margin-bottom: 10px;
-    }
+/* --- BOUTONS ET FORMULAIRES --- */
+.btn-action, button, select, textarea {
+    width: 100% !important; /* Force les éléments à rester dans le cadre sur mobile */
+    max-width: 100%;
+    display: block;
+    margin-bottom: 10px;
 }
