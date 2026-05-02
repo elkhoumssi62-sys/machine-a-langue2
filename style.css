@@ -16,28 +16,34 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #0f0f0f; /* Fond sombre pour faire ressortir l'effet verre */
+    background: #0f0f0f;
     color: var(--text-light);
     line-height: 1.6;
     overflow-x: hidden;
+    width: 100%;
 }
 
 .container {
+    width: 100%;
     max-width: 1100px;
-    margin: 40px auto;
-    padding: 20px;
+    margin: 20px auto;
+    padding: 0 15px; /* Évite que le contenu touche les bords du téléphone */
 }
 
+/* TITRE OPTIMISÉ POUR MOBILE */
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    /* clamp permet une taille fluide : minimum 1.5rem, idéal 6vw, maximum 2.5rem */
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    margin-bottom: 25px;
     text-align: center;
     background: linear-gradient(to right, #fff, var(--accent-yellow));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    padding: 0 10px;
+    word-wrap: break-word; /* Force le retour à la ligne si le mot est trop long */
 }
 
-/* Style de l'accordéon Glassmorphism */
+/* Accordéon Glassmorphism */
 .accordion-item {
     background: var(--glass-white);
     backdrop-filter: blur(12px);
@@ -46,20 +52,17 @@ h1 {
     border-radius: 12px;
     margin-bottom: 15px;
     transition: var(--transition);
-}
-
-.accordion-item:hover {
-    border-color: var(--accent-yellow);
-    transform: translateX(5px);
+    width: 100%;
 }
 
 .accordion-header {
-    padding: 20px;
+    padding: 15px 20px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 600;
+    gap: 10px; /* Espace entre le texte et l'icône sur petit écran */
 }
 
 .accordion-content {
@@ -70,7 +73,7 @@ h1 {
 }
 
 .accordion-content.active {
-    max-height: 2000px; /* Permet un contenu long */
+    max-height: fit-content; 
     padding: 20px;
     border-top: 1px solid var(--glass-border);
     transition: max-height 0.5s ease-in;
@@ -78,59 +81,48 @@ h1 {
 
 /* Éléments de cours */
 .badge {
-    font-size: 0.75rem;
-    padding: 4px 10px;
+    font-size: 0.7rem;
+    padding: 4px 8px;
     border-radius: 20px;
     background: var(--primary-blue);
+    white-space: nowrap; /* Empêche le badge de se casser bizarrement */
 }
 
 .btn-action {
     background: var(--accent-yellow);
     color: #1a1a1a;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
     margin-top: 15px;
     transition: var(--transition);
+    display: inline-block;
+    text-align: center;
+    width: auto;
 }
 
-.btn-action:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 0 15px var(--accent-yellow);
-}
-/* Adaptations pour téléphones (écrans inférieurs à 768px) */
+/* MEDIA QUERIES : CORRECTIONS SPÉCIFIQUES TÉLÉPHONE */
 @media (max-width: 768px) {
-    body {
-        padding: 10px; /* Réduit l'espace autour du contenu sur petit écran */
-    }
-
     .container {
-        width: 100%; /* Utilise toute la largeur disponible */
-        padding: 15px;
-        margin: 0;
+        margin: 10px auto;
     }
 
-    textarea {
-        width: 100%; /* Force la zone de texte à rester dans l'écran */
-        height: 180px; /* Hauteur adaptée pour laisser de la place au clavier */
-        font-size: 16px; /* Empêche le zoom automatique sur iPhone */
+    /* On empile les boutons et on les met à 100% de large */
+    .btn-action, .btn-group button {
+        width: 100%;
+        margin-right: 0;
     }
 
-    select {
-        width: 100%; /* Le menu déroulant prend toute la largeur */
-        padding: 10px;
-        font-size: 16px;
+    .accordion-header {
+        font-size: 0.95rem; /* Texte légèrement plus petit pour tenir sur une ligne */
+        padding: 12px 15px;
     }
 
-    .btn-group {
-        display: flex;
-        flex-direction: column; /* Aligne les boutons verticalement */
-        gap: 10px;
-    }
-
-    button {
-        width: 100%; /* Les boutons deviennent plus faciles à cliquer avec le pouce */
+    textarea, select {
+        width: 100% !important;
+        font-size: 16px !important; /* Important : évite le zoom automatique sur iOS */
+        margin-bottom: 10px;
     }
 }
