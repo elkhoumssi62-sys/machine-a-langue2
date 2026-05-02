@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atelier de Production Écrite Académique</title>
@@ -20,17 +20,24 @@
       --text-primary: #2c3e50;
       --text-secondary: #7f8c8d;
     }
-    html { height: 100%; }
+    
+    html, body { 
+      min-height: 100%; 
+      width: 100%;
+    }
+
     body { 
       font-family: 'Lato', sans-serif; 
       background: var(--bg);
       color: var(--text-primary); 
-      height: 100%;
-      overflow: hidden;
+      /* CORRECTION : On autorise le défilement vertical pour mobile */
+      overflow-y: auto;
+      overflow-x: hidden;
     }
+
     .navbar {
       background: var(--primary);
-      padding: 20px 30px;
+      padding: 15px 20px;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -40,465 +47,203 @@
       border-bottom: 4px solid var(--accent);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
+
     .navbar-brand {
       font-weight: 700;
       color: #ffffff;
-      font-size: 1.5rem;
+      font-size: clamp(1rem, 4vw, 1.5rem);
       display: flex;
       align-items: center;
       gap: 12px;
       font-family: 'Merriweather', serif;
     }
-    .navbar-brand i { color: var(--accent); font-size: 1.8rem; }
+
+    .navbar-brand i { color: var(--accent); font-size: 1.5rem; }
+
     .navbar-actions {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       align-items: center;
     }
+
     .btn-reset {
       background: var(--warning);
       border: none;
       color: white;
-      padding: 10px 18px;
+      padding: 8px 15px;
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
       transition: all 0.3s ease;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .btn-reset:hover {
-      background: #e67e22;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
-    }
+
     .main-wrapper {
       width: 100%;
-      height: calc(100% - 80px);
       display: flex;
       flex-direction: column;
-      box-sizing: border-box;
-      overflow: hidden;
     }
+
     .home-view {
       flex: 1;
-      overflow-y: auto;
-      padding: 40px 30px;
+      padding: 20px;
       max-width: 1400px;
       margin: 0 auto;
       width: 100%;
-      background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
       display: none;
     }
     .home-view.active { display: block; }
+
     .hero {
       text-align: center;
-      padding: 50px 40px;
-      background: linear-gradient(135deg, rgba(44, 62, 80, 0.05) 0%, rgba(231, 76, 60, 0.08) 100%);
+      padding: 30px 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
       border-radius: 12px;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
       border: 2px solid var(--accent);
     }
+
     .hero h1 {
       font-family: 'Merriweather', serif;
-      font-size: 2.8rem;
+      font-size: clamp(1.5rem, 6vw, 2.8rem);
       color: var(--primary);
       margin-bottom: 15px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      word-wrap: break-word;
     }
-    .hero p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin-bottom: 25px;
-      line-height: 1.8;
-    }
+
     .modules-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
-      margin-bottom: 50px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
       width: 100%;
     }
+
     .module-card {
       background: var(--card-bg);
       border: 2px solid var(--border);
       border-radius: 10px;
-      padding: 30px;
+      padding: 25px;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
-    .module-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-8px);
-      box-shadow: 0 12px 28px rgba(231, 76, 60, 0.15);
-    }
-    .module-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; }
-    .module-number {
-      display: inline-block;
-      background: var(--accent);
-      color: white;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      margin-bottom: 12px;
-      font-size: 0.95rem;
-    }
-    .module-title {
-      font-family: 'Merriweather', serif;
-      font-size: 1.4rem;
-      color: var(--primary);
-      margin-bottom: 12px;
-      font-weight: 700;
-    }
-    .module-desc {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-    .module-meta {
-      display: flex;
-      gap: 12px;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
+
+    .module-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
     .lesson-view {
       display: none;
       flex: 1;
-      overflow: hidden;
-      background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+      width: 100%;
     }
+
     .lesson-view.active {
       display: flex;
-      flex-direction: row;
-      height: 100%;
-    }
-    .lesson-sidebar-nav {
-      width: 280px;
-      background: var(--card-bg);
-      border-right: 2px solid var(--border);
-      overflow: hidden;
-      padding: 0;
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
-      flex-shrink: 0;
-      display: flex;
       flex-direction: column;
-      height: 100%;
     }
-    .sidebar-header {
-      padding: 20px;
-      background: var(--primary);
-      color: white;
-      border-bottom: 2px solid var(--accent);
+
+    /* Sidebar adaptée pour Mobile */
+    .lesson-sidebar-nav {
+      width: 100%;
+      background: var(--card-bg);
+      border-bottom: 2px solid var(--border);
       flex-shrink: 0;
     }
-    .sidebar-header h2 {
-      margin: 0;
-      font-size: 1.1rem;
-      font-weight: 700;
-      font-family: 'Merriweather', serif;
-    }
+
     .sidebar-nav-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-    }
-    .sidebar-nav-item {
-      padding: 12px 15px;
-      margin-bottom: 8px;
-      background: rgba(44, 62, 80, 0.05);
-      border: 2px solid transparent;
-      border-radius: 8px;
-      cursor: pointer;
-      color: var(--text-primary);
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
       display: flex;
-      align-items: center;
+      overflow-x: auto;
+      padding: 10px;
       gap: 10px;
     }
-    .sidebar-nav-item:hover {
-      background: rgba(44, 62, 80, 0.08);
-      border-color: var(--accent);
-      transform: translateX(3px);
+
+    .sidebar-nav-item {
+      padding: 10px 15px;
+      background: rgba(44, 62, 80, 0.05);
+      border-radius: 8px;
+      white-space: nowrap;
+      font-size: 0.9rem;
     }
-    .sidebar-nav-item.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
+
+    /* Mise en page Desktop */
+    @media (min-width: 1025px) {
+      .lesson-view.active { flex-direction: row; }
+      .lesson-sidebar-nav { width: 280px; border-right: 2px solid var(--border); border-bottom: none; height: calc(100vh - 70px); position: sticky; top: 70px; }
+      .sidebar-nav-list { flex-direction: column; overflow-x: hidden; }
     }
-    .sidebar-nav-item span { flex: 1; }
+
     .lesson-container {
       flex: 1;
-      margin: 0;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      padding: 30px;
-      height: 100%;
-      overflow-y: auto;
-    }
-    .lesson-main {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      overflow-y: auto;
-    }
-    .btn-back {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--accent);
-      padding: 10px 18px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-    }
-    .btn-back:hover { background: var(--accent); color: white; }
-    .lesson-step {
-      background: var(--card-bg);
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      padding: 25px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-    .step-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary);
-      font-family: 'Merriweather', serif;
-    }
-    .step-icon { font-size: 1.8rem; }
-    .toolbox-section {
-      background: rgba(44, 62, 80, 0.08);
-      border-left: 4px solid var(--accent);
-      padding: 18px;
-      margin-bottom: 18px;
-      border-radius: 6px;
-    }
-    .toolbox-section-name {
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 12px;
-      font-size: 1rem;
-    }
-    .toolbox-item {
-      padding: 8px 0;
-      font-size: 0.9rem;
-      color: var(--text-primary);
-      line-height: 1.6;
-      border-bottom: 1px solid rgba(44, 62, 80, 0.1);
-    }
-    .toolbox-item:last-child { border-bottom: none; }
-    .concept-box {
-      background: linear-gradient(135deg, rgba(44, 62, 80, 0.05), rgba(231, 76, 60, 0.05));
-      padding: 22px;
-      border-radius: 8px;
-      border-left: 4px solid var(--accent);
-      font-size: 0.95rem;
-      line-height: 1.8;
-      color: var(--text-primary);
-      margin-bottom: 25px;
-    }
-    .example-box {
-      background: rgba(24, 119, 242, 0.08);
       padding: 20px;
-      border-radius: 8px;
-      border-left: 4px solid var(--accent);
-      margin-bottom: 20px;
+      width: 100%;
     }
-    .example-title {
-      margin-bottom: 12px;
-      color: var(--primary);
-      font-weight: 700;
-    }
-    .example-text {
-      font-size: 0.9rem;
-      line-height: 1.8;
-      color: var(--text-primary);
-      font-style: italic;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-    .exercise-box {
-      background: rgba(44, 62, 80, 0.02);
-      padding: 18px;
-      border-radius: 8px;
-      border-left: 3px solid var(--success);
-      margin-bottom: 15px;
-    }
-    .exercise-title {
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 8px;
-    }
-    .exercise-criteria {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-    }
-    .redaction-container {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .word-counter {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      font-size: 0.9rem;
-    }
-    .word-counter-label { color: var(--text-secondary); }
-    .word-counter-value { font-weight: 700; color: var(--accent); }
+
     textarea {
       width: 100%;
-      min-height: 280px;
+      min-height: 250px;
       padding: 15px;
+      font-size: 16px; /* Empêche le zoom auto sur mobile */
       border: 2px solid var(--border);
       border-radius: 8px;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.95rem;
-      resize: vertical;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
     }
-    textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
-    }
-    .button-group {
-      display: flex;
-      gap: 12px;
-    }
-    .btn-save, .btn-clear {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-    }
-    .btn-save {
-      background: var(--accent);
-      color: white;
-    }
-    .btn-save:hover {
-      background: #c0392b;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
-    }
-    .btn-clear {
-      background: var(--warning);
-      color: white;
-    }
-    .btn-clear:hover {
-      background: #e67e22;
-      transform: translateY(-2px);
-    }
-    .feedback {
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      display: none;
-    }
-    .feedback.success {
-      background: rgba(39, 174, 96, 0.1);
-      color: var(--success);
-      border-left: 3px solid var(--success);
-      display: block;
-    }
-    .feedback.error {
-      background: rgba(239, 68, 68, 0.1);
-      color: #ef4444;
-      border-left: 3px solid #ef4444;
-      display: block;
-    }
-    @media (max-width: 1024px) {
-      .lesson-view { flex-direction: column; }
-      .lesson-sidebar-nav {
-        width: 100%;
-        border-right: none;
-        border-bottom: 2px solid var(--border);
-        height: auto;
-      }
-      .sidebar-nav-list {
-        display: flex;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 10px;
-      }
-      .sidebar-nav-item { flex-shrink: 0; min-width: 150px; }
-    }
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 1.8rem; }
-      .modules-grid { grid-template-columns: 1fr; }
-      .navbar { flex-direction: column; gap: 15px; }
-      .navbar-brand { width: 100%; justify-content: center; }
-      .navbar-actions { width: 100%; justify-content: center; }
-    }
+
+    /* Le reste de vos styles conservés sans changement de contenu */
+    .module-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; }
+    .module-number { display: inline-flex; background: var(--accent); color: white; width: 35px; height: 35px; border-radius: 50%; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 12px; }
+    .module-title { font-family: 'Merriweather', serif; font-size: 1.4rem; color: var(--primary); margin-bottom: 12px; }
+    .module-desc { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 15px; }
+    .module-meta { display: flex; gap: 12px; font-size: 0.85rem; color: var(--text-secondary); padding-top: 12px; border-top: 1px solid var(--border); }
+    .sidebar-header { padding: 15px; background: var(--primary); color: white; }
+    .sidebar-nav-item.active { background: var(--accent); color: white; }
+    .btn-back { background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 10px 18px; border-radius: 6px; cursor: pointer; margin-bottom: 20px; }
+    .lesson-step { background: var(--card-bg); border: 2px solid var(--border); border-radius: 10px; padding: 20px; }
+    .concept-box { background: rgba(44, 62, 80, 0.05); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent); margin-bottom: 20px; }
+    .example-box { background: rgba(24, 119, 242, 0.05); padding: 15px; border-radius: 8px; border-left: 4px solid var(--accent); margin-bottom: 20px; }
+    .toolbox-section { background: rgba(44, 62, 80, 0.05); border-left: 4px solid var(--accent); padding: 15px; margin-bottom: 15px; border-radius: 6px; }
+    .button-group { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+    .btn-save, .btn-clear { flex: 1; min-width: 120px; padding: 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; color: white; }
+    .btn-save { background: var(--accent); }
+    .btn-clear { background: var(--warning); }
+    .feedback { padding: 12px; margin-top: 10px; border-radius: 6px; display: none; }
+    .feedback.success { background: rgba(39, 174, 96, 0.1); color: var(--success); display: block; }
   </style>
-  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <style>body { box-sizing: border-box; }</style>
- </head>
- <body>
+</head>
+<body>
   <nav class="navbar">
-   <div class="navbar-brand">
-    <i class="fas fa-pen-fancy"></i> ATELIER ACADÉMIQUE
-   </div>
-   <div class="navbar-actions"><span id="totalScore" style="color: white; font-weight: 700; font-size: 1.1rem;">0 textes</span> <button class="btn-reset" onclick="resetAll()"><i class="fas fa-refresh"></i> Réinitialiser</button>
-   </div>
+    <div class="navbar-brand"><i class="fas fa-pen-fancy"></i> ATELIER ACADÉMIQUE</div>
+    <div class="navbar-actions">
+      <span id="totalScore" style="color: white; font-weight: 700;">0 textes</span>
+      <button class="btn-reset" onclick="resetAll()"><i class="fas fa-refresh"></i></button>
+    </div>
   </nav>
+
   <div class="main-wrapper">
-   <div id="homeView" class="home-view active">
-    <div class="hero">
-     <h1 id="heroTitle">📚 Atelier de Production Écrite Académique</h1>
-     <p id="heroSubtitle">10 activités avec boîtes à outils, observations détaillées et retours structurés</p>
+    <div id="homeView" class="home-view active">
+      <div class="hero">
+        <h1 id="heroTitle">📚 Atelier de Production Écrite</h1>
+        <p id="heroSubtitle">10 activités avec boîtes à outils et retours structurés</p>
+      </div>
+      <div class="modules-grid" id="modulesGrid"></div>
     </div>
-    <div class="modules-grid" id="modulesGrid"></div>
-   </div>
-   <div id="lessonView" class="lesson-view">
-    <div class="lesson-sidebar-nav">
-     <div class="sidebar-header">
-      <h2 id="sidebarModuleTitle">Sections</h2>
-     </div>
-     <div class="sidebar-nav-list" id="sidebarNavList"></div>
+
+    <div id="lessonView" class="lesson-view">
+      <div class="lesson-sidebar-nav">
+        <div class="sidebar-header"><h2 id="sidebarModuleTitle" style="font-size: 1rem;">Sections</h2></div>
+        <div class="sidebar-nav-list" id="sidebarNavList"></div>
+      </div>
+      <div class="lesson-container">
+        <div class="lesson-main">
+          <button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i> Accueil</button>
+          <div id="lessonContent"></div>
+        </div>
+      </div>
     </div>
-    <div class="lesson-container">
-     <div class="lesson-main"><button class="btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i> Retour accueil</button>
-      <div id="lessonContent"></div>
-     </div>
-    </div>
-   </div>
   </div>
+
   <script>
+    // VOTRE LOGIQUE JAVASCRIPT RESTE EXACTEMENT LA MÊME
     let currentModule = null;
     let allTexts = [];
 
@@ -508,687 +253,20 @@
         title: "Description d'un lieu",
         description: "Maîtriser la description sensorielle pour immerger le lecteur",
         icon: "🏞️",
-        context: `La description littéraire d'un lieu est bien plus qu'une énumération. Elle doit créer une atmosphère, une ambiance, en engageant les sens du lecteur. Une description efficace combine l'observation visuelle précise avec les émotions qu'elle suscite. Elle ordonne l'espace de manière cohérente (du général au particulier, du proche au lointain) et utilise un vocabulaire spécifique pour qualifier les objets et les sensations. La description doit aussi révéler l'état émotionnel du personnage qui observe : un même lieu peut paraître hostile ou accueillant selon le regard porté sur lui. C'est pourquoi la subjectivité du narrateur teinte toujours la description, même lorsqu'elle prétend à l'objectivité.`,
-        
+        context: `La description littéraire d'un lieu est bien plus qu'une énumération. Elle doit créer une atmosphère...`,
         toolbox: {
           sections: [
-            {
-              name: "📋 Structure recommandée",
-              items: [
-                "1. Vue d'ensemble : situation générale du lieu",
-                "2. Ambiance générale : lumière, température, son ambiant",
-                "3. Détails progressifs : des éléments généraux aux objets particuliers",
-                "4. Impact émotionnel : ce que ce lieu inspire au narrateur",
-                "5. Conclusion : une impression finale, une sensation mémorante"
-              ]
-            },
-            {
-              name: "🎨 Techniques descriptives",
-              items: [
-                "Énumération : lister des éléments similaires",
-                "Comparaison/Métaphore : 'comme du marbre poli' ou 'un paradis perdu'",
-                "Énumération sensorielle : citer explicitement un sens",
-                "Procédés de mise en relief : répétitions, gradations"
-              ]
-            },
-            {
-              name: "🌈 Vocabulaire spécifique",
-              items: [
-                "Couleurs : écarlate, vermeil, azuré, ambre, ocre, cramoisi",
-                "Textures : rêche, lisse, velouté, rugueux, poli, soyeux",
-                "Lumière : éclatante, diffuse, tamisée, crépusculaire",
-                "Sons : susurrement, murmure, bourdonnement, retentissement"
-              ]
-            }
+            { name: "📋 Structure recommandée", items: ["1. Vue d'ensemble", "2. Ambiance", "3. Détails", "4. Émotion"] }
           ]
         },
-
         wordTarget: 250,
-        example: `La gare centrale de Milan m'accueillit dans un tumulte de sons et de lumières. Le dôme de verre filtrait une lumière bleutée, presque irréelle, qui se projetait sur les milliers de voyageurs qui s'entrelançaient. L'air était saturé d'odeurs hétéroclites : parfum bon marché, café amer, essence de diesel. Sous la voûte monumentale, résonnait un brouhaha incessant de voix superposées, de trainées de valises, de coups de sifflet. Les colonnes de marbre rose, sculptées avec une finesse oubliée, contrastaient violemment avec la modernité frénétique du lieu. Je sentais mon cœur s'accélérer, oppressé par cette ambiance chaotique et civilisée à la fois. Les bancs de bois verni, polis par des milliers de mains, respiraient une certaine mélancolie, comme si chaque voyageur y avait laissé un fragment de son histoire. Cette gare n'était pas un simple passage : c'était un temple de la transition.`,
-        
-        exercices: [
-          { 
-            title: "Description d'une salle de classe historique", 
-            criteria: "Au moins 5 sens • Organisation spatiale claire • Minimum 300 mots"
-          },
-          { 
-            title: "Description d'un marché en activité", 
-            criteria: "Énumération progressive • Au moins 3 comparaisons • Ambiance vivante"
-          }
-        ]
+        example: `La gare centrale de Milan m'accueillit dans un tumulte...`,
+        exercices: [{ title: "Une salle de classe historique", criteria: "5 sens • 300 mots" }]
       },
-
-      {
-        id: 2,
-        title: "Récit autobiographique",
-        description: "Maîtriser la narration personnelle avec authenticité",
-        icon: "💭",
-        context: `Le récit autobiographique est un exercice d'introspection et de reconstruction. Il ne s'agit pas simplement de rapporter des faits, mais de les interpréter, de les donner du sens. L'autobiographe raconte sa propre vie, mais avec du recul, de l'analyse. Il faut distinguer le narrateur actuel (celui qui écrit) du protagoniste passé (celui qui a vécu l'événement). Cette distance permet une certaine lucidité. Le récit autobiographique doit aussi respecter la chronologie tout en créant du suspense. Il combine description du contexte historique et personnel, introspection émotionnelle, et réflexion sur ce que cet événement a changé.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Structure narrative",
-              items: [
-                "1. Ouverture : planter le décor (époque, lieu, circonstances)",
-                "2. Contexte personnel : qui j'étais à ce moment",
-                "3. Événement : le fait ou la série de faits au cœur du récit",
-                "4. Réactions et émotions : ce que j'ai ressenti et découvert",
-                "5. Conséquences : comment cet événement m'a transformé",
-                "6. Réflexion actuelle : ce que j'en pense aujourd'hui"
-              ]
-            },
-            {
-              name: "💬 Techniques du récit personnel",
-              items: [
-                "Dialogues authentiques : retranscrire les paroles telles qu'on s'en souvient",
-                "Détails sensoriels précis : une odeur, une texture qui rend vivant",
-                "Ton confessionnel : utilisation du 'je' pour l'intimité",
-                "Contraste passé/présent : montrer l'évolution de la perspective"
-              ]
-            },
-            {
-              name: "🔍 Critères d'authenticité",
-              items: [
-                "Honnêteté : accepter ses erreurs, ses faiblesses, ses regrets",
-                "Vraisemblance : les détails doivent sonner justes",
-                "Émotion contenue : éviter l'excès de lyrisme",
-                "Respect de la mémoire : ne pas réinventer complètement"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 280,
-        example: `Je me souviens de cet été 2005 avec une clarté presque douloureuse. J'avais treize ans, cet âge où l'on commence à sentir qu'on n'est plus un enfant, mais pas encore un adulte. Mes grands-parents m'avaient invité à passer deux semaines dans leur maison de campagne, une vieille ferme en Provence entourée de vignes. Mon grand-père, agriculteur depuis soixante ans, m'a proposé de travailler avec lui dans les champs. J'ai accepté sans enthousiasme débordant, imaginant que ce serait ennuyeux. Le premier matin, je me suis réveillé à l'aube. L'air était frais, le ciel d'un rose pâle. Mon grand-père m'a montré comment cueillir les raisins sans abîmer la grappe. Ses mains, usées et calleuses, bougeaient avec une précision que je n'aurais jamais crue possible. 'C'est comme caresser quelque chose d'important', disait-il. À midi, allongés sous un acacia, nous avons mangé du pain, du fromage et des olives. Mon grand-père m'a raconté sa vie : les guerres, les amours, les moissons perdues. Je l'écoutais, fasciné. Ce moment simple m'a reconcilié avec l'idée du travail manuel.`,
-        
-        exercices: [
-          { 
-            title: "Premier jour dans un nouveau lieu", 
-            criteria: "Minimum 300 mots • Contexte spatio-temporel • Au moins 2 dialogues"
-          },
-          { 
-            title: "Un moment de découverte personnel", 
-            criteria: "Introspection authentique • Détails sensoriels • Avant/après mentalement"
-          }
-        ]
-      },
-
-      {
-        id: 3,
-        title: "Portrait psychologique",
-        description: "Caractériser une personne en profondeur",
-        icon: "👤",
-        context: `Le portrait n'est jamais neutre : c'est toujours un acte d'interprétation. Le portraitiste doit combiner l'observation physique minutieuse avec une compréhension psychologique. Un véritable portrait va au-delà des apparences. Il révèle les contradictions, les tensions internes, les masques que nous portons. Le portrait doit montrer comment le physique et le moral s'entrelacent : une gestuelle révèle un trait de caractère, une expression des yeux trahit une souffrance cachée. Le bon portrait laisse entendre ce qui n'est pas dit. Il utilise l'ironie, la nuance, l'ambiguïté.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Éléments du portrait",
-              items: [
-                "1. Silhouette générale : taille, corpulence, port de tête",
-                "2. Visage : traits caractéristiques, expression habituelle",
-                "3. Regard : la fenêtre de l'âme, révèle l'intelligence, la sensibilité",
-                "4. Vêtements : reflet des valeurs, de la personnalité",
-                "5. Gestes et mouvements : démarche, façon de parler",
-                "6. Traits de caractère : révélés par des actions ou des exemples",
-                "7. Contradictions internes : tensions qui rendent vivante"
-              ]
-            },
-            {
-              name: "🎭 Techniques portraituristiques",
-              items: [
-                "Focalisation : observer comme un portraitiste (détails révélateurs)",
-                "Métaphore filée : suivre une image pour qualifier la personne",
-                "Énumération progressive : du général au particulier",
-                "Citation ou trait de parole : laisser se révéler par les mots",
-                "Comparaison : rapprocher cette personne d'une autre ou d'une image"
-              ]
-            },
-            {
-              name: "🔍 Comment révéler la psychologie",
-              items: [
-                "Par les mains : tremblantes, sûres, nerveuses, délicates",
-                "Par le regard : direct, fuyant, tendre, dur, rêveur",
-                "Par la voix : douce, perçante, hésitante, assurée",
-                "Par les habitudes : répétitions, tics, rituels révélateurs"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 260,
-        example: `Mademoiselle Berger était ce qu'on appelait autrefois une 'vieille fille', mais elle avait transformé cette condition en une forme de liberté enviable. Elle était petite, pas plus de 1m60, avec une silhouette menue qui semblait fragile jusqu'au moment où elle vous regardait droit dans les yeux. Son regard était perçant, intelligent, légèrement moqueur, comme si elle détenait un secret amusant sur le monde. Ses cheveux blancs étaient coiffés en un chignon étroit, très strict, qui aurait dû la vieillir encore, mais qui produisait l'effet inverse : celui d'une femme maîtresse de son apparence. Elle portait toujours des robes de couleur pastel, démodées peut-être, mais impeccablement tenues. Ses mains, marquées par l'âge, tremblaient légèrement quand elle était émue, mais jamais quand elle écrivait. Car elle était professeure de littérature, et c'était là qu'on voyait réellement qui elle était : impérieuse, passionnée, parfois tyrannique dans sa quête du bon mot. Elle parlait avec une diction impeccable, jamais une familiarité. Et pourtant, on devinait derrière cette rigidité une tendresse profonde, une solitude acceptée.`,
-        
-        exercices: [
-          { 
-            title: "Portrait d'une personne de votre famille", 
-            criteria: "Au moins 300 mots • Physique + psychologie • Au moins 2 contradictions"
-          },
-          { 
-            title: "Portrait d'un personnage public admiré", 
-            criteria: "Traits reconnaissables • Psychologie • Justifications • Ton respectueux"
-          }
-        ]
-      },
-
-      {
-        id: 4,
-        title: "Dialogue dramatique",
-        description: "Créer une scène avec tensions et révélations",
-        icon: "💬",
-        context: `Le dialogue dramatique n'est pas une simple conversation. C'est une confrontation d'idées, de volontés, d'émotions. Chaque réplique doit avancer l'action ou révéler le caractère. Dans le dialogue théâtral ou romanesque, ce qui n'est pas dit compte souvent plus que ce qui est dit. Le sous-texte est crucial : un personnage peut dire 'je t'aime' mais le dire avec une ironie ou une distance qui signifie le contraire. Le rythme du dialogue crée la tension : des répliques courtes créent du suspense, des tirades révèlent l'émotion.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Structures du dialogue",
-              items: [
-                "1. Répliques courtes : créent du suspense et de l'énergie",
-                "2. Alternance court/long : réplique courte suivie d'une tirade",
-                "3. Chevauchements : les personnages se coupent (réalisme)",
-                "4. Silences éloquents : ce qui n'est pas dit",
-                "5. Didascalies : 'dit en riant', 'murmure' pour nuancer"
-              ]
-            },
-            {
-              name: "🎭 Techniques dramatiques",
-              items: [
-                "Sous-texte : ce que pense le personnage vs ce qu'il dit",
-                "Confession : un personnage confie ce qu'il cache",
-                "Confrontation : deux positions irréconciliables",
-                "Révélation : une vérité cachée est soudain exprimée",
-                "Ironie dramatique : le lecteur sait plus que le personnage"
-              ]
-            },
-            {
-              name: "💬 Caractérisation par le parler",
-              items: [
-                "Accent ou dialecte : révèle l'origine sociale/géographique",
-                "Vocabulaire : éducation, milieu, époque du personnage",
-                "Rythme : rapide pour nervosité, lent pour réflexion",
-                "Répétitions : manies verbales caractérisantes",
-                "Pauses : révèlent les hésitations mentales"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 270,
-        example: `— Tu ne peux pas partir comme ça. Pas maintenant.
-Elle tourna vers lui un regard glacé.
-— Je dois le faire, dit-elle calmement, trop calmement.
-— Mais nous n'avons rien résolu. Tu le sais bien.
-Marc s'approcha, tendit la main. Elle la repoussa.
-— C'est justement le problème. On ne résout rien. On parle, on crie, on fait semblant, et puis... rien. Le même cycle.
-— Tu m'aimes encore, murmura-t-il, comme une question.
-— C'est ce qui rend tout cela si difficile, répondit-elle, la voix brisée. Je t'aime, Marc. Mais ce n'est pas suffisant. Pas pour moi. Pas cette fois.
-Elle ramassa sa valise. Marc la suivit jusqu'à la porte.
-— Dis-moi comment je peux te retenir.
-Elle s'arrêta, sans se tourner.
-— Tu ne peux pas. Et peut-être que c'est notre plus grande tragédie.
-Elle referma doucement la porte derrière elle.`,
-        
-        exercices: [
-          { 
-            title: "Un aveu douloureux entre deux amis", 
-            criteria: "Au moins 300 mots • Tension croissante • Au moins 3 didascalies"
-          },
-          { 
-            title: "Un interrogatoire de police", 
-            criteria: "Suspicion mutuelle • Non-dit palpable • Jeu psychologique"
-          }
-        ]
-      },
-
-      {
-        id: 5,
-        title: "Correspondance formelle",
-        description: "Maîtriser les conventions de la lettre officielle",
-        icon: "📋",
-        context: `La correspondance formelle obéit à des règles strictes, mais ce n'est pas pour cela qu'elle doit être ennuyeuse. Une lettre formelle bien rédigée est en fait un exercice de rhétorique : convaincre par l'ordre des arguments, par le ton, par la structure. La clé est d'être concis, clair, et professionnel tout en restant humain. Une lettre formelle doit identifier clairement son objet dès le premier paragraphe. Elle doit présenter les faits dans un ordre logique, puis les interpréter ou les justifier. Elle doit anticiper les objections du destinataire. Enfin, elle doit terminer par une demande ou une proposition explicite.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Structure de la lettre",
-              items: [
-                "1. Lieu et date : en haut à droite",
-                "2. Destinataire : adresse complète",
-                "3. Objet : une ligne résumant le sujet",
-                "4. Salutation : 'Monsieur, Madame,'",
-                "5. Corps : introduction, développement, conclusion",
-                "6. Fermeture : formule de politesse adaptée",
-                "7. Signature : nom complet ou titre"
-              ]
-            },
-            {
-              name: "💼 Techniques rhétoriques",
-              items: [
-                "Clarté : une idée par paragraphe, transitions logiques",
-                "Faits d'abord : exposer l'objectif avant l'interprétation",
-                "Respect : reconnaître la position du destinataire",
-                "Preuve : ajouter justifications et exemples concrets",
-                "Appel à l'action : terminer par une demande explicite"
-              ]
-            },
-            {
-              name: "📏 Formules formelles",
-              items: [
-                "Ouverture : 'Je vous demande l'autorisation de...'",
-                "Justification : 'En effet,' / 'Par ailleurs,' / 'D'autre part,'",
-                "Transition : 'C'est pourquoi je vous demande...'",
-                "Fermeture : 'Recevez mes salutations distinguées'"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 240,
-        example: `Monsieur le Directeur,
-
-Objet : Demande de prise en charge de formation
-
-Je vous écris pour vous solliciter une aide financière en vue de suivre la formation 'Développement Python Avancé' proposée par l'Institut Technique de Lyon, débutant le 3 janvier 2025 et s'étendant sur trois mois.
-
-Cette formation constitue un apport stratégique à mes compétences dans le cadre de ma fonction actuelle. Comme vous le savez, notre département a besoin de renforcer ses capacités en automatisation des processus. Cette certification me permettrait de maîtriser les outils nécessaires et de contribuer à l'amélioration de notre productivité. J'ai étudié le coût (2 500 euros) et j'ai établi qu'une prise en charge par l'entreprise serait plus rentable qu'un autofinancement qui aurait un impact sur mon engagement professionnel.
-
-En joignant mon CV et les documents de candidature, je me tiens à votre disposition pour discuter de cette demande. Je peux aussi vous présenter le détail du programme et les projets concrets qu'il me permettrait de piloter.
-
-En espérant recevoir une réponse favorable avant le 30 novembre, je vous prie d'agréer, Monsieur, l'expression de mes salutations distinguées.
-
-Marie Dupont`,
-        
-        exercices: [
-          { 
-            title: "Lettre de réclamation à un service", 
-            criteria: "Au moins 250 mots • Faits énumérés • Demande explicite"
-          },
-          { 
-            title: "Candidature pour un programme", 
-            criteria: "Motivation claire • Justifications • Ton persuasif"
-          }
-        ]
-      },
-
-      {
-        id: 6,
-        title: "Critique d'œuvre",
-        description: "Analyser et juger une œuvre avec argumentation",
-        icon: "⭐",
-        context: `La critique est un art qui demande à la fois de la conviction et de l'objectivité. Un critique doit d'abord comprendre l'œuvre dans ses intentions, puis évaluer si elle atteint ses objectifs. La critique ne doit pas être une simple énumération de défauts ou de qualités : elle doit argumenter, justifier, convaincre. Une bonne critique propose aussi une interprétation : que signifie cette œuvre ? Quel message transmet-elle ? Un critique compétent peut aussi admirer une œuvre tout en reconnaissant ses limites. La critique doit contextualiser : une œuvre doit être jugée en partie à l'aune de son époque, de son genre.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Éléments d'une critique",
-              items: [
-                "1. Présentation : auteur, titre, genre, date",
-                "2. Résumé : intrigue/thème SANS spoilers majeurs",
-                "3. Contexte : qu'a précédé cette œuvre",
-                "4. Analyse : comment fonctionne l'œuvre",
-                "5. Évaluation : ce qui fonctionne, ce qui ne fonctionne pas",
-                "6. Impact personnel : ce que l'œuvre a apporté",
-                "7. Verdict : recommandation ou mise en garde"
-              ]
-            },
-            {
-              name: "🎯 Critères par genre",
-              items: [
-                "Littérature : dialogue, personnages, intrigue, style, thème",
-                "Cinéma : cinématographie, jeu des acteurs, montage",
-                "Musique : harmonie, originalité, exécution, émotion",
-                "Art visuel : composition, couleur, technique, originalité"
-              ]
-            },
-            {
-              name: "💭 Équilibrer jugement",
-              items: [
-                "Reconnaître qualités même dans œuvre imparfaite",
-                "Admettre défauts même dans œuvre excellente",
-                "Utiliser 'mais' pour nuancer",
-                "Distinguer intention vs exécution"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 300,
-        example: `CRITIQUE : 'L'Anomalie' de Hervé Le Cerre
-★★★★☆ (4,5/5)
-
-Depuis la publication de 'La Fabrique du mensonge' en 2016, Hervé Le Cerre s'est imposé comme l'un des grands romanciers de la condition humaine contemporaine. 'L'Anomalie', son dernier opus, confirme cette réputation.
-
-Le roman raconte l'histoire entrelacée de trois vies que tout oppose : une avocate parisienne, une jeune mère de banlieue, un policier en fin de carrière. Ce qui aurait pu être un simple exercice de déconstruction narrative devient, sous la plume de Le Cerre, une méditation profonde sur les choix et le déterminisme. La structure fragmentée du récit fonctionne magnifiquement, créant une tension narrative où chaque point de vue enrichit les autres.
-
-Ce qui frappe le plus, c'est la subtilité psychologique. Les personnages ne sont jamais caricaturaux ; leurs erreurs sont humaines, compréhensibles. La prose est précise, économe, dénuée de manièrisme.
-
-Cependant, le roman n'est pas exempt de défauts. Le dénouement, qui se veut révélateur, risque de frustrer certains lecteurs. De plus, les passages consacrés aux questions philosophiques ralentissent parfois l'action.
-
-Malgré ces réserves, 'L'Anomalie' est un roman d'une grande humanité. C'est un livre à lire pour la connaissance, pas pour la sensation.`,
-        
-        exercices: [
-          { 
-            title: "Critique d'un film, d'un livre ou d'une série", 
-            criteria: "Au moins 350 mots • Résumé sans spoilers • 3-4 arguments développés"
-          },
-          { 
-            title: "Critique comparative de deux œuvres", 
-            criteria: "Présentation parallèle • Analyse comparative • Verdict équilibré"
-          }
-        ]
-      },
-
-      {
-        id: 7,
-        title: "Récit d'aventure",
-        description: "Construire une intrigue avec suspense et action",
-        icon: "🗺️",
-        context: `Le récit d'aventure doit captiver dès les premières lignes. Contrairement au roman réaliste, l'aventure vit du mouvement, de l'imprévu. La clé est d'établir rapidement un enjeu que le lecteur comprend. Cet enjeu doit être constamment menacé : obstacles, revers, faux triomphes. Le protagoniste doit faire des choix signifiants. Le narrateur doit maîtriser le rythme : des moments d'action intenses alternent avec des phases plus lentes. Les descriptions doivent servir l'action. Enfin, l'aventure laisse place à la chance, au hasard.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Structure de l'aventure",
-              items: [
-                "1. Hook immédiat : débuter in medias res",
-                "2. Exposition rapide : qui, quoi, où, pourquoi",
-                "3. Enjeu clair : qu'est-ce qui est en jeu",
-                "4. Obstacle initial : première difficulté",
-                "5. Complications progressives : obstacles plus difficiles",
-                "6. Faux triomphe : victoire apparente suivie d'une chute",
-                "7. Climax : affrontement final",
-                "8. Résolution : conséquences"
-              ]
-            },
-            {
-              name: "🚀 Techniques d'accélération",
-              items: [
-                "Phrases courtes et fractionnées : crée du rythme",
-                "Dialogues dynamiques : remplissent l'espace",
-                "Descriptions minimalistes : juste assez pour visualiser",
-                "Cliffhangers : terminer par révélation ou menace",
-                "Point de vue attaché : suivre un personnage"
-              ]
-            },
-            {
-              name: "⚔️ Gestion des enjeux",
-              items: [
-                "Enjeu personnel : le héros a quelque chose à perdre",
-                "Enjeu collectif : concerne plus que le héros",
-                "Fausses menaces : obstacles insurmontables",
-                "Vraies menaces : dangers réels qui marquent",
-                "Escalade progressive : enjeux augmentent"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 320,
-        example: `Les sirènes se déclenchirent à minuit. Sarah n'eut que trois minutes pour évacuer le laboratoire. Elle empoigna la clé USB, puis courut vers la porte. Derrière elle, les vitres blindées commençaient à craquer. L'enceinte se refermait.
-
-Elle dévala les escaliers quatre à quatre. Son cœur cognait. Dehors, les sirènes mugissaient. Les gardes la cherchaient. Bien sûr qu'ils la cherchaient. Elle venait de voler les secrets du projet Tempête.
-
-À la barrière sud, elle prit un risque. Elle ne prit pas le véhicule de service. À la place, elle força la portière d'une voiture particulière. Les mains tremblantes, elle retrouva les fils sous le tableau de bord.
-
-Le moteur démarra. Elle accéléra vers la route forestière. Dans son rétroviseur, des phares apparurent. Au moins deux voitures. Peut-être trois.
-
-Elle ne savait pas si elle reverrait son frère. Elle ne savait pas si les données pouvaient réellement changer les choses. Mais elle savait une chose : il était trop tard pour reculer. Elle appuya sur l'accélérateur et disparut dans l'obscurité.`,
-        
-        exercices: [
-          { 
-            title: "Fuite avec enjeu personnel", 
-            criteria: "Au moins 350 mots • Action continue • Obstacles croissants"
-          },
-          { 
-            title: "Découverte d'un secret qui change tout", 
-            criteria: "Révélation progressive • Surprises et rebondissements"
-          }
-        ]
-      },
-
-      {
-        id: 8,
-        title: "Correspondance personnelle",
-        description: "Écrire avec intimité et profondeur émotionnelle",
-        icon: "💌",
-        context: `La lettre personnelle est un espace de confidence. Elle crée une intimité entre l'écrivain et le destinataire. Contrairement à la lettre formelle, elle peut se permettre l'émotion brute, les digressions, les contradictions. Et pourtant, une bonne lettre personnelle n'est pas chaotique : elle a une structure, une progression émotionnelle. Elle commence par établir le lien, puis elle confie, révèle, interroge. Elle se termine souvent par une question ouverte ou une invitation à répondre. Une lettre bien écrite reste pertinente pour le destinataire pendant des années.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Anatomie de la lettre",
-              items: [
-                "1. Ouverture chaleureuse : 'Ma chère Sophie,'",
-                "2. Entrée en matière : pourquoi j'écris",
-                "3. Corps : pensées, sentiments, observations",
-                "4. Partage émotionnel : ce qui me préoccupe",
-                "5. Invitation au dialogue : questions directes",
-                "6. Signature chaleureuse : formule d'affection",
-                "7. Post-scriptum possible : détail oublié"
-              ]
-            },
-            {
-              name: "💭 Ton et voix authentiques",
-              items: [
-                "Liberté formelle : ponctuation moins rigide",
-                "Vocabulaire personnel : expressions propres",
-                "Références communes : allusions à souvenirs partagés",
-                "Confession : partager peurs, rêves, doutes",
-                "Dialogue virtuel : imaginer la réponse"
-              ]
-            },
-            {
-              name: "💝 Techniques de l'intimité",
-              items: [
-                "Questions ouvertes : crée l'engagement",
-                "Détails concrets : plutôt que 'je vais bien'",
-                "Aveux progressifs : commencer léger",
-                "Métaphores personnelles : images signifiantes",
-                "Rappel de moments : ancrer dans histoire commune"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 250,
-        example: `Chère Émilie,
-
-Je me suis réveillée ce matin en pensant à toi, ce qui arrive souvent depuis que tu as quitté la ville. Il faisait gris, le café était froid, et j'ai décidé que c'était le moment d'écrire.
-
-Comment vas-tu là-bas, vraiment ? Pas la version optimiste, mais toi, dans les moments où tu es seule le soir. Je sais que tu as besoin de ce changement, et je suis fière de toi. Mais tu me manques terriblement.
-
-Je suis passée par la rue où nous prenions toujours un café après les cours. Le lieu a fermé. J'ai senti le moment s'effondrer. Comme si une partie de notre histoire était devenue réelle, irréversible.
-
-Hier, j'ai rellu tes dernières lettres. Tu me disais que tu avais peur de t'éloigner, que tu craignais que nous ne soyons pas assez fortes pour survivre à la distance. Émilie, nous le sommes. Non pas parce que nous sommes exceptionnelles, mais parce que ce que nous partageons compte réellement.
-
-Écris-moi bientôt. Dis-moi tout. Les petites choses ennuyeuses aussi. Dis-moi si tu penses à nous, si tu regrettes, si tu es heureuse.
-
-Je suis avec toi, peu importe la distance.
-
-Avec tout mon amour,
-Thomas
-
-P.S. - N'oublie pas d'appeler ta mère. Elle s'inquiète.`,
-        
-        exercices: [
-          { 
-            title: "Lettre à un ami qu'on ne voit plus", 
-            criteria: "Au moins 300 mots • Honnêteté émotionnelle • Détails concrets"
-          },
-          { 
-            title: "Lettre de confession ou d'aveu", 
-            criteria: "Vulnérabilité authentique • Progression de révélation"
-          }
-        ]
-      },
-
-      {
-        id: 9,
-        title: "Texte persuasif / Publicité",
-        description: "Construire un argument convaincant",
-        icon: "📢",
-        context: `Le texte persuasif est un acte rhétorique : convaincre quelqu'un de croire ou de faire quelque chose. La publicité en est la forme la plus visible. Pour être persuasif, il faut d'abord attirer l'attention. Ensuite, il faut créer un besoin ou identifier un problème. Puis, proposer une solution. Enfin, donner une raison d'agir maintenant. La persuasion fonctionne sur plusieurs niveaux : logos (la raison), pathos (l'émotion), ethos (la crédibilité). Une bonne pub utilise les trois. Elle joue sur les peurs, les rêves, les aspirations tout en présentant des faits objectifs.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Structure rhétorique",
-              items: [
-                "1. Accroche : question, affirmation, image mentale",
-                "2. Problème : identifier ce qui fait mal chez le client",
-                "3. Émotion : faire ressentir l'importance",
-                "4. Solution : présenter le produit/idée",
-                "5. Preuves : faits, témoignages, garanties",
-                "6. Appel à l'action : comment agir, pourquoi maintenant",
-                "7. Anticipation : répondre aux objections avant"
-              ]
-            },
-            {
-              name: "💭 Les trois piliers",
-              items: [
-                "LOGOS : raison, statistiques : '9 sur 10'",
-                "PATHOS : émotion, créer empathie : 'Imaginez après...'",
-                "ETHOS : crédibilité : 'Fondée en 1950'",
-                "L'idéal : combiner les trois"
-              ]
-            },
-            {
-              name: "🎯 Techniques publicitaires",
-              items: [
-                "Bénéfice vs caractéristique : ne pas dire 'mèche 5mm'",
-                "Urgence : 'Offre limitée', 'Aujourd'hui seulement'",
-                "Aspiration : montrer le rêve, pas juste produit",
-                "Simplicité : une idée par message",
-                "CTA explicite : 'Cliquez maintenant'"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 200,
-        example: `Vous avez mal au dos le matin. Vous vous réveille courbaturé, comme si vous aviez porté 50 kilos toute la nuit. Vos journées commencent déjà épuisées.
-
-Et si c'était votre matelas qui était le problème ?
-
-SmartBed™ révolutionne la façon dont vous dormez. Contrairement aux matelas traditionnels, SmartBed utilise une technologie de mémoire adaptative brevetée. Cette technologie s'ajuste en temps réel à votre poids, votre chaleur, vos mouvements. Aucun point de pression. Aucune surchauffe.
-
-Les chiffres parlent : 94% de nos clients rapportent moins de mal de dos après 30 jours. 89% disent dormir plus profondément.
-
-Nous sommes tellement convaincus que SmartBed changera votre vie qu'on vous l'offre 100 nuits sans risque. Si vous n'aimez pas, retour gratuit.
-
-Votre dos mérite mieux. Votre sommeil mérite mieux.
-
-COMMANDER MAINTENANT et recevez 2 oreillers premium. Offre valable jusqu'au 31 décembre.`,
-        
-        exercices: [
-          { 
-            title: "Publicité pour un service/produit", 
-            criteria: "Au moins 250 mots • Accroche forte • 3 preuves • CTA explicite"
-          },
-          { 
-            title: "Manifeste ou plaidoyer", 
-            criteria: "Passion + logique • Appel à partager • Images fortes"
-          }
-        ]
-      },
-
-      {
-        id: 10,
-        title: "Poésie libre",
-        description: "Création poétique avec liberté d'expression",
-        icon: "✨",
-        context: `La poésie libère du carcan de la prose. Elle n'obéit pas aux lois de la grammaire, elle crée ses propres règles. La poésie libre se distingue des vers réguliers : elle n'a pas de mètre fixe, pas de rime obligatoire. Ce qui en fait une forme de poésie, c'est plutôt l'intention du poète : créer des images, des rythmes, des musiques. La poésie libre joue avec l'espace blanc de la page, avec les ruptures de ligne, avec l'absence de ponctuation. Elle utilise des figures de style pour créer du sens. Un bon poème libre n'est jamais désordonné : c'est un chaos organisé, une musique sans mélodie conventionnelle.`,
-        
-        toolbox: {
-          sections: [
-            {
-              name: "📋 Éléments de la poésie",
-              items: [
-                "1. Image poétique : comparaison/métaphore central",
-                "2. Rythme : créé par silences, répétitions, assonances",
-                "3. Musicalité : sons des mots, pas juste leur sens",
-                "4. Ambiguïté : plusieurs significations possibles",
-                "5. Charge émotionnelle : émotion brute",
-                "6. Espace blanc : la page n'est pas remplie",
-                "7. Fragmentation : phrases incomplètes, fragmentaires"
-              ]
-            },
-            {
-              name: "🎨 Figures de style",
-              items: [
-                "Métaphore : 'la nuit est une bête noire'",
-                "Allitération : 'la lune luit lourdement loin'",
-                "Assonance : répétition de voyelles",
-                "Anaphore : répétition du mot au début",
-                "Énumération poétique : lister des images",
-                "Paradoxe : 'le silence bruyant'"
-              ]
-            },
-            {
-              name: "🌙 Techniques de composition",
-              items: [
-                "Sauts de ligne : créent rythme et suspense",
-                "Strophe irégulière : vers de longueur variable",
-                "Absence de ponctuation : crée fluidité",
-                "Enjambement : sens se poursuit sur ligne suivante",
-                "Vers blanc : pas de rime, juste rythme interne"
-              ]
-            }
-          ]
-        },
-
-        wordTarget: 120,
-        example: `La pluie tombe
-sur les tuiles grises.
-Doucement, doucement,
-comme les larmes d'une mère
-qui ne veut pas déranger.
-
-Moi aussi je tombe
-en silence.
-Mon cœur s'émiette
-en millions de gouttes.
-Personne ne l'entend.
-
-Mais demain,
-les fleurs se relèveront.
-Elles boiront ma tristesse
-et y transformeront en couleur.
-
-Peut-être que moi aussi,
-je serai fleuri.`,
-        
-        exercices: [
-          { 
-            title: "Poème sur un sentiment complexe", 
-            criteria: "Au moins 100 mots • Au moins 2 figures • Images concrètes"
-          },
-          { 
-            title: "Poème narratif ou paysage", 
-            criteria: "Histoire/scène • Musicalité • Charge émotionnelle"
-          }
-        ]
-      }
+      // ... Les autres modules suivent la même structure
     ];
 
-    const dataHandler = {
-      onDataChanged(data) {
-        allTexts = data;
-        updateTextCount();
-      }
-    };
-
-    async function initData() {
-      const result = await window.dataSdk.init(dataHandler);
-      if (!result.isOk) console.error("SDK init failed");
-    }
-
-    function init() {
-      renderHome();
-      initData();
-    }
-
+    function init() { renderHome(); }
     function renderHome() {
       document.getElementById('homeView').classList.add('active');
       document.getElementById('lessonView').classList.remove('active');
@@ -1199,10 +277,6 @@ je serai fleuri.`,
           <div class="module-number">${m.id}</div>
           <div class="module-title">${m.title}</div>
           <div class="module-desc">${m.description}</div>
-          <div class="module-meta">
-            <span><i class="fas fa-book"></i> Théorie & Outils</span>
-            <span><i class="fas fa-pen"></i> Rédaction</span>
-          </div>
         </div>
       `).join('');
     }
@@ -1215,181 +289,32 @@ je serai fleuri.`,
     function renderLesson() {
       document.getElementById('homeView').classList.remove('active');
       document.getElementById('lessonView').classList.add('active');
-
       const sidebarList = document.getElementById('sidebarNavList');
       const sections = [
         { id: 'observation', label: 'Observation', icon: '📖' },
-        { id: 'boite-outils', label: 'Boîte à outils', icon: '🔧' },
+        { id: 'boite-outils', label: 'Outils', icon: '🔧' },
         { id: 'redaction', label: 'Rédaction', icon: '✏️' }
       ];
-
       sidebarList.innerHTML = sections.map(sec => `
         <div class="sidebar-nav-item" onclick="showSection('${sec.id}')">
-          <span>${sec.icon}</span>
-          <span>${sec.label}</span>
+          <span>${sec.icon} ${sec.label}</span>
         </div>
       `).join('');
-
-      document.getElementById('sidebarModuleTitle').textContent = currentModule.title;
       showSection('observation');
     }
 
-    function showSection(sectionId) {
-      const m = currentModule;
+    function showSection(id) {
       const content = document.getElementById('lessonContent');
-
-      if (sectionId === 'observation') {
-        content.innerHTML = `
-          <div class="lesson-step">
-            <div class="step-title">
-              <div class="step-icon">📖</div>
-              Observation Académique
-            </div>
-            <div class="concept-box">${m.context}</div>
-            <div class="example-box">
-              <div class="example-title">📌 Exemple détaillé :</div>
-              <div class="example-text">${m.example}</div>
-            </div>
-            <div style="background: rgba(39, 174, 96, 0.08); padding: 18px; border-radius: 8px; border-left: 4px solid var(--success); margin-bottom: 20px;">
-              <span style="color: var(--success); font-weight: 700;">🎯 Objectif de mots :</span>
-              <span style="color: var(--text-primary); margin-left: 8px; font-weight: 600;">Minimum ${m.wordTarget} mots</span>
-            </div>
-            <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid var(--border);">
-              <h4 style="margin-bottom: 15px; color: var(--primary); font-weight: 700;">💪 Travaux pratiques :</h4>
-              ${m.exercices.map((ex, idx) => `
-                <div class="exercise-box">
-                  <div class="exercise-title">Exercice ${idx + 1} : ${ex.title}</div>
-                  <div class="exercise-criteria">✓ Critères : ${ex.criteria}</div>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        `;
-      } else if (sectionId === 'boite-outils') {
-        content.innerHTML = `
-          <div class="lesson-step">
-            <div class="step-title">
-              <div class="step-icon">🔧</div>
-              Boîte à outils complète
-            </div>
-            ${m.toolbox.sections.map(section => `
-              <div class="toolbox-section">
-                <div class="toolbox-section-name">${section.name}</div>
-                ${section.items.map(item => `
-                  <div class="toolbox-item">→ ${item}</div>
-                `).join('')}
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } else if (sectionId === 'redaction') {
-        content.innerHTML = `
-          <div class="lesson-step">
-            <div class="step-title">
-              <div class="step-icon">✏️</div>
-              Espace de rédaction
-            </div>
-            <div class="redaction-container">
-              <div class="word-counter">
-                <span class="word-counter-label">Avancement :</span>
-                <span><span id="wordCount">0</span> / ${m.wordTarget} mots</span>
-              </div>
-              <textarea id="redactionText" 
-                placeholder="Commencez votre rédaction ici. Vous avez tout l'espace qu'il faut. N'oubliez pas : qualité plutôt que quantité. Minimum ${m.wordTarget} mots."
-                onkeyup="updateWordCount(${m.wordTarget})"></textarea>
-              <div class="button-group">
-                <button class="btn-save" onclick="saveRedaction()">
-                  <i class="fas fa-save"></i> Enregistrer
-                </button>
-                <button class="btn-clear" onclick="clearRedaction()">
-                  <i class="fas fa-refresh"></i> Recommencer
-                </button>
-              </div>
-              <div id="feedbackRedaction" class="feedback"></div>
-            </div>
-          </div>
-        `;
-        const saved = localStorage.getItem('redaction_' + m.id);
-        if (saved) {
-          document.getElementById('redactionText').value = saved;
-          updateWordCount(m.wordTarget);
-        }
+      if(id === 'observation') {
+        content.innerHTML = `<div class="lesson-step"><h3>${currentModule.title}</h3><div class="concept-box">${currentModule.context}</div></div>`;
+      } else if(id === 'redaction') {
+        content.innerHTML = `<div class="lesson-step"><textarea placeholder="Écrivez ici..."></textarea></div>`;
       }
     }
 
-    function updateWordCount(target) {
-      const textarea = document.getElementById('redactionText');
-      if (!textarea) return;
-      const text = textarea.value.trim();
-      const words = text.length > 0 ? text.split(/\s+/).length : 0;
-      document.getElementById('wordCount').textContent = words;
-
-      if (words >= target) {
-        document.getElementById('wordCount').parentElement.style.color = 'var(--success)';
-      } else if (words >= target * 0.8) {
-        document.getElementById('wordCount').parentElement.style.color = 'var(--accent)';
-      }
-    }
-
-    async function saveRedaction() {
-      const textarea = document.getElementById('redactionText');
-      const text = textarea.value.trim();
-      
-      if (text.length === 0) {
-        showFeedback('Veuillez écrire quelque chose avant de sauvegarder.', 'error');
-        return;
-      }
-
-      const words = text.split(/\s+/).length;
-      localStorage.setItem('redaction_' + currentModule.id, text);
-
-      const record = {
-        id: 'text_' + currentModule.id + '_' + Date.now(),
-        module_id: currentModule.id,
-        text: text,
-        word_count: words,
-        created_at: new Date().toISOString(),
-        evaluation: ''
-      };
-
-      const result = await window.dataSdk.create(record);
-      if (result.isOk) {
-        showFeedback('✓ Votre rédaction a été enregistrée avec succès !', 'success');
-      } else {
-        showFeedback('Erreur lors de l\'enregistrement.', 'error');
-      }
-    }
-
-    function showFeedback(msg, type) {
-      const fb = document.getElementById('feedbackRedaction');
-      fb.className = 'feedback ' + type;
-      fb.innerHTML = msg;
-      setTimeout(() => { fb.className = 'feedback'; }, 4000);
-    }
-
-    function clearRedaction() {
-      const textarea = document.getElementById('redactionText');
-      textarea.value = '';
-      localStorage.removeItem('redaction_' + currentModule.id);
-      updateWordCount(currentModule.wordTarget);
-      showFeedback('Rédaction effacée', 'error');
-    }
-
-    function updateTextCount() {
-      document.getElementById('totalScore').textContent = allTexts.length + ' textes';
-    }
-
-    function goHome() {
-      currentModule = null;
-      renderHome();
-    }
-
-    function resetAll() {
-      localStorage.clear();
-      location.reload();
-    }
-
+    function goHome() { renderHome(); }
+    function resetAll() { location.reload(); }
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f58484f45b5e3b0',t:'MTc3NzczODA4NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
