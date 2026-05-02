@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine à Langue | Expert Français</title>
+    <!-- Importation d'une police moderne -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue-fb: #1877f2;
+            --yellow-btn: #ffc107;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            color: var(--white);
+        }
+
+        /* Arrière-plan avec image (remplacez par votre image de livres) */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Barre de boutons supérieurs */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+            border: none;
+        }
+
+        .btn-blue { background-color: var(--blue-fb); color: white; }
+        .btn-yellow { background-color: var(--yellow-btn); color: #333; }
+        .btn-white { background-color: var(--white); color: #2c3e50; }
+
+        .btn:hover { transform: translateY(-3px); }
+
+        /* Grille des 4 activités pédagogiques */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 280px);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .card img {
+            width: 50px;
+            margin-bottom: 15px;
+        }
+
+        .card span {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Adaptabilité mobile */
+        @media (max-width: 650px) {
+            .grid-container { grid-template-columns: 1fr; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <h1>Machine à Langue</h1>
+        <p class="subtitle">Maîtrisez le Français avec Mohamed EL Khoumssi</p>
+
+        <div class="btn-group">
+            <a href="https://facebook.com" class="btn btn-blue">S'abonner (91k)</a>
+            <a href="#projets" class="btn btn-yellow">🚀 Commencer</a>
+            <a href="mailto:contact@exemple.com" class="btn btn-white">Message Direct</a>
+        </div>
+
+        <div class="grid-container">
+            <!-- Activité 1 : Lecture -->
+            <div class="card" onclick="location.href='lecture.html'">
+                <img src="https://cdn-icons-png.flaticon.com/512/3389/3389081.png" alt="Lecture">
+                <span>Réception Écrite</span>
+            </div>
+
+            <!-- Activité 2 : Langue -->
+            <div class="card" onclick="location.href='langue.html'">
+                <img src="https://cdn-icons-png.flaticon.com/512/2097/2097180.png" alt="Langue">
+                <span>Étude de Langue</span>
+            </div>
+
+            <!-- Activité 3 : Oral -->
+            <div class="card" onclick="location.href='oral.html'">
+                <img src="https://cdn-icons-png.flaticon.com/512/3050/3050518.png" alt="Oral">
+                <span>Production Orale</span>
+            </div>
+
+            <!-- Activité 4 : Écrit -->
+            <div class="card" onclick="location.href='ecrit.html'">
+                <img src="https://cdn-icons-png.flaticon.com/512/2596/2596420.png" alt="Écrit">
+                <span>Production Écrite</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

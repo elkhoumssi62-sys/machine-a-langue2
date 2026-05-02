@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse Interactive Complète - Prof. Mohamed EL KHOUMSSI</title>
+    <style>
+        :root {
+            --primary-blue: #2c3e50;
+            --accent-gold: #c0a080;
+            --white: #ffffff;
+            --success: #27ae60;
+            --error: #e74c3c;
+            --synth-red: #c0392b;
+            --question-color: #2980b9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.6s ease;
+        }
+
+        /* --- NAVIGATION --- */
+        #sidebar {
+            width: 320px;
+            background: var(--primary-blue);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-gold);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .nav-menu {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .nav-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .nav-item:hover { background: rgba(255,255,255,0.15); }
+        .nav-item.active { background: var(--accent-gold); font-weight: bold; }
+
+        /* --- CONTENU --- */
+        #main-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .text-support {
+            font-family: 'Georgia', serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #222;
+            text-align: justify;
+            border-left: 8px solid var(--accent-gold);
+            padding-left: 20px;
+            white-space: pre-line;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .question-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .question-title {
+            color: var(--question-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .opt-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .opt-btn.correct { background: var(--success) !important; color: white; }
+        .opt-btn.wrong { background: var(--error) !important; color: white; }
+
+        #synthesis-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff5f5;
+            border: 2px solid var(--synth-red);
+            border-radius: 10px;
+            display: none;
+            color: var(--synth-red);
+        }
+    </style>
+</head>
+<body>
+
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <h3>BAC FRANÇAIS</h3>
+            <p>Prof. Mohamed EL KHOUMSSI</p>
+        </div>
+        <nav class="nav-menu" id="menu"></nav>
+    </aside>
+
+    <main id="main-content">
+        <div class="content-card">
+            <h1 id="title">Sélectionnez un Support</h1>
+            <div id="text" class="text-support">Choisissez un chapitre pour commencer l'analyse.</div>
+        </div>
+        <div id="quiz" class="quiz-grid"></div>
+        <div id="synthesis-box">
+            <h2 style="margin-top:0">🚩 Synthèse Pédagogique</h2>
+            <p id="synth-text"></p>
+        </div>
+    </main>
+
+    <script>
+        const database = [
+            {
+                id: 1, titre: "Support 1 : La Solitude", color: "#f4f7f6",
+                texte: "Ma solitude ne date pas d'hier. Je vois, au fond d'une impasse que le soleil ne visite jamais, un petit garçon de six ans, dresser un piège pour attraper un moineau mais le moineau ne vient jamais. Il désire tant ce petit moineau ! Il ne le mangera pas, il ne le martyrisera pas. Il veut en faire son compagnon. Les pieds nus, sur la terre humide, il court jusqu'au bout de la ruelle pour voir passer les ânes et revient s'asseoir sur le pas de la maison et attendre l'arrivée du moineau qui ne vient pas. Le soir, il rentre le cœur gros et les yeux rougis, balançant au bout de son petit bras, un piège en fil de cuivre. Nous habitions Dar Chouafa, la maison de la voyante. Au rez-de-chaussée, habitait une voyante de grande réputation. Des quartiers les plus éloignés, des femmes de toutes les conditions venaient la consulter. Elle était voyante et quelque peu sorcière. Adepte de la confrérie des Gnaouas, elle s'offrait, une fois par mois, une séance de musique et de danses nègres. Des nuages de benjoin emplissaient la maison et les crotales et les guimbris nous empêchaient de dormir, toute la nuit. Je ne comprenais rien au rituel compliqué qui se déroulait au rez-de-chaussée.",
+                questions: [
+                    {q: "Quel âge a le narrateur ?", o: ["4 ans", "6 ans", "8 ans", "10 ans"], c: 1},
+                    {q: "Où habite la voyante ?", o: ["1er étage", "Cave", "Rez-de-chaussée", "Toit"], c: 2},
+                    {q: "Que veut-il faire du moineau ?", o: ["Le manger", "Le tuer", "Son compagnon", "Le vendre"], c: 2},
+                    {q: "Quelle confrérie est citée ?", o: ["Aissaoua", "Gnaoua", "Hamadcha", "Jilala"], c: 1},
+                    {q: "De quel métal est le piège ?", o: ["Fer", "Argent", "Cuivre", "Or"], c: 2},
+                    {q: "Comment est l'impasse ?", o: ["Ensoleillée", "Sombre", "Large", "Fleurie"], c: 1},
+                    {q: "Qui consulte la voyante ?", o: ["Hommes", "Femmes", "Enfants", "Soldats"], c: 1},
+                    {q: "Quel instrument est cité ?", o: ["Luth", "Piano", "Guimbri", "Flûte"], c: 2},
+                    {q: "Quel parfum est utilisé ?", o: ["Rose", "Musc", "Benjoin", "Ambre"], c: 2},
+                    {q: "Quel est le sentiment dominant ?", o: ["Joie", "Peur", "Solitude", "Haine"], c: 2}
+                ],
+                synth: "Ce passage introduit la solitude existentielle de Sidi Mohammed et l'atmosphère mystique de Dar Chouafa."
+            },
+            {
+                id: 2, titre: "Support 2 : Le Bain Maure", color: "#fff9f0",
+                texte: "Je crois me souvenir que c'était un mardi. Un mardi, jour de malheur pour les petits collégiens. Je ne voulais pas aller au bain maure. Ma mère me traîna de force. Les femmes parlaient fort, criaient, s'interpellaient à travers les nuages de vapeur. Je me sentais perdu dans ce brouillard d'odeurs et de cris. On me déshabilla, on me versa de l'eau bouillante sur la tête. Je pleurais, je hurlais. Ma mère me calmait par des gifles ou des menaces de me livrer aux djinns. Dans la pénombre, les corps nus me paraissaient des démons sortis de l'enfer. C'était une torture sans fin, un supplice que je ne comprenais pas. Le bain maure était pour moi le lieu de toutes les humiliations et de toutes les terreurs. Je ne voyais pas la beauté des mosaïques ni la fraîcheur de l'eau. Je ne voyais que des peaux rouges, des gestes brusques et j'entendais le fracas des seaux sur la dalle de marbre. Ma mère, elle, semblait dans son élément, discutant avec ses amies tout en me frottant vigoureusement la peau jusqu'au sang.",
+                questions: [
+                    {q: "Quel jour est-ce ?", o: ["Lundi", "Mardi", "Jeudi", "Vendredi"], c: 1},
+                    {q: "Comment l'enfant y va-t-il ?", o: ["Heureux", "De force", "En chantant", "Seul"], c: 1},
+                    {q: "À quoi compare-t-il les corps ?", o: ["Anges", "Poissons", "Démons", "Statues"], c: 2},
+                    {q: "Quelle menace utilise la mère ?", o: ["Le père", "Les djinns", "La faim", "Le Msid"], c: 1},
+                    {q: "Que verse-t-on sur sa tête ?", o: ["Lait", "Eau bouillante", "Eau froide", "Parfum"], c: 1},
+                    {q: "Quel bruit entend-il ?", o: ["Musique", "Seaux sur marbre", "Pluie", "Vent"], c: 1},
+                    {q: "Comment se sent la mère ?", o: ["Malade", "Perdue", "Dans son élément", "Triste"], c: 2},
+                    {q: "Comment est sa peau à la fin ?", o: ["Douce", "Blanche", "Rouge/sang", "Froide"], c: 2},
+                    {q: "Le narrateur aime-t-il le lieu ?", o: ["Oui", "Non", "Parfois", "Toujours"], c: 1},
+                    {q: "Que symbolise le bain ?", o: ["Paradis", "Supplice", "Jardin", "Forêt"], c: 1}
+                ],
+                synth: "Le bain maure est perçu comme un espace traumatisant, une véritable descente aux enfers pour l'enfant."
+            },
+            {
+                id: 3, titre: "Support 3 : Le Msid", color: "#eef2ff",
+                texte: "Le Msid était situé à la porte de la maison. C'était une petite salle sombre où nous étions entassés, une soixantaine de gamins, sous la surveillance d'un maître sévère. Le Fquih, un homme de haute taille, barbu, avec un regard qui nous glaçait le sang. Il tenait toujours à la main une longue baguette de cognassier. Cette baguette était l'instrument de sa justice. Dès qu'un élève bégayait ou s'endormait sur sa planchette, la baguette sifflait dans l'air et retombait sur les épaules du coupable. Nous devions réciter les versets du Coran à tue-tête. Le vacarme était assourdissant. Mes oreilles bourdonnaient. Je regardais par la petite lucarne un coin de ciel bleu et j'enviais les oiseaux qui volaient en liberté. Le Fquih ne souriait jamais. Son visage semblait sculpté dans du bois mort. Le jeudi était le jour de la révision générale, un jour de terreur car les erreurs se payaient cher sous la baguette de cognassier.",
+                questions: [
+                    {q: "Combien d'élèves y a-t-il ?", o: ["10", "30", "60", "100"], c: 2},
+                    {q: "De quel bois est la baguette ?", o: ["Olivier", "Cognassier", "Chêne", "Cèdre"], c: 1},
+                    {q: "Que récitent-ils ?", o: ["Poésie", "Versets Coraniques", "Noms", "Chants"], c: 1},
+                    {q: "Comment est le Fquih ?", o: ["Gentil", "Jeune", "Sévère", "Petit"], c: 2},
+                    {q: "Quel jour est la révision ?", o: ["Lundi", "Mercredi", "Jeudi", "Vendredi"], c: 2},
+                    {q: "Sur quoi écrivent-ils ?", o: ["Cahiers", "Planchettes", "Sable", "Murs"], c: 1},
+                    {q: "Que voit-il par la lucarne ?", o: ["La rue", "Le ciel", "Sa mère", "Un chat"], c: 1},
+                    {q: "À quoi compare-t-on son visage ?", o: ["Pierre", "Bois mort", "Lune", "Fer"], c: 1},
+                    {q: "L'enfant est-il heureux ?", o: ["Oui", "Non", "Parfois", "Toujours"], c: 1},
+                    {q: "Que font les oiseaux ?", o: ["Ils chantent", "Ils dorment", "Ils volent libres", "Ils mangent"], c: 2}
+                ],
+                synth: "Le Msid représente l'éducation traditionnelle rigide où règne la peur du maître."
+            },
+            {
+                id: 4, titre: "Support 4 : La Boîte", color: "#fef2f2",
+                texte: "Dès que je me sentais triste ou seul, je sortais ma Boîte à Merveilles. C'était une boîte en fer-blanc qui avait contenu des confiseries. À l'intérieur, je possédais un véritable trésor. Il y avait des billes de verre, des boutons de toutes les couleurs, des clous à grosse tête, des tessons de bouteilles polis par la mer, et surtout, un objet unique : un gros bouton de nacre. Pour les autres, ce n'étaient que des objets sans valeur, des déchets. Pour moi, ils vivaient. Ils me racontaient des histoires merveilleuses. Le bouton de nacre était un prince, les billes étaient des planètes. Je passais des heures à les contempler, à les ranger par ordre de taille ou de couleur. Ma boîte était mon refuge contre le monde des adultes que je ne comprenais pas. Elle était mon palais, mon univers secret. Personne n'avait le droit d'y toucher. Elle était le seul remède à mon chagrin.",
+                questions: [
+                    {q: "En quoi est la boîte ?", o: ["Bois", "Plastique", "Fer-blanc", "Carton"], c: 2},
+                    {q: "Que contenait-elle avant ?", o: ["Bijoux", "Confiseries", "Clous", "Photos"], c: 1},
+                    {q: "L'objet le plus précieux ?", o: ["Un clou", "Un bouton de nacre", "Une bille", "Un tesson"], c: 1},
+                    {q: "Que sont les billes pour lui ?", o: ["Bonbons", "Yeux", "Planètes", "Fleurs"], c: 2},
+                    {q: "Qui peut toucher la boîte ?", o: ["Sa mère", "Zineb", "Personne", "Le Fquih"], c: 2},
+                    {q: "Quand la sort-il ?", o: ["S'il est joyeux", "S'il est triste", "Le matin", "Au Msid"], c: 1},
+                    {q: "Les objets sont-ils vivants ?", o: ["Oui", "Non", "Seulement le bouton", "C'est un rêve"], c: 0},
+                    {q: "D'où viennent les tessons ?", o: ["Cuisine", "Rue", "Mer", "Marché"], c: 2},
+                    {q: "Que représente le bouton ?", o: ["Une pièce", "Un prince", "Un roi", "Un djin"], c: 1},
+                    {q: "C'est son refuge contre quoi ?", o: ["Le froid", "Les adultes", "Les djinns", "L'école"], c: 1}
+                ],
+                synth: "La boîte est l'espace du sacré et du merveilleux qui console l'enfant de sa solitude."
+            },
+            {
+                id: 5, titre: "Support 5 : La Dispute", color: "#fff1f1",
+                texte: "Un cri déchira le silence de la maison. C'était ma mère qui se disputait avec Rahma. La cause était dérisoire : une histoire de jour de lessive. Rahma avait utilisé l'espace de la terrasse qui revenait normalement à ma mère. Les insultes commencèrent à pleuvoir. Ma mère, d'ordinaire si douce, s'était transformée en une furie. Elle criait, gesticulait, rappelait à Rahma ses origines modestes. Rahma ne se laissait pas faire et répondait avec la même violence. Les autres voisines sortirent sur le patio pour assister au spectacle. Certaines essayaient de les calmer, d'autres prenaient discrètement parti. Moi, j'étais terrifié. Je me cachais derrière la porte de notre chambre, serrant ma boîte à merveilles contre mon cœur. Ce monde de haine me faisait peur. Les mots étaient comme des couteaux qui déchiraient l'air. La paix de Dar Chouafa était brisée pour longtemps.",
+                questions: [
+                    {q: "Qui se dispute ?", o: ["Zineb/Rahma", "Mère/Rahma", "Mère/Fatma", "Père/Mère"], c: 1},
+                    {q: "La cause ?", o: ["Argent", "Nourriture", "Lessive", "Enfants"], c: 2},
+                    {q: "Où se battent-elles ?", o: ["Rue", "Cuisine", "Terrasse", "Marché"], c: 2},
+                    {q: "Comment est la mère ?", o: ["Douce", "Furie", "Triste", "Calme"], c: 1},
+                    {q: "Que fait l'enfant ?", o: ["Il rit", "Il aide", "Il est terrifié", "Il dort"], c: 2},
+                    {q: "À quoi compare-t-il les mots ?", o: ["Fleurs", "Couteaux", "Oiseaux", "Pluie"], c: 1},
+                    {q: "Où se cache-t-il ?", o: ["Sous le lit", "Derrière la porte", "Sur le toit", "Dehors"], c: 1},
+                    {q: "Que serre-t-il ?", o: ["Son chat", "Sa boîte", "Un livre", "Sa mère"], c: 1},
+                    {q: "Qui regarde ?", o: ["Les voisines", "Les hommes", "Le Fquih", "La police"], c: 0},
+                    {q: "L'ambiance finale ?", o: ["Joyeuse", "Calme", "Paix brisée", "Normale"], c: 2}
+                ],
+                synth: "La dispute révèle la violence du monde des adultes et la fragilité de l'équilibre social à Dar Chouafa."
+            },
+            {
+                id: 6, titre: "Support 6 : Lalla Aïcha", color: "#f0fdf4",
+                texte: "Lalla Aïcha était l'ancienne voisine de ma mère. C'était une femme d'un certain âge, très respectée pour sa piété et sa sagesse. Elle venait souvent nous rendre visite. Ma mère l'accueillait avec de grands honneurs. On sortait les plus beaux plateaux de cuivre, on préparait le thé à la menthe avec soin. Elles s'installaient sur les divans et commençaient de longues discussions sur le passé, les familles de Fès et les soucis quotidiens. Lalla Aïcha avait connu des jours de gloire, mais son mari, Moulay Larbi, avait eu des problèmes avec son associé au souk des babouches. Elle avait dû vendre ses bijoux pour l'aider. Malgré la pauvreté qui menaçait, elle gardait une grande dignité. Elle représentait pour ma mère la confidente idéale, celle à qui on pouvait tout dire sans crainte d'être jugée. Je l'aimais bien car elle me donnait parfois une petite pièce ou un gâteau.",
+                questions: [
+                    {q: "Qui est Lalla Aïcha ?", o: ["Une tante", "Ancienne voisine", "Une servante", "La voyante"], c: 1},
+                    {q: "Que prépare-t-on ?", o: ["Café", "Thé à la menthe", "Soupe", "Lait"], c: 1},
+                    {q: "Métier du mari ?", o: ["Menuisier", "Babouchier", "Tisserand", "Boucher"], c: 1},
+                    {q: "Qu'a-t-elle vendu ?", o: ["Sa maison", "Sa boîte", "Ses bijoux", "Ses habits"], c: 2},
+                    {q: "Comment est-elle ?", o: ["Méchante", "Pieuse/Sage", "Jeune", "Riche"], c: 1},
+                    {q: "Son mari s'appelle ?", o: ["Abdeslem", "Larbi", "Driss", "Ahmed"], c: 1},
+                    {q: "De quoi parlent-elles ?", o: ["Politique", "Le passé/soucis", "Cinéma", "Voyages"], c: 1},
+                    {q: "Que donne-t-elle à l'enfant ?", o: ["Devoirs", "Une pièce/gâteau", "Rien", "Des djinns"], c: 1},
+                    {q: "Où travaillait le mari ?", o: ["Souk épices", "Souk babouches", "Port", "Ferme"], c: 1},
+                    {q: "L'accueil de la mère ?", o: ["Froid", "Avec honneurs", "Rapide", "En colère"], c: 1}
+                ],
+                synth: "Lalla Aïcha incarne la solidarité féminine et la résilience face aux épreuves économiques."
+            },
+            {
+                id: 7, titre: "Support 7 : Achoura", color: "#fffbeb",
+                texte: "La fête de l'Achoura approchait. C'était l'effervescence dans la maison. Mon père m'emmena au souk pour m'acheter des vêtements neufs. Le souk était une fourmilière humaine. Les couleurs éclataient de partout : les étoffes de soie, les laines teintes, les cuirs odorants. Mon père marchait d'un pas assuré, saluant ses connaissances. Nous nous arrêtâmes devant une boutique de tissus. Le marchand déploya des rouleaux de cotonnade blanche. Mon père choisit une pièce de qualité pour me faire un nouveau gilet et une chemise. J'étais fier de marcher à ses côtés. Il m'acheta aussi une paire de babouches jaunes, des 'belghas' qui sentaient le cuir neuf. Je ne les quittais pas des yeux. Je les imaginais déjà assorties à mon nouveau habit. Cette sortie était pour moi une aventure extraordinaire, un moment de complicité avec cet homme d'ordinaire si silencieux et grave.",
+                questions: [
+                    {q: "Quelle fête ?", o: ["Ramadan", "Achoura", "Mawlid", "Aïd"], c: 1},
+                    {q: "Qui l'accompagne ?", o: ["Mère", "Fquih", "Père", "Zineb"], c: 2},
+                    {q: "Où vont-ils ?", o: ["Plage", "Souk", "Msid", "Jardin"], c: 1},
+                    {q: "Couleur des babouches ?", o: ["Rouges", "Vertes", "Jaunes", "Noires"], c: 2},
+                    {q: "Tissu choisi ?", o: ["Soie", "Cotonnade blanche", "Laine", "Lin"], c: 1},
+                    {q: "Comment est le souk ?", o: ["Vide", "Fourmilière", "Triste", "Moderne"], c: 1},
+                    {q: "Comment est le père ?", o: ["Bavard", "Silencieux/grave", "Joyeux", "Colérique"], c: 1},
+                    {q: "L'enfant est-il fier ?", o: ["Oui", "Non", "Honteux", "Indifférent"], c: 0},
+                    {q: "Où s'arrêtent-ils ?", o: ["Boucherie", "Boutique tissus", "Café", "Mosquée"], c: 1},
+                    {q: "Que sentent les belghas ?", o: ["Rose", "Cuir neuf", "Savon", "Rien"], c: 1}
+                ],
+                synth: "L'Achoura est un moment de joie et de renforcement des liens entre le père et le fils."
+            },
+            {
+                id: 8, titre: "Support 8 : Zineb", color: "#f8fafc",
+                texte: "Un après-midi, un drame secoua Dar Chouafa. Zineb, la fille de Rahma, avait disparu. Sa mère s'était mise à hurler, à se griffer le visage, appelant sa fille à travers toute la maison. Les voisines accoururent. La nouvelle se répandit comme une traînée de poudre. Rahma était inconsolable. Ma mère oublia immédiatement leur ancienne dispute et se précipita pour la soutenir. Toutes les femmes partirent à la recherche de la petite fille dans les rues de la médina. Elles interrogeaient les passants, les marchands, les mendiants. L'angoisse montait. Zineb était une petite fille un peu simple, elle s'était peut-être perdue dans la foule immense du souk. Mon père, de retour du travail, se joignit aux recherches. Finalement, on la retrouva à l'asile des aveugles, saine et sauve. Ce jour-là, la solidarité entre les voisins montra sa force, effaçant les rancœurs passées devant le malheur d'une mère.",
+                questions: [
+                    {q: "Qui disparaît ?", o: ["L'enfant", "Zineb", "Le chat", "Le Fquih"], c: 1},
+                    {q: "Sa mère est ?", o: ["Lalla Aïcha", "Rahma", "Fatma", "La voyante"], c: 1},
+                    {q: "Réaction de la mère ?", o: ["Rit", "Hurle/griffe", "Dort", "Chante"], c: 1},
+                    {q: "Que fait la mère du narrateur ?", o: ["Ignore", "Soutient", "Se moque", "Crie"], c: 1},
+                    {q: "Où retrouve-t-on Zineb ?", o: ["Msid", "Asile aveugles", "Mer", "Pacha"], c: 1},
+                    {q: "Où s'est-elle perdue ?", o: ["Forêt", "Médina/Souk", "École", "Port"], c: 1},
+                    {q: "Zineb est ?", o: ["Intelligente", "Un peu simple", "Grande", "Méchant"], c: 1},
+                    {q: "Qui aide aussi ?", o: ["Père", "Djinns", "Police", "Voyante"], c: 0},
+                    {q: "Qu'est-ce qui est effacé ?", o: ["Mémoire", "Rancœurs", "Texte", "Poussière"], c: 1},
+                    {q: "Son état final ?", o: ["Blessée", "Saine et sauve", "Malade", "Morte"], c: 1}
+                ],
+                synth: "La disparition de Zineb met en avant la solidarité humaine face au malheur, au-delà des conflits personnels."
+            },
+            {
+                id: 9, titre: "Support 9 : Le Départ", color: "#fff5f5",
+                texte: "Mon père perdit tout son capital au souk. Un sac contenant son argent et ses outils disparut dans la cohue. C'était la ruine. Le soir, l'ambiance à la maison était lugubre. Il n'y avait plus de thé, plus de viande, seulement du pain sec. Mon père prit une décision héroïque : il devait partir travailler comme moissonneur dans les plaines autour de Fès pour gagner de quoi rembourser ses dettes et nourrir sa famille. Son départ fut un déchirement. Ma mère pleurait en silence. La maison semblait vide, privée de son pilier. Je ne comprenais pas pourquoi le destin s'acharnait sur nous. Pendant son absence, ma mère devint triste et nerveuse. Elle allait consulter les sanctuaires avec Lalla Aïcha, espérant un miracle. Ma boîte à merveilles devint mon seul compagnon de jeu, mais même mes trésors semblaient avoir perdu leur éclat devant le vide laissé par mon père.",
+                questions: [
+                    {q: "Que perd le père ?", o: ["Clés", "Capital/outils", "Maison", "Boîte"], c: 1},
+                    {q: "Nouveau métier ?", o: ["Menuisier", "Moissonneur", "Marin", "Juge"], c: 1},
+                    {q: "Où va-t-il ?", o: ["Plaines de Fès", "France", "Tanger", "Msid"], c: 0},
+                    {q: "Pourquoi partir ?", o: ["Vacances", "Rembourser dettes", "Colère", "Études"], c: 1},
+                    {q: "Repas de famille ?", o: ["Couscous", "Pain sec", "Viande", "Gâteaux"], c: 1},
+                    {q: "État de la mère ?", o: ["Heureuse", "Triste/nerveuse", "Indifférente", "Riche"], c: 1},
+                    {q: "Qui l'accompagne ?", o: ["Rahma", "Lalla Aïcha", "Zineb", "Driss"], c: 1},
+                    {q: "La boîte est-elle la même ?", o: ["Brille", "Perd son éclat", "Disparaît", "Est vendue"], c: 1},
+                    {q: "Où vont-elles prier ?", o: ["Mosquée", "Sanctuaires", "Marché", "Plage"], c: 1},
+                    {q: "Le père est appelé ?", o: ["Le maître", "Le pilier", "Le roi", "L'ami"], c: 1}
+                ],
+                synth: "La ruine financière et le départ du père marquent la fin de l'insouciance enfantine."
+            },
+            {
+                id: 10, titre: "Support 10 : Le Retour", color: "#f0fdfa",
+                texte: "Un matin, un bruit de pas familiers résonna dans l'escalier. C'était lui ! Mon père était de retour. Il était plus maigre, le visage brûlé par le soleil des moissons, mais ses yeux brillaient de joie. Il avait rapporté de l'argent, du sucre, du thé et même quelques cadeaux. La joie revint instantanément dans la maison. Ma mère retrouva son sourire et s'empressa de préparer un grand repas. Les voisines vinrent aux nouvelles, félicitant le retour du maître de maison. Moulay Larbi aussi avait résolu ses problèmes. Tout semblait rentrer dans l'ordre. Pourtant, dans toute cette agitation, je me sentais un peu à l'écart. J'allai chercher ma Boîte à Merveilles. Je l'ouvris et je retrouvai mes amis : le bouton de nacre, les billes, les clous. Ils m'attendaient. Le monde extérieur pouvait changer, mon père pouvait partir et revenir, mais ma boîte, elle, restait mon univers immuable, mon secret éternel.",
+                questions: [
+                    {q: "Qui revient ?", o: ["Fquih", "Père", "Larbi", "Le chat"], c: 1},
+                    {q: "Son visage est ?", o: ["Blanc", "Brûlé par soleil", "Vert", "Pâle"], c: 1},
+                    {q: "Qu'a-t-il rapporté ?", o: ["Rien", "Argent/sucre/thé", "Seulement pain", "Briques"], c: 1},
+                    {q: "État de la mère ?", o: ["Triste", "Souriante", "En colère", "Dort"], c: 1},
+                    {q: "Qui a aussi résolu ses soucis ?", o: ["Rahma", "Moulay Larbi", "Zineb", "Voyante"], c: 1},
+                    {q: "L'enfant se sent ?", o: ["Au centre", "À l'écart", "Dehors", "Malade"], c: 1},
+                    {q: "Que va-t-il chercher ?", o: ["Pain", "Sa Boîte", "Ses habits", "Un ami"], c: 1},
+                    {q: "Qui sont ses 'amis' ?", o: ["Voisins", "Objets de boîte", "Djinns", "Oiseaux"], c: 1},
+                    {q: "Sa boîte est ?", o: ["Utile", "Univers immuable", "Vide", "Moche"], c: 1},
+                    {q: "Comment finit l'œuvre ?", o: ["Tristement", "Retour au secret", "Départ", "Mort"], c: 1}
+                ],
+                synth: "Le retour du père rétablit l'ordre familial, mais le narrateur reste fidèle à son monde imaginaire."
+            }
+        ];
+
+        const menu = document.getElementById('menu');
+        const viewTitle = document.getElementById('title');
+        const viewText = document.getElementById('text');
+        const viewQuiz = document.getElementById('quiz');
+        const viewSynthBox = document.getElementById('synthesis-box');
+        const viewSynthText = document.getElementById('synth-text');
+
+        function init() {
+            database.forEach(item => {
+                const d = document.createElement('div');
+                d.className = 'nav-item';
+                d.innerText = item.titre;
+                d.onclick = () => load(item.id, d);
+                menu.appendChild(d);
+            });
+        }
+
+        function load(id, el) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            el.classList.add('active');
+            const data = database.find(d => d.id === id);
+            document.body.style.backgroundColor = data.color;
+            viewTitle.innerText = data.titre;
+            viewText.innerText = data.texte;
+            viewSynthBox.style.display = 'none';
+            viewQuiz.innerHTML = '';
+            let count = 0;
+
+            data.questions.forEach((q, i) => {
+                const box = document.createElement('div');
+                box.className = 'question-box';
+                box.innerHTML = `<span class="question-title">${i+1}. ${q.q}</span>`;
+                q.o.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'opt-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => {
+                        const all = box.querySelectorAll('button');
+                        all.forEach(b => b.style.pointerEvents = 'none');
+                        if(idx === q.c) btn.classList.add('correct');
+                        else { btn.classList.add('wrong'); all[q.c].classList.add('correct'); }
+                        count++;
+                        if(count === 10) {
+                            viewSynthBox.style.display = 'block';
+                            viewSynthText.innerText = data.synth;
+                        }
+                    };
+                    box.appendChild(btn);
+                });
+                viewQuiz.appendChild(box);
+            });
+        }
+        window.onload = init;
+    </script>
+</body>
+</html>

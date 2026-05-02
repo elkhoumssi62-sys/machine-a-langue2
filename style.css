@@ -1,0 +1,102 @@
+/* Variables de thème basées sur l'identité de Machine à Langue */
+:root {
+    --primary-blue: #1877f2;
+    --accent-yellow: #ffc107;
+    --glass-white: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-light: #f8f9fa;
+    --transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0f0f0f; /* Fond sombre pour faire ressortir l'effet verre */
+    color: var(--text-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    background: linear-gradient(to right, #fff, var(--accent-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Style de l'accordéon Glassmorphism */
+.accordion-item {
+    background: var(--glass-white);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: var(--transition);
+}
+
+.accordion-item:hover {
+    border-color: var(--accent-yellow);
+    transform: translateX(5px);
+}
+
+.accordion-header {
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.accordion-content.active {
+    max-height: 2000px; /* Permet un contenu long */
+    padding: 20px;
+    border-top: 1px solid var(--glass-border);
+    transition: max-height 0.5s ease-in;
+}
+
+/* Éléments de cours */
+.badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--primary-blue);
+}
+
+.btn-action {
+    background: var(--accent-yellow);
+    color: #1a1a1a;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: var(--transition);
+}
+
+.btn-action:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 15px var(--accent-yellow);
+}

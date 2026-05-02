@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Activités QCM - La Boîte à Merveilles</title>
+    <style>
+        :root {
+            --primary-dark: #2c3e50;
+            --accent-color: #e67e22;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --info-color: #2980b9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.8s ease;
+            background-color: #f4f7f6;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 { text-align: center; color: var(--primary-dark); text-transform: uppercase; letter-spacing: 2px; }
+
+        .nav-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .nav-btn {
+            padding: 10px 14px;
+            border: none;
+            background: var(--primary-dark);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-btn.active { background: var(--accent-color); transform: translateY(-3px); }
+
+        .activity-card { display: none; }
+        .activity-card.active { display: block; animation: fadeIn 0.5s ease; }
+
+        .banner {
+            background: #fff3e0;
+            border-left: 6px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .expression-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-style: italic;
+            color: #c0392b;
+        }
+
+        .dialogue-box {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .speaker { font-weight: bold; color: var(--primary-dark); min-width: 140px; display: inline-block; }
+        .highlight { background: #fff176; font-weight: bold; padding: 2px 4px; border-radius: 3px; }
+
+        .quiz-section { background: #f9f9f9; padding: 20px; border-radius: 10px; border: 1px solid #eee; }
+        .q-item { margin-bottom: 25px; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        .options-group { margin: 10px 0; }
+        .option-label { display: block; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .option-label:hover { background: #f0f0f0; }
+        
+        .option-label input { margin-right: 10px; }
+
+        .check-btn { 
+            background: var(--primary-dark); 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.4s;
+        }
+        
+        .feedback { 
+            display: none; 
+            margin-top: 12px; 
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 5px solid var(--info-color);
+        }
+        
+        .correct-fb { background: #e8f5e9; border-left-color: var(--success-color); }
+        .wrong-fb { background: #ffebee; border-left-color: var(--error-color); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Atelier Interactif : La Boîte à Merveilles</h1>
+    <div class="nav-bar" id="navigation"></div>
+    <div id="content-area"></div>
+</div>
+
+<script>
+    const activities = [
+        {
+            theme: "La Solitude (Introduction)",
+            bg: "#D5F5E3",
+            exp: ["Sentiment de vacuité", "Évasion onirique", "Refuge de l'invisible", "Solitude contemplative"],
+            dialogue: [
+                ["Sidi Mohammed", "Maman, pourquoi le temps semble-t-il s'arrêter dans cette maison ?"],
+                ["Lalla Zoubida", "C'est parce que tu ne joues pas assez avec les enfants de ton âge."],
+                ["Sidi Mohammed", "Leur compagnie me donne un <span class='highlight'>sentiment de vacuité</span> insupportable."],
+                ["Lalla Zoubida", "Tu préfères rester seul avec tes boutons et tes clous rouillés ?"],
+                ["Sidi Mohammed", "Ce ne sont pas des objets, ce sont des amis pour mon <span class='highlight'>évasion onirique</span>."],
+                ["Lalla Zoubida", "Tu finiras par devenir fou, mon pauvre enfant."],
+                ["Sidi Mohammed", "Au contraire, je trouve la paix dans le <span class='highlight'>refuge de l'invisible</span>."],
+                ["Lalla Zoubida", "L'invisible ne te donnera pas à manger plus tard."],
+                ["Sidi Mohammed", "Il me donne la beauté que le Msid m'enlève."],
+                ["Lalla Zoubida", "Le Fqih dit que tu es un élève distrait."],
+                ["Sidi Mohammed", "Ma distraction est une <span class='highlight'>solitude contemplative</span> que personne ne comprend."],
+                ["Lalla Zoubida", "Ton père aussi est silencieux, mais il travaille."],
+                ["Sidi Mohammed", "Mon père écoute le silence, lui aussi."],
+                ["Lalla Zoubida", "Il écoute les machines à tisser, pas les djinns !"],
+                ["Sidi Mohammed", "Les djinns sont plus réels que les voisins."],
+                ["Lalla Zoubida", "Tais-toi, tu vas attirer le mauvais œil !"],
+                ["Sidi Mohammed", "Ma boîte me protège mieux que les amulettes."],
+                ["Lalla Zoubida", "Viens manger et laisse tes rêves de côté."],
+                ["Sidi Mohammed", "Je mangerai quand j'aurai fini de parler à mon prince de verre."],
+                ["Lalla Zoubida", "Patience, Seigneur, patience avec cet enfant."]
+            ],
+            questions: [
+                {q: "Pourquoi l'enfant refuse-t-il de jouer ?", opts: ["Il est trop fatigué", "Il ressent un vide avec les autres", "Il n'aime pas le ballon"], correct: 1},
+                {q: "Que représente la boîte pour lui ?", opts: ["Un simple jouet", "Un objet de luxe", "Un refuge protecteur"], correct: 2},
+                {q: "L'attitude de la mère est plutôt :", opts: ["Pragmatique et inquiète", "Poétique et douce", "Indifférente"], correct: 0},
+                {q: "Que signifie 'onirique' ?", opts: ["Relatif au sommeil", "Relatif au rêve", "Relatif à la peur"], correct: 1},
+                {q: "Quel registre domine ici ?", opts: ["Comique", "Lyrique", "Polémique"], correct: 1},
+                {q: "Qui sont les 'amis' de l'enfant ?", opts: ["Les voisins", "Les objets de sa boîte", "Les élèves du Msid"], correct: 1},
+                {q: "L'antithèse majeure ici est entre :", opts: ["Manger et dormir", "Invisible et réalité", "Père et mère"], correct: 1},
+                {q: "Le père est décrit comme étant :", opts: ["Bavard", "Silencieux", "Sévère"], correct: 1},
+                {q: "L'enfant préfère les djinns car :", opts: ["Ils font peur", "Ils sont plus réels que les voisins", "Ils donnent de l'argent"], correct: 1},
+                {q: "La solitude de l'enfant est :", opts: ["Subie", "Contemplative et choisie", "Une punition"], correct: 1}
+            ]
+        },
+        {
+            theme: "Le Bain Maure (Le supplice)",
+            bg: "#FADBD8",
+            exp: ["Atmosphère infernale", "Supplice physique", "Répulsion instinctive", "Vapeurs suffocantes"],
+            dialogue: [
+                ["Lalla Zoubida", "Dépêche-toi Sidi Mohammed, les seaux sont prêts pour le bain."],
+                ["Sidi Mohammed", "Non maman, je t'en supplie, cet endroit est une <span class='highlight'>atmosphère infernale</span>."],
+                ["Lalla Zoubida", "C'est la tradition, il faut être propre pour le vendredi."],
+                ["Sidi Mohammed", "Pour moi, le frottement du 'kess' est un <span class='highlight'>supplice physique</span>."],
+                ["Lalla Zoubida", "Toutes les femmes du quartier seront là pour discuter."],
+                ["Sidi Mohammed", "C'est justement ce mélange de cris et de corps qui me cause une <span class='highlight'>répulsion instinctive</span>."],
+                ["Lalla Zoubida", "L'eau chaude te fera du bien au moral."],
+                ["Sidi Mohammed", "Je préfère mon moral bas à ces <span class='highlight'>vapeurs suffocantes</span>."],
+                ["Lalla Zoubida", "Ne discute pas, prends tes vêtements de rechange."],
+                ["Sidi Mohammed", "Même les djinns ne fréquenteraient pas un tel lieu."],
+                ["Lalla Zoubida", "Au contraire, on dit que les djinns habitent les lieux d'eau."],
+                ["Sidi Mohammed", "Alors pourquoi m'y emmener si c'est dangereux ?"],
+                ["Lalla Zoubida", "Ce sont de bons djinns, ils aiment la propreté."],
+                ["Sidi Mohammed", "Je sens déjà la chaleur qui m'oppresse la poitrine."],
+                ["Lalla Zoubida", "Tiens ma main et ne me lâche pas dans la foule."],
+                ["Sidi Mohammed", "Je fermerai les yeux pour ne rien voir."],
+                ["Lalla Zoubida", "Tu es un petit homme maintenant, sois courageux."],
+                ["Sidi Mohammed", "Un homme ne devrait pas pleurer pour un peu d'eau chaude."],
+                ["Lalla Zoubida", "Exactement, alors marche plus vite."],
+                ["Sidi Mohammed", "Je marche, mais mon cœur reste à la maison."]
+            ],
+            questions: [
+                {q: "L'enfant compare le bain à :", opts: ["Un paradis", "L'enfer", "Une aire de jeux"], correct: 1},
+                {q: "Le bain est obligatoire pour :", opts: ["Le mariage", "La fête d'Achoura", "La propreté du vendredi"], correct: 2},
+                {q: "Qu'est-ce que le 'kess' ?", opts: ["Un savon", "Un gant de gommage", "Un seau d'eau"], correct: 1},
+                {q: "Le sentiment de l'enfant est une :", opts: ["Répulsion instinctive", "Attirance forte", "Indifférence totale"], correct: 0},
+                {q: "Que font les femmes au bain ?", opts: ["Elles dorment", "Elles travaillent", "Elles discutent"], correct: 2},
+                {q: "Comment est l'air au bain ?", opts: ["Frais et pur", "Parfumé", "Suffocant"], correct: 2},
+                {q: "Selon la mère, qui habite les lieux d'eau ?", opts: ["Les djinns", "Les poissons", "Les anges"], correct: 0},
+                {q: "L'enfant ferme les yeux pour :", opts: ["S'endormir", "Ne rien voir de la foule", "Mieux entendre"], correct: 1},
+                {q: "Le ton de cette scène est :", opts: ["Tragique", "Pathétique et comique", "Religieux"], correct: 1},
+                {q: "Le 'cœur' de l'enfant reste :", opts: ["Au bain", "À la maison", "Au Msid"], correct: 1}
+            ]
+        },
+        {
+            theme: "La Dispute de Rahma",
+            bg: "#EAECEE",
+            exp: ["Invectives acerbes", "Dignité bafouée", "Rupture du voisinage", "Tempête verbale"],
+            dialogue: [
+                ["Rahma", "C'est mon tour de lessive aujourd'hui, Zoubida !"],
+                ["Lalla Zoubida", "Tu as utilisé l'espace hier, laisse-moi la place !"],
+                ["Rahma", "Tu es une menteuse, j'ai peine à croire tes paroles."],
+                ["Lalla Zoubida", "Tes <span class='highlight'>invectives acerbes</span> ne m'impressionnent pas, femme !"],
+                ["Rahma", "Regardez cette noble dame qui se croit au-dessus de nous !"],
+                ["Lalla Zoubida", "Je sens ma <span class='highlight'>dignité bafouée</span> par une personne de ton espèce."],
+                ["Rahma", "Mon espèce vaut bien la tienne, descendante du prophète !"],
+                ["Lalla Zoubida", "C'est une <span class='highlight'>rupture du voisinage</span> définitive entre nous."],
+                ["Rahma", "Tant mieux, je n'ai que faire de tes airs de sainte."],
+                ["Lalla Zoubida", "Cette <span class='highlight'>tempête verbale</span> va réveiller toute la maison."],
+                ["Rahma", "Que tout le monde sache qui tu es vraiment !"],
+                ["Lalla Zoubida", "Je ne t'adresserai plus jamais la parole."],
+                ["Rahma", "Tes silences sont mes plus beaux cadeaux."],
+                ["Lalla Zoubida", "Maudite soit l'heure où je t'ai connue."],
+                ["Rahma", "Maudis-toi toi-même, sorcière de malheur !"],
+                ["Lalla Zoubida", "Sidi Mohammed, ne regarde pas cette femme impolie."],
+                ["Rahma", "L'enfant voit bien qui a raison ici."],
+                ["Lalla Zoubida", "L'enfant voit une furie qui hurle pour un peu d'eau."],
+                ["Rahma", "Sors de mon chemin immédiatement !"],
+                ["Lalla Zoubida", "Je sors, mais Dieu jugera nos actes."]
+            ],
+            questions: [
+                {q: "L'origine de la dispute est :", opts: ["Un vol d'argent", "Le tour de lessive", "Une insulte sur l'enfant"], correct: 1},
+                {q: "Rahma traite Zoubida de :", opts: ["Menteuse", "Amie", "Sœur"], correct: 0},
+                {q: "Zoubida invoque son origine :", opts: ["Royale", "Descendante du prophète", "Andalouse"], correct: 1},
+                {q: "Le dialogue est marqué par des :", opts: ["Compliments", "Invectives acerbes", "Prières"], correct: 1},
+                {q: "La dispute cause une :", opts: ["Réconciliation", "Fête", "Rupture du voisinage"], correct: 2},
+                {q: "Que signifie 'acerbe' ?", opts: ["Doux", "Agressif et blessant", "Incompréhensible"], correct: 1},
+                {q: "L'enfant, face à cette violence :", opts: ["Rit", "Est traumatisé (pleure)", "Dort"], correct: 1},
+                {q: "Zoubida appelle Rahma :", opts: ["Une furie", "Une sainte", "Une reine"], correct: 0},
+                {q: "La fin du dialogue évoque :", opts: ["La police", "Le jugement de Dieu", "Le départ du mari"], correct: 1},
+                {q: "Le lieu de la dispute est :", opts: ["Le patio (cour commune)", "Le toit", "La rue"], correct: 0}
+            ]
+        },
+        {
+            theme: "Le Msid et le Fqih",
+            bg: "#FEF9E7",
+            exp: ["Autorité implacable", "Apprentissage psalmodié", "Crainte révérencielle", "Rigueur dogmatique"],
+            dialogue: [
+                ["Le Fqih", "Sidi Mohammed, récite le verset d'hier sans erreur."],
+                ["Sidi Mohammed", "Bismillahi... je... j'ai oublié le début, Maître."],
+                ["Le Fqih", "Ton esprit est encore perdu dans les nuages, quelle <span class='highlight'>autorité implacable</span> dois-je utiliser ?"],
+                ["Sidi Mohammed", "Pitié, Maître, la baguette me fait peur."],
+                ["Le Fqih", "Seul l' <span class='highlight'>apprentissage psalmodié</span> restera dans ta mémoire stérile."],
+                ["Sidi Mohammed", "Je ressens une <span class='highlight'>crainte révérencielle</span> chaque fois que vous me regardez."],
+                ["Le Fqih", "La religion demande une <span class='highlight'>rigueur dogmatique</span> absolue."],
+                ["Sidi Mohammed", "Mes doigts tremblent sur ma planchette."],
+                ["Le Fqih", "Tes doigts devraient trembler de dévotion, pas de peur."],
+                ["Sidi Mohammed", "Le soleil dehors m'appelle, Maître."],
+                ["Le Fqih", "Le soleil est pour les bêtes, le savoir est pour les hommes."],
+                ["Sidi Mohammed", "Est-ce que le savoir doit toujours faire mal ?"],
+                ["Le Fqih", "La douleur est la forge de l'âme, petit sot."],
+                ["Sidi Mohammed", "Je préférerais apprendre avec des fleurs."],
+                ["Le Fqih", "Les fleurs fanent, la parole de Dieu est éternelle."],
+                ["Sidi Mohammed", "Je vais essayer de me concentrer davantage."],
+                ["Le Fqih", "Recommence depuis le début, et que ta voix porte."],
+                ["Sidi Mohammed", "Bismillahi Rahmani Rahimi..."],
+                ["Le Fqih", "C'est mieux, mais la route est encore longue."],
+                ["Sidi Mohammed", "Longue comme l'éternité du mardi."]
+            ],
+            questions: [
+                {q: "L'instrument de punition du Fqih est :", opts: ["Une règle", "Une baguette de cognassier", "Un martinet"], correct: 1},
+                {q: "L'apprentissage au Msid est fondé sur :", opts: ["Le jeu", "La psalmodie (par cœur)", "Le dessin"], correct: 1},
+                {q: "Le sentiment de l'enfant envers le maître est :", opts: ["L'amour", "La crainte révérencielle", "La camaraderie"], correct: 1},
+                {q: "Le Fqih compare le soleil à :", opts: ["Un cadeau de Dieu", "Une distraction pour les bêtes", "Une source de savoir"], correct: 1},
+                {q: "L'objet utilisé pour écrire est :", opts: ["Un cahier", "Une planchette de bois", "Une ardoise magique"], correct: 1},
+                {q: "Pour le Fqih, la douleur est :", opts: ["Inutile", "La forge de l'âme", "Un péché"], correct: 1},
+                {q: "Le jour le plus redouté au Msid est :", opts: ["Le vendredi", "Le mardi", "Le dimanche"], correct: 1},
+                {q: "L'enfant rêve d'apprendre avec :", opts: ["Des fleurs", "Des ordinateurs", "Des djinns"], correct: 0},
+                {q: "L'autorité du Fqih est qualifiée d' :", opts: ["Inexistante", "Implacable", "Douce"], correct: 1},
+                {q: "La mémoire de l'enfant est dite :", opts: ["Brillante", "Stérile (selon le maître)", "Sélective"], correct: 1}
+            ]
+        },
+        {
+            theme: "Le départ du Père",
+            bg: "#EBF5FB",
+            exp: ["Destin accablant", "Foyer déstabilisé", "Détresse silencieuse", "Espoir ténu"],
+            dialogue: [
+                ["Maâlem Abdeslem", "Zoubida, j'ai tout perdu au souk aujourd'hui."],
+                ["Lalla Zoubida", "Comment est-ce possible ? Tout notre argent ?"],
+                ["Maâlem Abdeslem", "Un <span class='highlight'>destin accablant</span> m'a frappé, ma bourse a glissé."],
+                ["Lalla Zoubida", "Nous sommes ruinés, le <span class='highlight'>foyer déstabilisé</span> va s'écrouler."],
+                ["Maâlem Abdeslem", "Je dois partir travailler aux moissons pour nous sauver."],
+                ["Lalla Zoubida", "Partir ? Et nous laisser seuls dans cette grande maison ?"],
+                ["Maâlem Abdeslem", "Ma <span class='highlight'>détresse silencieuse</span> est plus grande que la tienne, crois-moi."],
+                ["Lalla Zoubida", "Que diront les voisins ? Nous serons la risée de tous."],
+                ["Maâlem Abdeslem", "La dignité ne se nourrit pas des commérages."],
+                ["Lalla Zoubida", "Je ne pourrai pas supporter ton absence."],
+                ["Maâlem Abdeslem", "Il nous reste un <span class='highlight'>espoir ténu</span> : la récolte sera bonne."],
+                ["Lalla Zoubida", "Un mois... c'est une éternité sans protecteur."],
+                ["Maâlem Abdeslem", "Sidi Mohammed veillera sur toi comme un homme."],
+                ["Lalla Zoubida", "C'est encore un bébé qui pleure pour un bouton."],
+                ["Maâlem Abdeslem", "Il apprendra la force dans l'épreuve."],
+                ["Lalla Zoubida", "Je vais prier tous les saints pour ton retour."],
+                ["Maâlem Abdeslem", "Prépare mon sac de voyage, je pars à l'aube."],
+                ["Lalla Zoubida", "Les djinns nous ont punis, j'en suis sûre."],
+                ["Maâlem Abdeslem", "Dieu seul donne et Dieu seul reprend."],
+                ["Lalla Zoubida", "Que Sa volonté soit faite, mon mari."]
+            ],
+            questions: [
+                {q: "Pourquoi le père est-il ruiné ?", opts: ["Il a tout dépensé", "Il a perdu sa bourse au souk", "Il a été volé par son associé"], correct: 1},
+                {q: "Quel métier va-t-il exercer à la campagne ?", opts: ["Commerçant", "Moissonneur", "Berger"], correct: 1},
+                {q: "La durée prévue de son absence est :", opts: ["Un an", "Un mois", "Une semaine"], correct: 1},
+                {q: "Zoubida craint surtout :", opts: ["La faim", "Le regard des voisins", "Les djinns"], correct: 1},
+                {q: "Le père confie la garde de la maison à :", opts: ["Sidi Mohammed", "Le Fqih", "Driss le teigneux"], correct: 0},
+                {q: "L'espoir du père repose sur :", opts: ["La loterie", "La récolte des moissons", "Un prêt"], correct: 1},
+                {q: "Zoubida pense que ce malheur vient :", opts: ["De la malchance", "D'une punition des djinns", "De l'État"], correct: 1},
+                {q: "Le père part pour :", opts: ["Se venger", "Sauver son foyer", "Voyager"], correct: 1},
+                {q: "Le ton du père est empreint de :", opts: ["Colère", "Dignité et résignation", "Peur"], correct: 1},
+                {q: "Maâlem Abdeslem part à quel moment ?", opts: ["À midi", "À l'aube", "Le soir"], correct: 1}
+            ]
+        },
+        {
+            theme: "Lalla Aïcha et le Mariage",
+            bg: "#F5EEF8",
+            exp: ["Trahison conjugale", "Déchéance matérielle", "Solidarité féminine", "Destin tragique"],
+            dialogue: [
+                ["Lalla Aïcha", "Zoubida, mon mari Moulay Larbi m'a trahie."],
+                ["Lalla Zoubida", "Quoi ? Après tous tes sacrifices pour lui ?"],
+                ["Lalla Aïcha", "Il a pris une seconde épouse, une fille de coiffeur."],
+                ["Lalla Zoubida", "Quelle <span class='highlight'>trahison conjugale</span> ignoble après ton soutien !"],
+                ["Lalla Aïcha", "J'ai vendu mes bijoux pour lui, et voici ma récompense."],
+                ["Lalla Zoubida", "Tu vis une véritable <span class='highlight'>déchéance matérielle</span> et morale."],
+                ["Lalla Aïcha", "Je n'ai plus rien, même pas mon honneur."],
+                ["Lalla Zoubida", "Ma maison est la tienne, vive la <span class='highlight'>solidarité féminine</span>."],
+                ["Lalla Aïcha", "Pourquoi les hommes sont-ils si ingrats ?"],
+                ["Lalla Zoubida", "Ils oublient vite la main qui les a nourris."],
+                ["Lalla Aïcha", "Mon <span class='highlight'>destin tragique</span> était écrit sur mon front."],
+                ["Lalla Zoubida", "Ne dis pas cela, nous irons voir un voyant."],
+                ["Lalla Aïcha", "Aucun voyant ne peut rendre un cœur fidèle."],
+                ["Lalla Zoubida", "Nous irons à Sidi Ali Boughaleb pour demander grâce."],
+                ["Lalla Aïcha", "Mes larmes ont séché à force de couler."],
+                ["Lalla Zoubida", "Sois forte, le malheur ne dure jamais."],
+                ["Lalla Aïcha", "Le malheur change juste de visage, Zoubida."],
+                ["Lalla Zoubida", "Mange un peu, cela te redonnera des forces."],
+                ["Lalla Aïcha", "Le goût de la nourriture est devenu amer."],
+                ["Lalla Zoubida", "Nous vaincrons cette épreuve ensemble."]
+            ],
+            questions: [
+                {q: "Quelle est la trahison de Moulay Larbi ?", opts: ["Il a volé Aïcha", "Il a pris une seconde épouse", "Il a quitté la ville"], correct: 1},
+                {q: "La nouvelle épouse est la fille de :", opts: ["Un coiffeur", "Un boucher", "Un marchand"], correct: 0},
+                {q: "Aïcha avait aidé son mari en vendant :", opts: ["Sa maison", "Ses bijoux", "Ses vêtements"], correct: 1},
+                {q: "Le sentiment dominant de Zoubida est :", opts: ["La joie", "La solidarité féminine", "L'indifférence"], correct: 1},
+                {q: "Aïcha qualifie son destin de :", opts: ["Merveilleux", "Tragique", "Amusant"], correct: 1},
+                {q: "Que signifie 'déchéance matérielle' ?", opts: ["S'enrichir", "Tomber dans la pauvreté", "Changer de maison"], correct: 1},
+                {q: "Où Zoubida propose-t-elle d'aller ?", opts: ["Au souk", "Chez un saint (Sidi Ali Boughaleb)", "À la plage"], correct: 1},
+                {q: "Pour Aïcha, les hommes sont :", opts: ["Reconnaissants", "Ingrats", "Toujours fidèles"], correct: 1},
+                {q: "Comment Aïcha trouve-t-elle la nourriture ?", opts: ["Délicieuse", "Amère", "Trop salée"], correct: 1},
+                {q: "Quel est le rôle de Zoubida ici ?", opts: ["Elle juge Aïcha", "Elle la console", "Elle se moque d'elle"], correct: 1}
+            ]
+        },
+        {
+            theme: "La Fête d'Achoura",
+            bg: "#FCF3CF",
+            exp: ["Effervescence festive", "Tradition immuable", "Joie enfantine", "Splendeur des apparats"],
+            dialogue: [
+                ["Sidi Mohammed", "Maman, regarde ma nouvelle djellaba pour demain !"],
+                ["Lalla Zoubida", "Elle te va à merveille, tu es un vrai petit prince."],
+                ["Sidi Mohammed", "Toute la ville est dans une <span class='highlight'>effervescence festive</span>."],
+                ["Lalla Zoubida", "C'est l'Achoura, le jour où les cœurs s'ouvrent."],
+                ["Sidi Mohammed", "J'aime cette <span class='highlight'>tradition immuable</span> qui revient chaque année."],
+                ["Lalla Zoubida", "N'oublie pas tes bougies pour le Msid."],
+                ["Sidi Mohammed", "Ma <span class='highlight'>joie enfantine</span> est si grande que je ne peux dormir."],
+                ["Lalla Zoubida", "Demain tu chanteras avec tes camarades."],
+                ["Sidi Mohammed", "Et nous aurons des gâteaux et des fruits secs !"],
+                ["Lalla Zoubida", "La <span class='highlight'>splendeur des apparats</span> cache parfois la pauvreté du reste de l'année."],
+                ["Sidi Mohammed", "Pourquoi ne peut-on pas être en fête tous les jours ?"],
+                ["Lalla Zoubida", "Parce que le plaisir a besoin du manque pour exister."],
+                ["Sidi Mohammed", "Le Fqih sourit même aujourd'hui, c'est un miracle."],
+                ["Lalla Zoubida", "L'Achoura adoucit même les cœurs de pierre."],
+                ["Sidi Mohammed", "J'ai aussi un nouveau tambourin."],
+                ["Lalla Zoubida", "Ne fais pas trop de bruit avant le lever du soleil."],
+                ["Sidi Mohammed", "Les étoiles semblent fêter l'Achoura avec nous."],
+                ["Lalla Zoubida", "Dors maintenant, pour être le premier réveillé."],
+                ["Sidi Mohammed", "Je rêve déjà des lumières du sanctuaire."],
+                ["Lalla Zoubida", "Que tes rêves soient bénis, mon fils."]
+            ],
+            questions: [
+                {q: "Quel vêtement neuf reçoit l'enfant ?", opts: ["Un pantalon", "Une djellaba", "Un manteau"], correct: 1},
+                {q: "Que doit-il apporter au Msid ?", opts: ["Des livres", "Des bougies", "Du pain"], correct: 1},
+                {q: "L'Achoura est une tradition qualifiée d' :", opts: ["Inutile", "Immuable (qui ne change pas)", "Étrangère"], correct: 1},
+                {q: "Comment se comporte le Fqih ce jour-là ?", opts: ["Il est en colère", "Il sourit (miracle)", "Il est absent"], correct: 1},
+                {q: "L'enfant a reçu un instrument de musique :", opts: ["Une flûte", "Un tambourin", "Une guitare"], correct: 1},
+                {q: "Le plaisir a besoin de quoi pour exister ?", opts: ["D'argent", "Du manque", "De sommeil"], correct: 1},
+                {q: "Que mangent-ils pour la fête ?", opts: ["De la viande seulement", "Des gâteaux et fruits secs", "Rien"], correct: 1},
+                {q: "Où Sidi Mohammed chante-t-il ?", opts: ["Dans la rue", "Au Msid", "Au bain"], correct: 1},
+                {q: "Que signifie 'apparats' ?", opts: ["Vêtements de fête", "Outils de travail", "Meubles"], correct: 0},
+                {q: "Pourquoi l'enfant ne dort-il pas ?", opts: ["Il est malade", "Il est trop joyeux", "Il a peur"], correct: 1}
+            ]
+        },
+        {
+            theme: "La Visite du Voyant",
+            bg: "#D1F2EB",
+            exp: ["Superstition ancrée", "Mystère ésotérique", "Quête de vérité", "Influence occulte"],
+            dialogue: [
+                ["Lalla Zoubida", "Aïcha, nous devons consulter Sidi El Arafi."],
+                ["Lalla Aïcha", "Tu penses qu'un aveugle peut voir notre futur ?"],
+                ["Lalla Zoubida", "C'est une <span class='highlight'>superstition ancrée</span> en moi : il sait tout."],
+                ["Lalla Aïcha", "Son sanctuaire est plein de <span class='highlight'>mystère ésotérique</span>."],
+                ["Lalla Zoubida", "Nous sommes dans une <span class='highlight'>quête de vérité</span> pour ton mari."],
+                ["Lalla Aïcha", "J'ai peur de ce qu'il pourrait nous dire."],
+                ["Lalla Zoubida", "Son <span class='highlight'>influence occulte</span> apaisera tes tourments."],
+                ["Lalla Aïcha", "Regarde comme les gens attendent humblement."],
+                ["Lalla Zoubida", "Il parle aux oiseaux, il comprend le langage des âmes."],
+                ["Lalla Aïcha", "Sidi Mohammed semble fasciné par lui."],
+                ["Lalla Zoubida", "L'enfant sent les choses sacrées mieux que nous."],
+                ["Lalla Aïcha", "Le voyant a posé sa main sur mon épaule."],
+                ["Lalla Zoubida", "Qu'a-t-il murmuré à ton oreille ?"],
+                ["Lalla Aïcha", "Il a dit que la patience est une clé dorée."],
+                ["Lalla Zoubida", "C'est un signe que Moulay Larbi reviendra."],
+                ["Lalla Aïcha", "L'espoir est une plante fragile, Zoubida."],
+                ["Lalla Zoubida", "Arrosons-la de prières et de visites."],
+                ["Lalla Aïcha", "Je me sens déjà plus légère après lui avoir parlé."],
+                ["Lalla Zoubida", "C'est la force de la baraka de cet homme."],
+                ["Lalla Aïcha", "Rentrons avant que la nuit ne tombe."]
+            ],
+            questions: [
+                {q: "Qui est Sidi El Arafi ?", opts: ["Un médecin", "Un voyant aveugle", "Un marchand"], correct: 1},
+                {q: "La particularité du voyant est qu'il est :", opts: ["Sourd", "Aveugle", "Muet"], correct: 1},
+                {q: "Zoubida croit en lui par :", opts: ["Logique", "Superstition ancrée", "Obligation"], correct: 1},
+                {q: "Le voyant comprend le langage des :", opts: ["Plantes", "Oiseaux et des âmes", "Poissons"], correct: 1},
+                {q: "Quel conseil donne-t-il à Lalla Aïcha ?", opts: ["De se remarier", "La patience est une clé dorée", "De partir"], correct: 1},
+                {q: "Que signifie 'ésotérique' ?", opts: ["Public", "Secret et mystérieux", "Moderne"], correct: 1},
+                {q: "L'enfant est fasciné par :", opts: ["L'argent", "Le voyant", "La nourriture"], correct: 1},
+                {q: "L'espoir est comparé à :", opts: ["Un rocher", "Une plante fragile", "Un oiseau"], correct: 1},
+                {q: "Sidi El Arafi a une influence :", opts: ["Politique", "Occulte", "Scientifique"], correct: 1},
+                {q: "Après la visite, Aïcha se sent :", opts: ["Plus lourde", "Plus légère", "En colère"], correct: 1}
+            ]
+        },
+        {
+            theme: "Le Retour du Père",
+            bg: "#D6EAF8",
+            exp: ["Allégresse retrouvée", "Providence divine", "Restauration de l'ordre", "Épilogue heureux"],
+            dialogue: [
+                ["Sidi Mohammed", "Maman ! Maman ! J'entends la voix de mon père !"],
+                ["Lalla Zoubida", "Ce n'est pas possible, il ne devait revenir que plus tard."],
+                ["Maâlem Abdeslem", "Zoubida ! Je suis de retour avec de bonnes nouvelles !"],
+                ["Lalla Zoubida", "Quelle <span class='highlight'>allégresse retrouvée</span> dans cette maison !"],
+                ["Maâlem Abdeslem", "C'est la <span class='highlight'>providence divine</span>, j'ai gagné assez d'argent."],
+                ["Lalla Zoubida", "C'est la <span class='highlight'>restauration de l'ordre</span> naturel des choses."],
+                ["Sidi Mohammed", "Tu as ramené des cadeaux, papa ?"],
+                ["Maâlem Abdeslem", "J'ai ramené de quoi fêter cet <span class='highlight'>épilogue heureux</span>."],
+                ["Lalla Zoubida", "Le vide de ton absence est enfin comblé."],
+                ["Maâlem Abdeslem", "La récolte a été miraculeuse cette année."],
+                ["Sidi Mohammed", "Tu ne repartiras plus jamais, n'est-ce pas ?"],
+                ["Maâlem Abdeslem", "Je reste ici pour veiller sur vous deux."],
+                ["Lalla Zoubida", "La maison semblait morte sans toi."],
+                ["Maâlem Abdeslem", "J'ai pensé à vous chaque nuit sous les étoiles."],
+                ["Sidi Mohammed", "Ma boîte à merveilles est redevenue magique."],
+                ["Lalla Zoubida", "Préparons un grand couscous pour remercier Dieu."],
+                ["Maâlem Abdeslem", "Invitons nos voisins, même ceux qui nous ont oubliés."],
+                ["Lalla Zoubida", "La générosité est le parfum du retour."],
+                ["Sidi Mohammed", "Je suis l'enfant le plus heureux de Fès."],
+                ["Maâlem Abdeslem", "Et moi le père le plus comblé."]
+            ],
+            questions: [
+                {q: "Qui annonce le retour du père ?", opts: ["La voisine", "Sidi Mohammed", "Le Fqih"], correct: 1},
+                {q: "Le père revient avec :", opts: ["Rien", "De l'argent et des cadeaux", "Des dettes"], correct: 1},
+                {q: "Ce retour est vu comme la :", opts: ["Fin du monde", "Providence divine", "Malchance"], correct: 1},
+                {q: "Le sentiment dans la maison est l' :", opts: ["Allégresse retrouvée", "Tristesse", "Ennui"], correct: 0},
+                {q: "Le père a travaillé dans :", opts: ["Les mines", "Les moissons (récolte)", "Les usines"], correct: 1},
+                {q: "La boîte à merveilles devient :", opts: ["Inutile", "Magique à nouveau", "Perdue"], correct: 1},
+                {q: "Quel plat Zoubida veut-elle préparer ?", opts: ["Une pizza", "Un grand couscous", "Une soupe"], correct: 1},
+                {q: "Qui le père veut-il inviter ?", opts: ["Personne", "Les voisins", "Le gouverneur"], correct: 1},
+                {q: "Que signifie 'épilogue' ?", opts: ["Début", "Conclusion d'une histoire", "Le milieu"], correct: 1},
+                {q: "L'enfant se sent l'enfant le plus heureux de :", opts: ["Marrakech", "Fès", "Casablanca"], correct: 1}
+            ]
+        },
+        {
+            theme: "La Clôture (Bilan)",
+            bg: "#F9EBEA",
+            exp: ["Cycle mémoriel", "Héritage culturel", "Sagesse acquise", "Empreinte littéraire"],
+            dialogue: [
+                ["Sidi Mohammed", "Je suis maintenant plus grand, maman."],
+                ["Lalla Zoubida", "Tu as appris que la vie n'est pas qu'un rêve."],
+                ["Sidi Mohammed", "Mais mon <span class='highlight'>cycle mémoriel</span> gardera toujours mes trésors."],
+                ["Lalla Zoubida", "Ces souvenirs sont ton plus bel <span class='highlight'>héritage culturel</span>."],
+                ["Sidi Mohammed", "J'ai une certaine <span class='highlight'>sagesse acquise</span> à travers nos épreuves."],
+                ["Lalla Zoubida", "Tu parles comme un livre, mon fils."],
+                ["Sidi Mohammed", "Peut-être que ma vie laissera une <span class='highlight'>empreinte littéraire</span>."],
+                ["Lalla Zoubida", "L'important est de rester fidèle à tes racines."],
+                ["Sidi Mohammed", "Fès est gravée dans mon cœur pour toujours."],
+                ["Lalla Zoubida", "Même quand tu seras un homme, souviens-toi de Dar Chouafa."],
+                ["Sidi Mohammed", "Je me souviendrai de la vapeur du bain et du Fqih."],
+                ["Lalla Zoubida", "Et de la bonté de ton père."],
+                ["Sidi Mohammed", "Et de tes histoires merveilleuses, maman."],
+                ["Lalla Zoubida", "Le monde change, mais les souvenirs restent."],
+                ["Sidi Mohammed", "Ma boîte à merveilles sera ma mémoire."],
+                ["Lalla Zoubida", "Elle est le témoin de ton enfance."],
+                ["Sidi Mohammed", "Je vais écrire tout cela un jour."],
+                ["Lalla Zoubida", "Écris pour ne jamais oublier qui tu es."],
+                ["Sidi Mohammed", "Je n'oublierai jamais rien."],
+                ["Lalla Zoubida", "Alors, tu es prêt pour l'avenir."]
+            ],
+            questions: [
+                {q: "L'enfant a acquis une certaine :", opts: ["Richesse", "Sagesse", "Méchanceté"], correct: 1},
+                {q: "Les souvenirs sont qualifiés d' :", opts: ["Inutiles", "Héritage culturel", "Fardeaux"], correct: 1},
+                {q: "Fès est gravée dans son :", opts: ["Bras", "Cœur", "Livre"], correct: 1},
+                {q: "L'enfant veut laisser une :", opts: ["Trace de pas", "Empreinte littéraire", "Dette"], correct: 1},
+                {q: "La boîte à merveilles sera sa :", opts: ["Fortune", "Mémoire", "Maison"], correct: 1},
+                {q: "Le projet futur de l'enfant est d' :", opts: ["Écrire", "Voyager", "Vendre"], correct: 0},
+                {q: "L'important selon la mère est de rester fidèle à ses :", opts: ["Amis", "Racines", "Rêves seulement"], correct: 1},
+                {q: "Le 'cycle mémoriel' concerne :", opts: ["Le futur", "Les souvenirs du passé", "La météo"], correct: 1},
+                {q: "Lalla Zoubida dit qu'il parle comme :", opts: ["Un fou", "Un livre", "Son père"], correct: 1},
+                {q: "À la fin, l'enfant est prêt pour :", opts: ["Dormir", "L'avenir", "Le Msid"], correct: 1}
+            ]
+        }
+    ];
+
+    const nav = document.getElementById('navigation');
+    const content = document.getElementById('content-area');
+
+    function loadActivity(index, btn) {
+        document.body.style.backgroundColor = activities[index].bg;
+        document.querySelectorAll('.activity-card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`card-${index}`).classList.add('active');
+        if(btn) btn.classList.add('active');
+    }
+
+    activities.forEach((act, i) => {
+        const btn = document.createElement('button');
+        btn.className = `nav-btn ${i === 0 ? 'active' : ''}`;
+        btn.innerText = `Activité ${i + 1}`;
+        btn.onclick = () => loadActivity(i, btn);
+        nav.appendChild(btn);
+
+        const card = document.createElement('div');
+        card.id = `card-${i}`;
+        card.className = `activity-card ${i === 0 ? 'active' : ''}`;
+        
+        card.innerHTML = `
+            <div class="banner">
+                <h3>Thème : ${act.theme}</h3>
+                <div class="expression-list">
+                    ${act.exp.map(e => `<span>• ${e}</span>`).join('')}
+                </div>
+            </div>
+            <div class="dialogue-box">
+                ${act.dialogue.map(line => `<p><span class="speaker">${line[0]} :</span> ${line[1]}</p>`).join('')}
+            </div>
+            <div class="quiz-section">
+                <h4>QCM d'Analyse Interactive</h4>
+                ${act.questions.map((qObj, qi) => `
+                    <div class="q-item" id="qbox-${i}-${qi}">
+                        <p><strong>${qi+1}. ${qObj.q}</strong></p>
+                        <div class="options-group">
+                            ${qObj.opts.map((opt, oi) => `
+                                <label class="option-label">
+                                    <input type="radio" name="q-${i}-${qi}" value="${oi}">
+                                    ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                        <button class="check-btn" onclick="checkQCM(${i}, ${qi})">Valider</button>
+                        <div class="feedback" id="fb-${i}-${qi}"></div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        content.appendChild(card);
+    });
+
+    window.checkQCM = function(actIdx, qIdx) {
+        const qBox = document.getElementById(`qbox-${actIdx}-${qIdx}`);
+        const fb = document.getElementById(`fb-${actIdx}-${qIdx}`);
+        const btn = qBox.querySelector('.check-btn');
+        const selected = qBox.querySelector(`input[name="q-${actIdx}-${qIdx}"]:checked`);
+
+        if (!selected) {
+            alert("Sélectionnez une option !");
+            return;
+        }
+
+        const userVal = parseInt(selected.value);
+        const correctVal = activities[actIdx].questions[qIdx].correct;
+
+        fb.style.display = 'block';
+        if (userVal === correctVal) {
+            btn.style.backgroundColor = '#27ae60';
+            btn.innerText = "Correct !";
+            fb.className = "feedback correct-fb";
+            fb.innerHTML = "<strong>Bravo !</strong> C'est la bonne analyse.";
+        } else {
+            btn.style.backgroundColor = '#e74c3c';
+            btn.innerText = "Incorrect";
+            fb.className = "feedback wrong-fb";
+            fb.innerHTML = "<strong>Erreur.</strong> Réessayez ou vérifiez le texte du dialogue.";
+        }
+    };
+
+    document.body.style.backgroundColor = activities[0].bg;
+</script>
+</body>
+</html>

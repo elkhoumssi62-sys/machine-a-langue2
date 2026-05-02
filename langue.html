@@ -1,0 +1,2645 @@
+<!doctype html>
+<html lang="fr">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Machine à Langue - Encyclopédie Linguistique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Poppins:wght@400;600;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1877f2;
+            --accent: #ffc107;
+            --success: #10b981;
+            --danger: #f87171;
+            --bg: linear-gradient(135deg, #0b1120 0%, #1a1f3a 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-hover: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e1;
+        }
+
+        html { height: 100%; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: var(--bg);
+            color: var(--text-primary); 
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(11, 17, 32, 0.95);
+            padding: 15px 25px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--accent);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-weight: 900;
+            color: var(--accent);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-score {
+            background: rgba(24, 119, 242, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .score-value {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .navbar-download {
+            background: linear-gradient(135deg, var(--accent), #ffb700);
+            border: none;
+            color: #1a1a1a;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .navbar-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+        }
+
+        .navbar-download:active {
+            transform: translateY(0);
+        }
+
+        /* MAIN CONTAINER */
+        .main-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(24, 119, 242, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        /* MODULES GRID */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* CATEGORY FILTERS */
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 30px;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 2px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(255, 193, 7, 0.1);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .module-card:hover::before {
+            left: 100%;
+        }
+
+        .module-card:hover {
+            background: var(--card-hover);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.1);
+        }
+
+        .module-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .module-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .module-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .module-status {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            background: rgba(16, 185, 129, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* LESSON VIEW */
+        .lesson-view {
+            display: none;
+        }
+
+        .lesson-view.active {
+            display: block;
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, rgba(24, 119, 242, 0.2) 0%, rgba(255, 193, 7, 0.1) 100%);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .lesson-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .lesson-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .btn-back {
+            background: rgba(24, 119, 242, 0.2);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* STEPS */
+        .lesson-step {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .step-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: rgba(255, 193, 7, 0.1);
+        }
+
+        /* Couleurs distinctives par module - Titres des étapes */
+        /* ANALOGIE - Modules 1 & 4 */
+        .module-1 .step-title, .module-4 .step-title { 
+            background: rgba(239, 68, 68, 0.2); 
+            border-left: 6px solid #ef4444; 
+            color: #fca5a5; 
+        }
+        
+        /* OPPOSITION - Modules 2, 3, 8, 10 */
+        .module-2 .step-title, .module-3 .step-title, .module-8 .step-title, .module-10 .step-title { 
+            background: rgba(59, 130, 246, 0.2); 
+            border-left: 6px solid #3b82f6; 
+            color: #93c5fd; 
+        }
+        
+        /* SUBSTITUTION - Module 5 */
+        .module-5 .step-title { 
+            background: rgba(34, 197, 94, 0.2); 
+            border-left: 6px solid #22c55e; 
+            color: #86efac; 
+        }
+        
+        /* EXAGÉRATION - Module 9 */
+        .module-9 .step-title { 
+            background: rgba(168, 85, 247, 0.2); 
+            border-left: 6px solid #a855f7; 
+            color: #d8b4fe; 
+        }
+        
+        /* INSISTANCE - Modules 6 & 7 */
+        .module-6 .step-title, .module-7 .step-title { 
+            background: rgba(249, 115, 22, 0.2); 
+            border-left: 6px solid #f97316; 
+            color: #fed7aa; 
+        }
+
+        /* SUBFIGURES PREVIEW BAR */
+        .subfigures-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 193, 7, 0.08);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .subfigure-preview-card {
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .subfigure-preview-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .subfigure-preview-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .subfigure-preview-desc {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        /* Couleurs pour chaque type */
+        .subfigure-card-1 { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+        .subfigure-card-1 .subfigure-preview-title { color: #fca5a5; }
+        .subfigure-card-1 .subfigure-preview-desc { color: rgba(252, 165, 165, 0.8); }
+
+        .subfigure-card-2 { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+        .subfigure-card-2 .subfigure-preview-title { color: #93c5fd; }
+        .subfigure-card-2 .subfigure-preview-desc { color: rgba(147, 197, 253, 0.8); }
+
+        .subfigure-card-3 { border-color: #22c55e; background: rgba(34, 197, 94, 0.1); }
+        .subfigure-card-3 .subfigure-preview-title { color: #86efac; }
+        .subfigure-card-3 .subfigure-preview-desc { color: rgba(134, 239, 172, 0.8); }
+
+        .subfigure-card-4 { border-color: #f97316; background: rgba(249, 115, 22, 0.1); }
+        .subfigure-card-4 .subfigure-preview-title { color: #fed7aa; }
+        .subfigure-card-4 .subfigure-preview-desc { color: rgba(254, 215, 170, 0.8); }
+
+        .subfigure-card-5 { border-color: #a855f7; background: rgba(168, 85, 247, 0.1); }
+        .subfigure-card-5 .subfigure-preview-title { color: #d8b4fe; }
+        .subfigure-card-5 .subfigure-preview-desc { color: rgba(216, 180, 254, 0.8); }
+
+        .subfigure-card-6 { border-color: #06b6d4; background: rgba(6, 182, 212, 0.1); }
+        .subfigure-card-6 .subfigure-preview-title { color: #67e8f9; }
+        .subfigure-card-6 .subfigure-preview-desc { color: rgba(103, 232, 249, 0.8); }
+
+        .subfigure-card-7 { border-color: #ec4899; background: rgba(236, 72, 153, 0.1); }
+        .subfigure-card-7 .subfigure-preview-title { color: #f472b6; }
+        .subfigure-card-7 .subfigure-preview-desc { color: rgba(244, 114, 182, 0.8); }
+
+        .subfigure-card-8 { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
+        .subfigure-card-8 .subfigure-preview-title { color: #c4b5fd; }
+        .subfigure-card-8 .subfigure-preview-desc { color: rgba(196, 181, 253, 0.8); }
+
+        .subfigure-card-9 { border-color: #14b8a6; background: rgba(20, 184, 166, 0.1); }
+        .subfigure-card-9 .subfigure-preview-title { color: #7ee8d9; }
+        .subfigure-card-9 .subfigure-preview-desc { color: rgba(126, 232, 217, 0.8); }
+
+        .subfigure-card-10 { border-color: #d97706; background: rgba(217, 119, 6, 0.1); }
+        .subfigure-card-10 .subfigure-preview-title { color: #fcd34d; }
+        .subfigure-card-10 .subfigure-preview-desc { color: rgba(252, 211, 77, 0.8); }
+
+        .corpus-list {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .corpus-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            border: 1px solid rgba(24, 119, 242, 0.3);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .corpus-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .corpus-item strong {
+            color: var(--accent);
+            font-style: normal;
+        }
+
+        /* QUESTIONS */
+        .question-block {
+            background: rgba(24, 119, 242, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(24, 119, 242, 0.3);
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .question-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 15px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px solid var(--border);
+            color: white;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(24, 119, 242, 0.3);
+        }
+
+        input[type="text"].correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        input[type="text"].wrong {
+            border-color: var(--danger);
+            background: rgba(248, 113, 113, 0.1);
+        }
+
+        .btn-check {
+            background: linear-gradient(135deg, var(--primary), rgba(24, 119, 242, 0.8));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-check:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
+        }
+
+        .btn-check:active {
+            transform: translateY(0);
+        }
+
+        .feedback {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .feedback.correct {
+            color: var(--success);
+        }
+
+        .feedback.wrong {
+            color: var(--danger);
+        }
+
+        /* CONCEPT BOX */
+        .concept-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(24, 119, 242, 0.1) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .concept-box strong {
+            color: var(--accent);
+        }
+
+        /* EXERCISES GRID */
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .exercise-box {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .exercise-box:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+        }
+
+        .exercise-title {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exercise-list {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .exercise-list li {
+            margin-bottom: 8px;
+            list-style-position: inside;
+        }
+
+        .exercise-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .exercise-input-group input {
+            flex: 1;
+        }
+
+        .exercise-input-group button {
+            flex-shrink: 0;
+        }
+
+        /* STATS */
+        .lesson-stats {
+            background: linear-gradient(135deg, rgba(24, 119, 242, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-top: 30px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(24, 119, 242, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .stat-content h3 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 900;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(255, 255, 255, 0.95) 100%);
+            border: 3px solid #d1d5db;
+            border-radius: 0;
+            padding: 40px 40px 40px 90px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.3s ease;
+            position: relative;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 70px;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.12) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border-right: 2px solid rgba(239, 68, 68, 0.4);
+        }
+
+        .modal-content::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-image: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 27px,
+                rgba(100, 150, 255, 0.1) 27px,
+                rgba(100, 150, 255, 0.1) 28px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ffc107;
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #1f2937;
+            margin: 0;
+            text-decoration: underline;
+            text-decoration-color: #ffc107;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px;
+        }
+
+        .modal-close {
+            background: rgba(239, 68, 68, 0.15);
+            border: 2px solid #ef4444;
+            color: #ef4444;
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            font-weight: bold;
+        }
+
+        .modal-close:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* NOTEBOOK STYLE - ONLY FOR MODAL */
+        #subfiguresContent {
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(255, 255, 255, 0.92) 100%);
+            position: relative;
+            padding: 30px 30px 30px 80px;
+            margin-bottom: 0;
+        }
+
+        #subfiguresContent::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border-right: 2px solid rgba(239, 68, 68, 0.3);
+        }
+
+        #subfiguresContent::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-image: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 27px,
+                rgba(100, 150, 255, 0.15) 27px,
+                rgba(100, 150, 255, 0.15) 28px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #subfiguresContent {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subfigure-item {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 20px 0;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .subfigure-item:hover {
+            background: transparent;
+            border-color: transparent;
+            transform: translateX(3px);
+        }
+
+        .subfigure-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(100, 150, 255, 0.3);
+        }
+
+        .subfigure-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: white;
+            box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
+        }
+
+        .subfigure-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: #ffc107;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+
+        .subfigure-definition {
+            font-size: 0.9rem;
+            color: #374151;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .subfigure-example {
+            background: transparent;
+            padding: 0;
+            border-left: none;
+            border-radius: 0;
+            font-style: italic;
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 3px solid #ffc107;
+        }
+
+        .modal-copyright {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #ffc107;
+            text-align: center;
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lesson-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar-score {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .exercise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lesson-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .modal-content {
+                padding: 25px;
+                max-height: 90vh;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+   <div class="navbar-brand">
+    <i class="fas fa-book-open"></i> MACHINE À LANGUE
+   </div>
+   <div class="navbar-score">
+    <i class="fas fa-star"></i> <span>Points:</span> <span class="score-value" id="totalScore">0</span>
+   </div><button class="navbar-download" onclick="downloadPage()" title="Télécharger la page"> <i class="fas fa-download"></i> Télécharger </button>
+  </nav><!-- MAIN CONTENT -->
+  <div class="main-wrapper">
+   <!-- HOME VIEW -->
+   <div id="homeView" class="home-view active">
+    <div class="hero">
+     <h1>Encyclopédie de Mohamed EL KHOUMSSI</h1>
+     <p>Explorez les figures de style et enrichissez votre compréhension littéraire</p>
+     <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;"><button class="navbar-download" onclick="showOralActivitiesView()" style="background: linear-gradient(135deg, #22c55e, #16a34a); margin: 0;"> <i class="fas fa-microphone"></i> Activités Orales </button>
+     </div>
+     <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+     </div>
+     <div class="progress-text">
+      <span id="progressText">0 / 10 modules complétés</span>
+     </div>
+    </div><!-- CATEGORY FILTERS -->
+    <div class="category-filters" id="categoryFilters"></div>
+    <div class="modules-grid" id="modulesGrid"></div>
+   </div><!-- LESSON VIEW -->
+   <div id="lessonView" class="lesson-view">
+    <button class="btn-back" onclick="goHome()"> <i class="fas fa-arrow-left"></i> Retour </button>
+    <div class="lesson-header">
+     <h1 id="lessonTitle"></h1>
+     <p id="lessonDesc"></p>
+    </div>
+    <div id="lessonContent"></div>
+   </div><!-- MODAL SUBFIGURES -->
+   <div id="subfiguresModal" class="modal-overlay">
+    <div class="modal-content">
+     <div class="modal-header">
+      <h2 id="modalTitle"></h2><button class="modal-close" onclick="closeSubfiguresModal()">✕</button>
+     </div>
+     <div id="subfiguresContent"></div>
+    </div>
+   </div>
+  </div>
+  <script>
+        // DATABASE - ORAL ACTIVITIES
+        const oralActivities = [
+            {
+                id: 1,
+                title: "Activité Orale 1: Analogie au Musée",
+                dialogue: `
+                    <div style="background: rgba(239, 68, 68, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #ef4444;">
+                        <div style="font-weight: 700; color: #fca5a5; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Au Musée</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Claire :</strong> "Regarde ce tableau ! Cette peinture est comme une fenêtre ouverte sur l'âme de l'artiste."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Marc :</strong> "Tu as raison. Les couleurs dansent comme des papillons libres dans le ciel."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Claire :</strong> "Cette sculpture ? C'est une symphonie figée dans la pierre. Telle une musique silencieuse."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Marc :</strong> "Et ces portraits ? Ils nous regardent comme s'ils respiraient toujours."</div>
+                            <div><strong style="color: #fca5a5;">Claire :</strong> "L'art transforme chaque matériau en rivière d'émotions qui s'écoule dans notre cœur."</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "Cette peinture est comme une fenêtre ouverte sur l'âme de l'artiste.", question: "Identifiez la figure de style et l'outil de comparaison utilisé.", answer: "Comparaison avec l'outil 'comme'" },
+                    { phrase: "Les couleurs dansent comme des papillons libres.", question: "Quel verbe donne une caractéristique humaine aux couleurs ?", answer: "dansent (personnification)" },
+                    { phrase: "C'est une symphonie figée dans la pierre.", question: "À quel concept abstrait cette sculpture est-elle comparée ?", answer: "symphonie (métaphore)" },
+                    { phrase: "L'art transforme chaque matériau en rivière d'émotions.", question: "Identifiez ce que devient le matériau selon cette affirmation.", answer: "rivière d'émotions (métaphore)" }
+                ],
+                qcm: [
+                    { q: "Quelle figure est utilisée dans 'Les couleurs dansent comme des papillons' ?", options: ["Métaphore", "Comparaison", "Ironie", "Oxymore"], answer: 1 },
+                    { q: "Que représente 'une fenêtre ouverte sur l'âme' ?", options: ["Une porte", "Un accès à l'intérieur", "Une barrière", "Une isolation"], answer: 1 },
+                    { q: "Quel est l'effet créé par 'symphonie figée dans la pierre' ?", options: ["Clarté", "Fusion poétique", "Contradiction", "Répétition"], answer: 1 },
+                    { q: "'Telle une musique silencieuse' contient quel type de figure ?", options: ["Allitération", "Oxymore", "Paradoxe", "Accumulation"], answer: 2 },
+                    { q: "Comment Marc exprime-t-il sa compréhension du tableau ?", options: ["Par critique", "Par comparaison", "Par énumération", "Par négation"], answer: 1 },
+                    { q: "Quel sens domine dans le dialogue : visuel ou auditif ?", options: ["Auditif", "Tactile", "Visuel", "Olfactif"], answer: 2 },
+                    { q: "La 'rivière d'émotions' symbolise quoi ?", options: ["L'eau", "Le flux ininterrompu", "La pierre", "La musique"], answer: 1 },
+                    { q: "Quel rôle jouent les comparaisons dans ce dialogue ?", options: ["Décrire précisément", "Enrichir poétiquement", "Expliquer scientifiquement", "Divertir"], answer: 1 },
+                    { q: "Comment les personnages construisent-ils leur compréhension commune ?", options: ["Par opposition", "Par énumération", "Par analogie progressive", "Par ironie"], answer: 2 },
+                    { q: "Quel est le ton général du dialogue ?", options: ["Critique", "Admiratif", "Moqueur", "Indifférent"], answer: 1 }
+                ]
+            },
+            {
+                id: 2,
+                title: "Activité Orale 2: Ironie chez le Dentiste",
+                dialogue: `
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #3b82f6;">
+                        <div style="font-weight: 700; color: #93c5fd; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Au Cabinet Dentaire</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Dentiste :</strong> "Ah, vous voilà enfin ! Quel plaisir de vous revoir après... six mois !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Patient :</strong> "Oui, j'ai adoré ma dernière visite. Vraiment un moment de détente pure !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Dentiste :</strong> "Voyons voir... Excellent ! Ces caries sont très... productives !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Patient :</strong> "Productives ? C'est une belle façon de le dire. Je suis vraiment fier de mon travail dentaire !"</div>
+                            <div><strong style="color: #93c5fd;">Dentiste :</strong> "Vous vous brossez régulièrement, c'est évident ! Vos dents sont une vraie merveille !"</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "Quel plaisir de vous revoir après six mois !", question: "Cette phrase est-elle sincère ou ironique ? Justifiez.", answer: "Ironique - le ton critique la négligence du patient" },
+                    { phrase: "J'ai adoré ma dernière visite. Vraiment un moment de détente pure !", question: "Qu'exprime vraiment le patient par cette ironie ?", answer: "Le contraire - c'était douloureux et désagréable" },
+                    { phrase: "Ces caries sont très... productives !", question: "Quel adjectif inapproprié crée l'ironie du dentiste ?", answer: "productives (qui se multiplient, qui se développent)" },
+                    { phrase: "Vos dents sont une vraie merveille !", question: "Cette affirmation ironique cache quelle réalité ?", answer: "L'état piteux des dents du patient" }
+                ],
+                qcm: [
+                    { q: "Pourquoi le dentiste dit-il 'Quel plaisir' de manière ironique ?", options: ["Il aime les patients", "Le patient néglige ses dents", "Il adore son travail", "Par politesse"], answer: 1 },
+                    { q: "Que signifie vraiment 'un moment de détente pure' selon le patient ?", options: ["C'était relaxant", "C'était douloureux", "C'était amusant", "C'était utile"], answer: 1 },
+                    { q: "Quel est l'objectif de l'ironie dans ce dialogue ?", options: ["Faire rire", "Critiquer", "Confondre", "Expliquer"], answer: 1 },
+                    { q: "'Productives' appliqué aux caries signifie quoi ironiquement ?", options: ["Positives", "Bien gérées", "Qui se multiplient", "Disparues"], answer: 2 },
+                    { q: "Comment le patient répond-il à l'ironie du dentiste ?", options: ["Avec sincérité", "Avec sa propre ironie", "Avec peur", "Avec colère"], answer: 1 },
+                    { q: "Quel sentiment veut exprimer le patient en disant 'fier de mon travail dentaire' ?", options: ["De l'orgueil", "De la moquerie envers lui-même", "De la satisfaction", "De l'indifférence"], answer: 1 },
+                    { q: "L'ironie sert ici à...", options: ["Louer le patient", "Critiquer sa négligence", "Complimenter", "Expliquer scientifiquement"], answer: 1 },
+                    { q: "Comment reconnaît-on l'ironie dans le ton du dentiste ?", options: ["Par exagération menaçante", "Par décalage entre paroles et réalité", "Par une explication logique", "Par un silence"], answer: 1 },
+                    { q: "Que faire pour éviter cette situation ironique ?", options: ["Ignorer les dents", "Se brosser régulièrement", "Rire avec le dentiste", "Changer de dentiste"], answer: 1 },
+                    { q: "L'antiphrase 'Vos dents sont une merveille' exprime...", options: ["Un compliment sincère", "Le contraire - un défaut réel", "Une plaisanterie amicale", "Une observation neutre"], answer: 1 }
+                ]
+            },
+            {
+                id: 3,
+                title: "Activité Orale 3: Oxymore sur le Paradoxe",
+                dialogue: `
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #3b82f6;">
+                        <div style="font-weight: 700; color: #93c5fd; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Débat Philosophique</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Sophie :</strong> "La beauté cruelle du crépuscule me fascine. C'est une lumière sombre qui éclaire."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Thomas :</strong> "C'est un silence éloquent qui crie sans bruit. Cette obscure clarté m'apaise."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Sophie :</strong> "Exactement ! L'absence présente nous enveloppe d'une vide comblé."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Thomas :</strong> "Et cette douce violence du vent qui nous libère... c'est une servitude agréable."</div>
+                            <div><strong style="color: #93c5fd;">Sophie :</strong> "Nous vivons une vivante mort, n'est-ce pas ? Une vérité menteuse nous guide."</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "La beauté cruelle du crépuscule me fascine.", question: "Identifiez les deux mots opposés qui forment un oxymore.", answer: "beauté et cruelle" },
+                    { phrase: "C'est une lumière sombre qui éclaire.", question: "Quel paradoxe crée cette association de mots contradictoires ?", answer: "lumière sombre (contradiction entre clarté et obscurité)" },
+                    { phrase: "Un silence éloquent qui crie sans bruit.", question: "Combien d'oxymores se trouvent dans cette phrase ?", answer: "Trois : silence éloquent, crie sans bruit" },
+                    { phrase: "L'absence présente nous enveloppe d'une vide comblé.", question: "Quels mots s'opposent directement dans cette phrase ?", answer: "absence-présente et vide-comblé" }
+                ],
+                qcm: [
+                    { q: "Que signifie 'beauté cruelle' selon Sophie ?", options: ["Beauté ordinaire", "Beauté qui fait souffrir", "Beauté joyeuse", "Beauté artificielle"], answer: 1 },
+                    { q: "'Obscure clarté' est un exemple de...", options: ["Métaphore", "Comparaison", "Oxymore", "Paradoxe"], answer: 2 },
+                    { q: "Quel est l'effet poétique de 'silence éloquent' ?", options: ["Contradiction amusante", "Fusion paradoxale", "Critique mordante", "Explication logique"], answer: 1 },
+                    { q: "Thomas exprime son ressenti par...", options: ["Des phrases simples", "Des oxymores et paradoxes", "Des énumérations", "Des comparaisons"], answer: 1 },
+                    { q: "'Douce violence' suggère quoi ?", options: ["Douceur ordinaire", "Violence extrême", "Contraste émotionnel intense", "Calme total"], answer: 2 },
+                    { q: "L'oxymore serve ici pour...", options: ["Clarifier", "Exprimer l'inexprimable", "Simplifier", "Divertir"], answer: 1 },
+                    { q: "'Servitude agréable' contient quel paradoxe ?", options: ["Absence de liberté avec plaisir", "Liberté totale", "Joie pure", "Tristesse simple"], answer: 0 },
+                    { q: "Comment ces deux personnages construisent-ils le sens ?", options: ["Par logique", "Par accumulation d'oxymores", "Par énumération", "Par critique"], answer: 1 },
+                    { q: "'Vivante mort' et 'vérité menteuse' expriment...", options: ["Une réalité simple", "Des paradoxes existentiels", "Une impossibilité", "Une exagération"], answer: 1 },
+                    { q: "Quel est le ton dominant du dialogue ?", options: ["Critique", "Méditatif et poétique", "Humoristique", "Agressif"], answer: 1 }
+                ]
+            },
+            {
+                id: 4,
+                title: "Activité Orale 4: Métaphore - Entretien avec un Écrivain",
+                dialogue: `
+                    <div style="background: rgba(239, 68, 68, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #ef4444;">
+                        <div style="font-weight: 700; color: #fca5a5; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Interview Littéraire</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Journaliste :</strong> "Comment créez-vous vos histoires ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Écrivain :</strong> "L'écriture est une rivière qui s'écoule de l'âme. Elle charrie les rêves et les secrets."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Journaliste :</strong> "C'est une belle image. Mais vos personnages ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Écrivain :</strong> "Mes personnages sont des graines que je plante dans les cœurs des lecteurs. Ils germent dans leur mémoire."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fca5a5;">Journaliste :</strong> "Et le style ? C'est une arme pour vous ?"</div>
+                            <div><strong style="color: #fca5a5;">Écrivain :</strong> "Le style est une fenêtre ouverte sur l'univers intérieur. C'est une clé qui déverrouille les portes fermées."</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "L'écriture est une rivière qui s'écoule de l'âme.", question: "Identifiez ce qui est comparé à une rivière et pourquoi.", answer: "L'écriture - car elle s'écoule naturellement et continuellement" },
+                    { phrase: "Mes personnages sont des graines que je plante dans les cœurs des lecteurs.", question: "Qu'exprime cette métaphore sur la relation entre auteur et lecteur ?", answer: "Les idées se développent et germent dans les lecteurs" },
+                    { phrase: "Le style est une fenêtre ouverte sur l'univers intérieur.", question: "Quel rôle la 'fenêtre' donne-t-elle au style ?", answer: "Accès, transparence, révélation de l'intériorité" },
+                    { phrase: "C'est une clé qui déverrouille les portes fermées.", question: "À quoi correspondent les 'portes fermées' dans cette métaphore ?", answer: "Les esprits fermés, les cœurs inaccessibles" }
+                ],
+                qcm: [
+                    { q: "Selon l'écrivain, que charrie la rivière de l'écriture ?", options: ["De l'eau", "Des rêves et des secrets", "Des poissons", "Du courant"], answer: 1 },
+                    { q: "Quel est l'effet de la métaphore 'graines plantées' ?", options: ["Critique", "Montrer la croissance des idées", "Expliquer la nature", "Décrire le jardinage"], answer: 1 },
+                    { q: "Comment les personnages 'germent' dans la mémoire des lecteurs ?", options: ["Ils poussent réellement", "Ils s'y développent et vivent", "Ils disparaissent", "Ils se multiplient seuls"], answer: 1 },
+                    { q: "'Le style est une clé' signifie que le style...", options: ["Ouvre les portes métalliques", "Permet d'accéder à l'univers de l'auteur", "Est une arme", "Est une prison"], answer: 1 },
+                    { q: "Quelle vision l'écrivain a-t-il de son rôle ?", options: ["Dominant", "Multiplicateur de rêves et d'idées", "Critique", "Détaché"], answer: 1 },
+                    { q: "L'écriture 's'écoule' comme une rivière pour exprimer quoi ?", options: ["La difficulté", "La naturalité et la fluidité", "La lenteur", "L'arrêt"], answer: 1 },
+                    { q: "Les 'portes fermées' représentent symboliquement...", options: ["Des portes matérielles", "Les esprits inaccessibles", "Les livres", "L'imagination"], answer: 1 },
+                    { q: "Comment le journaliste réagit-il aux métaphores ?", options: ["Avec critique", "Avec appréciation et curiosité", "Avec indifférence", "Avec hostilité"], answer: 1 },
+                    { q: "Quel est le ton de l'écrivain ?", options: ["Agressif", "Poétique et philosophique", "Humoristique", "Scientifique"], answer: 1 },
+                    { q: "L'ensemble des métaphores crée quelle impression générale ?", options: ["Scientifique", "Mystérieuse et créative", "Réaliste", "Critique"], answer: 1 }
+                ]
+            },
+            {
+                id: 5,
+                title: "Activité Orale 5: Synecdoque au Marché",
+                dialogue: `
+                    <div style="background: rgba(34, 197, 94, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #22c55e;">
+                        <div style="font-weight: 700; color: #86efac; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Sur le Marché</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #86efac;">Vendeur :</strong> "Regardez ces beaux fruits ! De bonnes mains les ont cultivés."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #86efac;">Cliente :</strong> "Combien de têtes couronnées reconnaîtraient ces saveurs ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #86efac;">Vendeur :</strong> "Les robes colorées des tomates valent mieux que les murs gris."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #86efac;">Cliente :</strong> "Vrai ! Ces voiles blancs des oignons me rappellent les voiles en mer."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #86efac;">Vendeur :</strong> "Et ces cœurs verts des laitues, ils contiennent toute la vie du jardin !"</div>
+                            <div><strong style="color: #86efac;">Cliente :</strong> "Vous parlez comme un poète ! Ces mains d'œuvre méritent bien du respect !"</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "De bonnes mains les ont cultivés.", question: "Qu'est-ce que 'les mains' remplace réellement ici ?", answer: "Les personnes, les travailleurs (la partie pour le tout)" },
+                    { phrase: "Combien de têtes couronnées reconnaîtraient ces saveurs ?", question: "Que représente 'les têtes couronnées' dans cette phrase ?", answer: "Les rois/reines, les personnes nobles (la tête pour la personne)" },
+                    { phrase: "Les robes colorées des tomates valent mieux que les murs gris.", question: "Qu'appelle-t-on 'robes' pour les tomates et pourquoi ?", answer: "Les pelures/enveloppes colorées (partie pour le tout)" },
+                    { phrase: "Ces cœurs verts des laitues, ils contiennent toute la vie du jardin !", question: "Le 'cœur' représente quoi pour la cliente et quelle est la figure ?", answer: "La partie centrale - synecdoque du tout pour la partie" }
+                ],
+                qcm: [
+                    { q: "'Les bonnes mains ont cultivé' est une synecdoque signifiant...", options: ["Les mains seules", "Les personnes complètes", "Les outils", "Le sol"], answer: 1 },
+                    { q: "Pourquoi utiliser 'têtes couronnées' au lieu de 'rois' ?", options: ["Pour clarté", "Pour effet poétique", "Pour simplifier", "Par erreur"], answer: 1 },
+                    { q: "La 'robe' des tomates représente quoi ?", options: ["Un vêtement", "La couleur et la pelure", "La forme", "La taille"], answer: 1 },
+                    { q: "'Les voiles en mer' remplacent quoi dans la phrase ?", options: ["Les navires", "Les vagues", "Les marins", "Les cordes"], answer: 0 },
+                    { q: "Quel est l'effet de ces synecdoques dans le dialogue ?", options: ["Scientifique", "Poétique et vivant", "Critique", "Neutre"], answer: 1 },
+                    { q: "'Cœurs verts des laitues' signifie littéralement...", options: ["Des cœurs réels", "La partie centrale", "La plante entière", "Les feuilles"], answer: 1 },
+                    { q: "Pourquoi le vendeur parle-t-il ainsi ?", options: ["Par ignorance", "Volontairement poétique", "Par erreur", "Pour confondre"], answer: 1 },
+                    { q: "'Mains d'œuvre' est une synecdoque signifiant...", options: ["Les mains", "Les travailleurs", "Le travail", "Les salaires"], answer: 1 },
+                    { q: "Comment la cliente reconnaît-elle le style du vendeur ?", options: ["Elle le critique", "Elle dit qu'il parle comme un poète", "Elle part", "Elle se fâche"], answer: 1 },
+                    { q: "La synecdoque sert ici à...", options: ["Simplifier", "Créer une atmosphère poétique", "Expliquer", "Convaincre"], answer: 1 }
+                ]
+            },
+            {
+                id: 6,
+                title: "Activité Orale 6: Euphémisme - Annonce Gouvernementale",
+                dialogue: `
+                    <div style="background: rgba(249, 115, 22, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #f97316;">
+                        <div style="font-weight: 700; color: #fed7aa; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Conférence de Presse Officielle</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Ministre :</strong> "Nous annonçons une restructuration économique nécessaire..."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Journaliste 1 :</strong> "Cela signifie des licenciements massifs, monsieur ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Ministre :</strong> "Non, une optimisation d'effectifs, une réallocation des ressources humaines."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Journaliste 2 :</strong> "Et les personnes du troisième âge dans vos usines ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Ministre :</strong> "Elles bénéficieront d'une transition professionnelle accompagnée et d'une préretraite anticipée."</div>
+                            <div><strong style="color: #fed7aa;">Journaliste 1 :</strong> "Vous voulez dire qu'ils perdent leur emploi sans vraie reconversion ?"</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "'Restructuration économique' au lieu de 'fermeture d'usines'.", question: "Quel est l'objectif de cet euphémisme selon le ministre ?", answer: "Adoucir la réalité brutale, préserver l'image politique" },
+                    { phrase: "'Optimisation d'effectifs' remplace littéralement quoi ?", question: "Quel terme plus brutal cela cache-t-il ?", answer: "Licenciements ou suppressions d'emplois" },
+                    { phrase: "'Personnes du troisième âge' au lieu de 'vieux'.", question: "Pourquoi utiliser cette périphrase dans un contexte officiel ?", answer: "Pour respecter les personnes âgées et éviter le terme péjoratif" },
+                    { phrase: "'Transition professionnelle accompagnée' signifie réellement...", question: "Identifiez ce que cache cet euphémisme.", answer: "Formation rapide ou très peu d'aide après le licenciement" }
+                ],
+                qcm: [
+                    { q: "Pourquoi le ministre utilise-t-il des euphémismes ?", options: ["Clarté", "Euphémismes", "Adoucir des réalités difficiles", "Confusion"], answer: 2 },
+                    { q: "'Réallocation des ressources humaines' dénote quoi de la part du ministre ?", options: ["Honnêteté", "Tentative de dissimuler", "Clarté brutale", "Poésie"], answer: 1 },
+                    { q: "Le journaliste traduit ce langage pour...", options: ["Critiquer", "Clarifier la réalité", "Moquerie", "Accord"], answer: 1 },
+                    { q: "'Personnes du troisième âge' est un euphémisme pour...", options: ["Vieillards", "Personnes âgées (respectueusement)", "Anciens", "Retraités"], answer: 1 },
+                    { q: "Quel est l'effet politique des euphémismes du ministre ?", options: ["Transparence", "Acceptabilité sociale", "Vérité", "Critique"], answer: 1 },
+                    { q: "'Préretraite anticipée' cache quelle réalité ?", options: ["Une vraie retraite", "Un départ forcé sans vraies ressources", "Une promotion", "Un congé"], answer: 1 },
+                    { q: "La tension dramatique du dialogue repose sur...", options: ["L'accord", "Le décalage entre euphémismes et réalité", "L'hostilité", "La confusion"], answer: 1 },
+                    { q: "Pourquoi dire 'restructuration' et non 'licenciements massifs' ?", options: ["Par ignorance", "Pour adoucir l'impact", "Pour clarifier", "Pour jouer"], answer: 1 },
+                    { q: "L'euphémisme gouvernemental sert principalement à...", options: ["Informer précisément", "Préserver l'image politique", "Éduquer", "Amuser"], answer: 1 },
+                    { q: "Quelle critique implicite les journalistes font-ils ?", options: ["Aucune", "Dénoncer le langage trompeur", "Accepter tout", "Applaudir"], answer: 1 }
+                ]
+            },
+            {
+                id: 7,
+                title: "Activité Orale 7: Allitération - Audition Poétique",
+                dialogue: `
+                    <div style="background: rgba(249, 115, 22, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #f97316;">
+                        <div style="font-weight: 700; color: #fed7aa; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Audition Théâtrale</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Metteur en scène :</strong> "Déclame ce passage ! 'Pour qui sont ces serpents qui sifflent sur vos têtes ?'"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Acteur :</strong> "Le son sifflant crée une symphonie sinistre, n'est-ce pas ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Metteur en scène :</strong> "Exactement ! Les sons se succèdent : 's'... Sentez cette sensation !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Acteur :</strong> "Magnifique ! Avec le 'm' ? 'Murmure de mers molles, mammifères montant mon mont' ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #fed7aa;">Metteur en scène :</strong> "Oui ! Les liquides se libèrent ! 'Loin, léger, libre, la lune luit lentement'."</div>
+                            <div><strong style="color: #fed7aa;">Acteur :</strong> "C'est marveleux ! Cette musique du langage me captive !"</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "Pour qui sont ces serpents qui sifflent sur vos têtes ?", question: "Identifiez le son consonantique qui se répète et la figure utilisée.", answer: "Son /s/ qui sifle - allitération" },
+                    { phrase: "Le son sifflant crée une symphonie sinistre.", question: "Quel effet l'allitération /s/ produit-elle sur le lecteur ?", answer: "Un effet sinistre, inquiétant, évoquant le sifflement" },
+                    { phrase: "'Murmure de mers molles, mammifères montant mon mont'", question: "Quel son se répète et quel est son effet musical ?", answer: "Son /m/ - donne une impression douce et fluide" },
+                    { phrase: "'Loin, léger, libre, la lune luit lentement'", question: "Analysez la répétition du son /l/ et son effet.", answer: "Son /l/ - crée une fluidité, légèreté et aérienne" }
+                ],
+                qcm: [
+                    { q: "L'allitération en /s/ dans la réplique de Racine crée quel effet ?", options: ["Douceur", "Menace et inquiétude", "Joie", "Tranquillité"], answer: 1 },
+                    { q: "Pourquoi le metteur en scène insiste-t-il sur les sons ?", options: ["Pour confondre", "Pour créer une atmosphère", "Pour clarifier", "Pour simplifier"], answer: 1 },
+                    { q: "L'allitération en /m/ dans 'Murmure... molles... mammifères' rend quoi ?", options: ["Horreur", "Légèreté douce", "Rapidité", "Tristesse"], answer: 1 },
+                    { q: "Les 'liquides se libèrent' veut dire que les sons /l/...", options: ["Disparaissent", "Dominent le rythme", "Se contractent", "S'arrêtent"], answer: 1 },
+                    { q: "Quel est l'objectif pédagogique du metteur en scène ?", options: ["Ennuyer", "Montrer comment les sons affectent le sens", "Critiquer", "Simplifier"], answer: 1 },
+                    { q: "L'allitération /l/ dans 'Loin léger libre... lune luit lentement' exprime...", options: ["Lourdeur", "Légèreté et fluidité", "Silence", "Force"], answer: 1 },
+                    { q: "Comment l'acteur reconnaît-il l'impact de l'allitération ?", options: ["Il ne dit rien", "Par enthousiasme et fascination", "Avec indifférence", "Avec critique"], answer: 1 },
+                    { q: "La 'musique du langage' signifie que l'allitération crée...", options: ["Confusion", "Un rythme et une harmonie sonore", "Silence", "Bruit blanc"], answer: 1 },
+                    { q: "Quelle est la différence entre /s/, /m/ et /l/ dans leurs effets ?", options: ["Aucune", "Chacun crée une atmosphère distincte", "Tous les mêmes", "Tous horribles"], answer: 1 },
+                    { q: "L'allitération est surtout utilisée en...", options: ["Prose ordinaire", "Théâtre et poésie pour l'effet musical", "Journalisme", "Notices administratives"], answer: 1 }
+                ]
+            },
+            {
+                id: 8,
+                title: "Activité Orale 8: Paradoxe - Débat Philosophique",
+                dialogue: `
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #3b82f6;">
+                        <div style="font-weight: 700; color: #93c5fd; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Café Philosophique</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Professeur :</strong> "Comment peut-on vivre vraiment en acceptant la mort ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Étudiant 1 :</strong> "C'est un paradoxe ! Accepter la mort pour vivre intensément ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Professeur :</strong> "Exactement ! Je sais que je ne sais rien, disait Socrate."</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Étudiant 2 :</strong> "Mais comment renonce-t-on au bonheur pour le trouver ?"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Professeur :</strong> "En cherchant moins à posséder. Moins on a, plus on est libre et riche intérieurement."</div>
+                            <div><strong style="color: #93c5fd;">Étudiant 1 :</strong> "C'est une double vérité : le mensonge contient parfois la vérité !"</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "Comment peut-on vivre vraiment en acceptant la mort ?", question: "Quel est le paradoxe central de cette question ?", answer: "La mort et la vie semblent opposées, mais accepter la mort donne sens à la vie" },
+                    { phrase: "'Je sais que je ne sais rien', disait Socrate.", question: "Expliquez le paradoxe de cette phrase philosophique.", answer: "Savoir qu'on ne sait pas = sagesse suprême, contradiction apparente" },
+                    { phrase: "Comment renonce-t-on au bonheur pour le trouver ?", question: "Quel paradoxe l'étudiant énonce-t-il ?", answer: "Le bonheur vient en y renonçant, non en le poursuivant" },
+                    { phrase: "'Moins on a, plus on est libre et riche intérieurement.'", question: "Quel paradoxe cette affirmation du professeur contient-elle ?", answer: "Pauvreté matérielle = richesse spirituelle" }
+                ],
+                qcm: [
+                    { q: "Le paradoxe du professeur sur la mort et la vie signifie que...", options: ["La mort est bonne", "Accepter la finitude donne du sens à la vie", "Il ne faut pas vivre", "Rien n'a de sens"], answer: 1 },
+                    { q: "Pourquoi Socrate dit-il 'Je sais que je ne sais rien' ?", options: ["Par ignorance", "Pour montrer une sagesse profonde", "Par modestie fausse", "Par critique"], answer: 1 },
+                    { q: "Le paradoxe du bonheur exprimes que...", options: ["Le bonheur est facile", "Chercher le bonheur éloigne du bonheur", "Le bonheur n'existe pas", "C'est simple"], answer: 1 },
+                    { q: "Comment la pauvreté rend-elle riche selon le professeur ?", options: ["Financièrement", "Spirituellement", "Intellectuellement", "Socialement"], answer: 1 },
+                    { q: "Quel est l'objectif du paradoxe en philosophie ?", options: ["Confondre", "Provoquer la réflexion", "Simplifier", "Divertir"], answer: 1 },
+                    { q: "'Le mensonge contient parfois la vérité' est un paradoxe signifiant...", options: ["Les mensonges sont vrais", "Les contraires peuvent se rencontrer", "La vérité n'existe pas", "Contradiction pure"], answer: 1 },
+                    { q: "Comment les étudiants réagissent-ils aux paradoxes ?", options: ["Avec confusion", "Avec fascination et engagement", "Avec rejet", "Avec indifférence"], answer: 1 },
+                    { q: "Le paradoxe sur la mort et la vie révèle quoi de la condition humaine ?", options: ["Absurdité", "Complexité profonde", "Simplicité", "Injustice"], answer: 1 },
+                    { q: "Quelle sagesse le professeur transmet-il ?", options: ["Scientifique", "Existentielle et philosophique", "Pratique", "Politique"], answer: 1 },
+                    { q: "Comment interpréter 'moins on a, plus on est riche' ?", options: ["Littéralement", "Au plan de la liberté et de l'autonomie spirituelle", "Mathématiquement", "Économiquement"], answer: 1 }
+                ]
+            },
+            {
+                id: 9,
+                title: "Activité Orale 9: Accumulation - Critique de Film",
+                dialogue: `
+                    <div style="background: rgba(168, 85, 247, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #a855f7;">
+                        <div style="font-weight: 700; color: #d8b4fe; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Critique Cinématographique</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #d8b4fe;">Critique 1 :</strong> "Ce film catastrophe était insoutenable ! Explosions, destructions, tremblements, écroulements !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #d8b4fe;">Critique 2 :</strong> "Et les acteurs ? Cris, pleurs, hurlements, gémissements, lamentations !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #d8b4fe;">Critique 1 :</strong> "L'héroïne a tout fait : courir, sauter, combattre, survivre, triompher, danser de joie !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #d8b4fe;">Critique 2 :</strong> "Et les décors ? Bâtiments éventrés, routes fracassées, ponts écrasés, voitures déchiquetées, arbres déracinés !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #d8b4fe;">Critique 1 :</strong> "Malgré tout, c'était ennuyeux : pas d'histoire, pas d'émotion, pas de sens, pas de profondeur !"</div>
+                            <div><strong style="color: #d8b4fe;">Critique 2 :</strong> "Résumé : bruit, fureur, action, mais vide ! Un spectacle sans substance !"</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "Explosions, destructions, tremblements, écroulements !", question: "Identifiez la figure de style et l'effet qu'elle crée.", answer: "Accumulation - crée une impression de surcharge et de chaos" },
+                    { phrase: "Cris, pleurs, hurlements, gémissements, lamentations !", question: "Quels sentiments cette accumulation d'actions vocales exprime-t-elle ?", answer: "La souffrance collective et l'hystérie émotionnelle" },
+                    { phrase: "Courir, sauter, combattre, survivre, triompher, danser de joie !", question: "Quel arc narratif cette accumulation d'actions suggère-t-elle ?", answer: "L'escalade progressive jusqu'au triomphe final" },
+                    { phrase: "'Pas d'histoire, pas d'émotion, pas de sens, pas de profondeur !'", question: "Comment l'accumulation négative renforce-t-elle la critique ?", answer: "Par répétition insistante du manque et de l'absence" }
+                ],
+                qcm: [
+                    { q: "L'accumulation des événements catastrophiques sert à...", options: ["Clarifier", "Amplifier l'impression de chaos", "Simplifier", "Relaxer"], answer: 1 },
+                    { q: "Pourquoi les critiques énumèrent-ils plusieurs actions vocales ?", options: ["Par confusion", "Pour montrer la surcharge émotionnelle du film", "Par ignorance", "Sans raison"], answer: 1 },
+                    { q: "L'accumulation d'actions héroïques (courir, sauter...) crée quel effet ?", options: ["Calme", "Impression d'hyperactivité sans repos", "Silence", "Monotonie"], answer: 1 },
+                    { q: "Les destructions énumérées (bâtiments, routes, ponts...) symbolisent quoi ?", options: ["La création", "La civilisation s'effondrant", "La beauté", "La paix"], answer: 1 },
+                    { q: "Quel est le paradoxe soulevé par les critiques ?", options: ["Pas de paradoxe", "Action extrême mais ennui extrême", "Calme et action", "Fiction et réalité"], answer: 1 },
+                    { q: "L'accumulation négative ('pas d'histoire, pas d'émotion...') exprime...", options: ["Enthousiasme", "Une critique sévère et systématique", "Lounge", "Confusion"], answer: 1 },
+                    { q: "Comment l'accumulation affecte le spectateur du film critiqué ?", options: ["Aucun effet", "Surcharge sensorielle et fatigue", "Relax", "Concentration"], answer: 1 },
+                    { q: "Quel est le ton dominant des critiques ?", options: ["Admiratif", "Sarcastique et critique", "Neutre", "Didactique"], answer: 1 },
+                    { q: "'Bruit, fureur, action, mais vide' résume comment le problème du film ?", options: ["Trop de subtilité", "Spectacle sans substance", "Trop calme", "Trop intellectuel"], answer: 1 },
+                    { q: "L'accumulation dans la critique rend celle-ci...", options: ["Moins crédible", "Plus impactante et convaincante", "Plus neutre", "Plus confuse"], answer: 1 }
+                ]
+            },
+            {
+                id: 10,
+                title: "Activité Orale 10: Antithèse - Débat sur la Justice",
+                dialogue: `
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #3b82f6;">
+                        <div style="font-weight: 700; color: #93c5fd; margin-bottom: 15px; font-size: 1rem;">🎭 DIALOGUE : Débat Parlementaire</div>
+                        <div style="background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.8;">
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Député A :</strong> "La justice doit punir, pas rédemptionner ! Sévérité contre clémence !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Député B :</strong> "Vous confondez justice et vengeance ! La rédemption sauve, la rigueur détruit !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Député A :</strong> "Les coupables doivent souffrir ! L'ordre triomphe sur le chaos !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Député B :</strong> "Mais la compassion transforme tandis que la haine perpétue ! Lumière vs ténèbres !"</div>
+                            <div style="margin-bottom: 12px;"><strong style="color: #93c5fd;">Député A :</strong> "Vie libre vs prison ! C'est le prix de la transgression !"</div>
+                            <div><strong style="color: #93c5fd;">Député B :</strong> "Mort de l'âme vs renaissance ! La vraie justice libère autant qu'elle protège."</div>
+                        </div>
+                    </div>
+                `,
+                expressions: [
+                    { phrase: "'La justice doit punir, pas rédemptionner ! Sévérité contre clémence !'", question: "Identifiez l'antithèse centrale et son rôle rhétorique.", answer: "Sévérité vs clémence - établit un choix binaire pour convaincre" },
+                    { phrase: "'Vous confondez justice et vengeance ! La rédemption sauve, la rigueur détruit !'", question: "Comment l'antithèse renforce-t-elle l'argument du Député B ?", answer: "Par opposition dramatique : rédemption (positive) vs rigueur (négative)" },
+                    { phrase: "'L'ordre triomphe sur le chaos !'", question: "Quel concept s'oppose à 'chaos' dans cette antithèse ?", answer: "L'ordre (bien vs mal implicite)" },
+                    { phrase: "'Lumière vs ténèbres, compassion vs haine, vie libre vs prison'", question: "Quel est l'effet de ces multiples antithèses successives ?", answer: "Accumulation d'oppositions pour amplifier le message politique" }
+                ],
+                qcm: [
+                    { q: "L'antithèse 'sévérité contre clémence' illustre quel conflit ?", options: ["Absence de conflit", "Deux philosophies judiciaires opposées", "Accord parfait", "Confusion"], answer: 1 },
+                    { q: "Pourquoi les députés utilisent-ils tant d'antithèses ?", options: ["Par hasard", "Pour convaincre par le contraste frappant", "Pour confondre", "Pour divertir"], answer: 1 },
+                    { q: "L'antithèse 'rédemption sauve, rigueur détruit' crée quel jugement moral ?", options: ["Neutre", "Clair : rédemption = bien, rigueur = mal", "Égal", "Confus"], answer: 1 },
+                    { q: "'L'ordre triomphe sur le chaos' utilisé pour défendre quoi ?", options: ["La compassion", "Une position punitive et stricte", "La liberté", "L'anarchie"], answer: 1 },
+                    { q: "Quel est l'effet rhétorique de 'lumière vs ténèbres' dans un débat ?", options: ["Factuel", "Esthétique et émotionnel persuasif", "Scientifique", "Neutre"], answer: 1 },
+                    { q: "L'antithèse 'vie libre vs prison' renvoie à quel système de valeurs ?", options: ["Économique", "Politique et moral", "Scientifique", "Esthétique"], answer: 1 },
+                    { q: "Comment le Député B répond à chaque antithèse du Député A ?", options: ["Avec silence", "Avec sa propre antithèse inverse", "Avec accord", "Sans argumenter"], answer: 1 },
+                    { q: "L'antithèse finale 'mort de l'âme vs renaissance' signifie que...", options: ["Le criminel meurt", "La punition sans rédemption détruit, la compassion sauve", "La mort est bonne", "Pas de sens"], answer: 1 },
+                    { q: "Quel est le ton dominant du débat ?", options: ["Amical", "Polarisé et confrontationnel", "Neutre", "Confus"], answer: 1 },
+                    { q: "L'accumulation d'antithèses dans ce débat rend l'argumentation...", options: ["Moins efficace", "Plus dramatique et persuasive", "Plus scientifique", "Plus confuse"], answer: 1 }
+                ]
+            }
+        ];
+
+        // DATABASE - MODULES
+        const modules = [
+            {
+                id: 1,
+                title: "Les Figures d'Analogie",
+                description: "Comparaison, métaphore et personnification",
+                icon: "✨",
+                category: "Analogie",
+                subfigures: [
+                    {
+                        name: "La Comparaison",
+                        definition: "C'est la figure la plus simple. Elle rapproche deux idées à l'aide d'un outil de comparaison (comme, tel que, ressembler à, pareil à).",
+                        example: "« Sa mémoire est comme une boîte à merveilles. »"
+                    },
+                    {
+                        name: "La Métaphore",
+                        definition: "C'est une comparaison plus directe car elle supprime l'outil de comparaison. Le lien entre les deux éléments est sous-entendu.",
+                        example: "« Cette boîte est un magasin de trésors. »"
+                    },
+                    {
+                        name: "La Personnification",
+                        definition: "Elle consiste à attribuer des caractéristiques humaines (sentiments, gestes, paroles) à un objet, un animal ou une idée.",
+                        example: "« Le mur me regardait avec sévérité. »"
+                    },
+                    {
+                        name: "L'Allégorie",
+                        definition: "Elle rend une idée abstraite concrète en la représentant sous une forme vivante ou matérielle (souvent avec une majuscule).",
+                        example: "La Mort représentée comme une faucheuse qui attend le condamné."
+                    }
+                ],
+                observation: [
+                    "<strong>1.</strong> Ses cheveux noirs ondulaient comme une rivière mystérieuse. (Poésie romantique)",
+                    "<strong>2.</strong> Le cœur de la ville battait au rythme des foules. (Musset)",
+                    "<strong>3.</strong> Telle une vague qui se brise sur le rivage, l'espoir s'effondra. (Victor Hugo)",
+                    "<strong>4.</strong> Le vent susurrait entre les branches des arbres anciens. (Lamartine)",
+                    "<strong>5.</strong> Ses lèvres étaient des pétales de rose délicats et fragiles. (Poésie courtoise)"
+                ],
+                questions: [
+                    { q: "Dans la phrase 1 'ses cheveux noirs ondulaient comme une rivière', quel est l'outil de comparaison utilisé ?", r: "comme" },
+                    { q: "Identifiez le verbe qui donne une caractéristique humaine au cœur dans la phrase 2.", r: "battait" },
+                    { q: "La phrase 3 commence par 'Telle une vague'. Quel est cet outil de comparaison ?", r: "telle" },
+                    { q: "Dans la phrase 4, quel verbe signifie que le vent produit un son doux ?", r: "susurrait" },
+                    { q: "Dans la phrase 5, à quel objet naturel délicate les lèvres sont-elles comparées ?", r: "pétales de rose" }
+                ],
+                concept: "L'analogie rapproche deux réalités distinctes. La <strong>comparaison</strong> explicite utilise 'comme', 'tel', 'semblable à', 'pareil à'. La <strong>métaphore</strong> fusionne directement sans marqueur. La <strong>personnification</strong> donne des caractères humains aux êtres inanimés ou abstraits.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Types de comparaison (5 phrases)",
+                        phrases: [
+                            "Elle marchait tel un cygne majestueux sur un lac calme.",
+                            "Les nuages flottaient, semblables à des navires blancs dans le ciel.",
+                            "Son sourire brillait comme mille étoiles réunies.",
+                            "La route s'étendait, pareille à un serpent de pierre gris.",
+                            "Les enfants couraient, agiles comme des gazelles dans les prés."
+                        ],
+                        answers: ["tel", "semblables", "comme", "pareille", "comme"]
+                    },
+                    { 
+                        title: "Ex.2 : Personnifications (5 phrases)",
+                        phrases: [
+                            "La montagne gardait ses secrets enfouis.",
+                            "L'automne gémissait sur les feuilles mortes.",
+                            "La ville endormie respirait lentement sous la lune.",
+                            "Le silence tombait comme un voile sur la forêt.",
+                            "Le fleuve murmure ses désirs aux pierres du rivage."
+                        ],
+                        answers: ["gardait", "gémissait", "respirait", "tombait", "murmure"]
+                    },
+                    { 
+                        title: "Ex.3 : Métaphores pures (5 phrases)",
+                        phrases: [
+                            "Ses yeux sont deux abîmes profonds qui attirent irrésistiblement.",
+                            "La vie est un jardin où fleurissent les rêves.",
+                            "Le temps est une rivière qui s'écoule sans retour.",
+                            "Son cœur est une forteresse inexpugnable.",
+                            "La nuit était un voile noir enveloppant le monde."
+                        ],
+                        answers: ["abîmes", "jardin", "rivière", "forteresse", "voile"]
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "L'Ironie (Antiphrase)",
+                description: "Dire le contraire pour critiquer ou moquer",
+                icon: "😏",
+                category: "Opposition",
+                observation: [
+                    "<strong>1.</strong> Bravo ! Voilà une magnifique façon de rater complètement. (Usage contemporain)",
+                    "<strong>2.</strong> Vous êtes une personne d'une grande honnêteté. (dit à un menteur notoire)",
+                    "<strong>3.</strong> C'est vraiment beau, ce résultat catastrophique ! (Critique voilée)",
+                    "<strong>4.</strong> Quel génie ! (dit à quelqu'un qui vient de faire une bêtise)",
+                    "<strong>5.</strong> Merci pour cette aide si précieuse. (dit après un coup de poignard dans le dos)"
+                ],
+                questions: [
+                    { q: "L'ironie exprime-t-elle littéralement ce qu'elle pense véritablement ?", r: "non" },
+                    { q: "Dans la phrase 1 'C'est vraiment beau', cet adjectif 'beau' est-il utilisé sincèrement ou ironiquement ?", r: "ironiquement" },
+                    { q: "Quel est l'objectif principal quand on utilise l'ironie dans la phrase 4 'Quel génie !' ?", r: "moquer" },
+                    { q: "Dans la phrase 2, dire à un menteur 'Vous êtes une personne d'une grande honnêteté' est-il sincère ?", r: "non" },
+                    { q: "L'ironie qui dit le bien pour signifier le mal s'appelle aussi...", r: "antiphrase" }
+                ],
+                concept: "L'ironie <strong>exprime l'opposé de sa pensée</strong> pour créer une critique, une moquerie ou un humour. C'est une <strong>antiphrase</strong> : dire le bien pour signifier le mal. Arme rhétorique des philosophes et écrivains.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Repérage du sens ironique",
+                        phrases: [
+                            "Après trois heures d'attente : 'Quel service exemplaire !'",
+                            "Face à une mauvaise copie : 'Orthographe exceptionnelle !'",
+                            "Devant un ami sans cœur : 'Tu es une personne si généreuse !'",
+                            "Après un mensonge éhonté : 'Quelle sincérité remarquable !'",
+                            "Regardant un travail inachevé : 'C'est une vraie merveille !'"
+                        ],
+                        answers: ["critique", "critique", "critique", "critique", "critique"]
+                    },
+                    { 
+                        title: "Ex.2 : Intention ironique",
+                        phrases: [
+                            "Elle dit à son ami maladroit : 'Tu es un danseur magnifique !'",
+                            "Face au silence complice : 'Quelle conversation passionnante !'",
+                            "Devant l'arrogance d'un sot : 'Quel modèle de modestie !'",
+                            "À celui qui abandonne toujours : 'Tu es tellement persévérant !'",
+                            "Voyant l'égoïsme flagrant : 'Quel altruiste remarquable !'"
+                        ],
+                        answers: ["moquerie", "sarcasme", "sarcasme", "moquerie", "critique"]
+                    },
+                    { 
+                        title: "Ex.3 : Sens caché",
+                        phrases: [
+                            "À un traître : 'Merci pour ton amitié si fidèle !'",
+                            "Face à l'injustice : 'C'est une loi si équitable !'",
+                            "Devant la cobardise : 'Quel courage admirable !'",
+                            "À un paresseux : 'Tu travailles avec tant de diligence !'",
+                            "Regardant l'incompétence : 'Tu gères cela avec une telle expertise !'"
+                        ],
+                        answers: ["trahison", "injustice", "couardise", "paresse", "incompétence"]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "L'Oxymore",
+                description: "Association de mots opposés",
+                icon: "⚡",
+                category: "Opposition",
+                observation: [
+                    "<strong>1.</strong> Cette obscure clarté qui tombe des étoiles fait ressembler la nuit à le jour. (Corneille)",
+                    "<strong>2.</strong> Un silence éloquent remplit la salle de sa puissance muette. (Molière)",
+                    "<strong>3.</strong> La douce violence de la tempête nous submerge dans une quiétude tormentée. (Racine)",
+                    "<strong>4.</strong> Ils marchent dans la lumière noire du crépuscule merveilleux. (Poésie)",
+                    "<strong>5.</strong> C'est une vivante mort de l'esprit qui anime ses actions. (Philosophie)"
+                ],
+                questions: [
+                    { q: "Quels deux mots exactement s'opposent dans 'obscure clarté' (phrase 1) ?", r: "obscure et clarté" },
+                    { q: "L'oxymore unit-il deux mots contraires directement ou indirectement ?", r: "directement" },
+                    { q: "Dans la phrase 3, quel adjectif crée une contradiction avec 'violence' ?", r: "douce" },
+                    { q: "Quel est le type de paradoxe créé par 'silence éloquent' : contradiction ou fusion ?", r: "paradoxe" },
+                    { q: "L'oxymore est-il une construction poétique volontaire ou une erreur de langage ?", r: "poétique" }
+                ],
+                concept: "L'oxymore rapproche <strong>deux mots de sens contraire</strong> pour créer une <strong>tension paradoxale</strong>. Il exprime une réalité complexe qui dépasse la logique ordinaire. Exemple : 'obscure clarté' capture l'ambiguïté du crépuscule.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Identification des paires opposées",
+                        phrases: [
+                            "Cette obscure clarté révèle l'invisible visible du crépuscule mystérieux.",
+                            "Un silence éloquent parle plus fort que mille cris murmurés.",
+                            "La douce violence nous envahit d'une tendresse brutale.",
+                            "Cette vivante mort du paysage reste étrangement vivace.",
+                            "Une froide chaleur émane de cette nuit lumineuse."
+                        ],
+                        answers: ["obscure-clarté", "silence-éloquent", "douce-violence", "vivante-mort", "froide-chaleur"]
+                    },
+                    { 
+                        title: "Ex.2 : Sens paradoxal",
+                        phrases: [
+                            "L'amoureux heureux souffre d'une joie douloureuse insoutenable.",
+                            "Le mensonge vrai des poètes éclaire la fausseté véridique.",
+                            "Cette liberté esclave nous lie à l'indépendance asservissante.",
+                            "Le silence bruyant de la foule crie son apathie sonore.",
+                            "Une nuit lumineuse apporte l'obscurité radieuse du rêve."
+                        ],
+                        answers: ["paradoxe", "contraste", "contradiction", "tension", "paradoxe"]
+                    },
+                    { 
+                        title: "Ex.3 : Effets poétiques",
+                        phrases: [
+                            "Cette fausse vérité nous libère d'une certitude menteuse.",
+                            "L'absence présente hante notre vide comblé.",
+                            "Cette petitesse géante écrase nos grands riens.",
+                            "L'amour haineux qui brûle doucement consume silencieusement.",
+                            "Le bruit muet de la solitude crie son isolement joyeux."
+                        ],
+                        answers: ["contradiction", "paradoxe", "tension", "ambiguïté", "paradoxe"]
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "La Métaphore",
+                description: "Substitution poétique sans outil de comparaison",
+                icon: "🎭",
+                category: "Analogie",
+                observation: [
+                    "<strong>1.</strong> La vie est un long voyage parsemé d'embûches et de carrefours. (Proverbe)",
+                    "<strong>2.</strong> Ses yeux sont deux océans de tendresse infiniment profonds. (Poésie)",
+                    "<strong>3.</strong> L'amour est un feu consumant qui ravage l'âme du poète. (Ronsard)",
+                    "<strong>4.</strong> Le temps est un fleuve qui s'écoule inexorablement vers l'oubli. (Saint-Exupéry)",
+                    "<strong>5.</strong> La mort est un sommeil paisible d'où nul ne s'éveille. (Poésie funéraire)"
+                ],
+                questions: [
+                    { q: "Dans la phrase 1, la vie est comparée à quel objet ou concept spécifique ?", r: "voyage" },
+                    { q: "Dans la phrase 2, à quel élément naturel immense les yeux sont-ils identifiés ?", r: "océans" },
+                    { q: "La métaphore utilise-t-elle l'outil de comparaison 'comme' ou remplace-t-elle directement ?", r: "remplace" },
+                    { q: "Identifiez ce que devient ou ce qu'incarne l'amour dans la phrase 3.", r: "feu" },
+                    { q: "Pourquoi la métaphore s'appelle-t-elle une 'substitution directe' ?", r: "fusion" }
+                ],
+                concept: "La métaphore <strong>identifie directement</strong> deux réalités. Contrairement à la comparaison, elle n'utilise pas d'outil comme 'comme'. Elle fusionne: 'la vie est un voyage' (non 'la vie est comme un voyage'). C'est substitution poétique.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Identifier le comparé",
+                        phrases: [
+                            "Ses yeux sont deux diamants étincelants dans l'obscurité du soir.",
+                            "L'âme du poète est une harpe éolienne vibrant sous les vents du destin.",
+                            "Le cœur de la ville est une machine vivante qui pulse sans relâche.",
+                            "Ses mains tremblantes sont des feuilles d'automne emportées par le vent.",
+                            "La mémoire est un trésor que le temps ronge inexorablement."
+                        ],
+                        answers: ["diamants", "harpe", "machine", "feuilles", "trésor"]
+                    },
+                    { 
+                        title: "Ex.2 : Sens symbolique",
+                        phrases: [
+                            "La jalousie est un poison qui corrompt les plus beaux sentiments.",
+                            "L'espoir est une lumière qui guide les âmes égarées.",
+                            "Le doute est une chaîne qui enchaîne les audacieux.",
+                            "La beauté est un jardin dont chacun cultive sa part.",
+                            "L'ignorance est une prison dorée qui retient captifs."
+                        ],
+                        answers: ["poison", "lumière", "chaîne", "jardin", "prison"]
+                    },
+                    { 
+                        title: "Ex.3 : Création poétique",
+                        phrases: [
+                            "La nuit est une reine souveraine qui règne sur le silence.",
+                            "Le rêve est une porte ouverte sur les mondes impossibles.",
+                            "La colère est un volcan qui gronde dans les entrailles du cœur.",
+                            "La solitude est un désert infini sans oasis de tendresse.",
+                            "L'amitié est une ancre qui nous retient en ces eaux tempétueuses."
+                        ],
+                        answers: ["reine", "porte", "volcan", "désert", "ancre"]
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "La Synecdoque",
+                description: "Partie pour le tout, ou inversement",
+                icon: "🔗",
+                category: "Substitution",
+                observation: [
+                    "<strong>1.</strong> Il y a beaucoup de voiles sur l'horizon. (Les voiles = les navires)",
+                    "<strong>2.</strong> Brûler la chandelle par les deux bouts. (La chandelle = la vie)",
+                    "<strong>3.</strong> Les murs de cette maison ont des secrets. (Les murs = la maison)",
+                    "<strong>4.</strong> Tous les cœurs battaient d'inquiétude. (Les cœurs = les personnes)",
+                    "<strong>5.</strong> Cent têtes couronnées assistaient au banquet. (Les têtes = les rois/reines)"
+                ],
+                questions: [
+                    { q: "Dans la phrase 1, que représentent les 'voiles' : les navires ou les voiles elles-mêmes ?", r: "navires" },
+                    { q: "Quel concept ou réalité symbolise 'la chandelle' dans la phrase 2 ?", r: "vie" },
+                    { q: "La synecdoque utilise une partie pour désigner le ou l'...", r: "tout" },
+                    { q: "Dans la phrase 4, que désignent les 'cœurs' : des organes ou des personnes ?", r: "personnes" },
+                    { q: "Dans 'cent têtes couronnées', la partie qui représente le tout est : têtes, couronnes ou rois ?", r: "têtes" }
+                ],
+                concept: "La synecdoque utilise une <strong>partie pour désigner le tout</strong> ou <strong>le tout pour désigner une partie</strong>. Elle crée des images poétiques originales. Exemples : 'une voile' = un navire, 'une main d'œuvre' = des travailleurs.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Partie pour le tout",
+                        phrases: [
+                            "Les tentes blanches recouvraient l'armée entière du désert.",
+                            "Les toits rouges du village dominaient la vallée verdoyante.",
+                            "Les couronnes d'or brillaient à la cérémonie royale.",
+                            "Les épées résonnaient lors du combat féroce.",
+                            "Les masques de marbre gardaient le secret des âmes."
+                        ],
+                        answers: ["armée", "village", "rois", "guerriers", "personnes"]
+                    },
+                    { 
+                        title: "Ex.2 : Le tout pour la partie",
+                        phrases: [
+                            "Toute la France tremblait devant cet homme seul.",
+                            "L'humanité entière était représentée par cet enfant innocent.",
+                            "La nature grondait à travers la seule tempête.",
+                            "L'univers se résumait au silence de ce moment.",
+                            "Le monde était captif de ses regards enchanteurs."
+                        ],
+                        answers: ["nation", "humanité", "phénomène", "instant", "personne"]
+                    },
+                    { 
+                        title: "Ex.3 : Reconnaissance",
+                        phrases: [
+                            "Les rues protestaient contre l'injustice flagrante.",
+                            "La prairie respirait le parfum du printemps nouveau.",
+                            "Les toques blanches défendaient l'honneur de la cuisine.",
+                            "Les mains tremblaient en signant le document crucial.",
+                            "Le ciel pleurait sur les ruines de la cité."
+                        ],
+                        answers: ["foule", "nature", "chefs", "personnes", "destin"]
+                    }
+                ]
+            },
+            {
+                id: 6,
+                title: "L'Atténuation : La Litote et l'Euphémisme",
+                description: "Adoucir une réalité brutale avec retenue et élégance",
+                icon: "🤐",
+                category: "Insistance",
+                subfigures: [
+                    {
+                        name: "La Litote",
+                        definition: "Elle consiste à dire moins pour suggérer plus. On utilise souvent une structure négative pour affirmer un sentiment ou une pensée de manière plus forte qu'il n'y paraît.",
+                        example: "« Ce n'est pas mauvais » (pour dire que c'est très bon)."
+                    },
+                    {
+                        name: "L'Euphémisme",
+                        definition: "Il consiste à remplacer une expression qui pourrait choquer, blesser ou paraître trop brutale par un terme plus doux ou neutre.",
+                        example: "« Il nous a quittés » (pour dire qu'il est mort)."
+                    },
+                    {
+                        name: "L'Adoucissement contextuel",
+                        definition: "C'est l'art de présenter une réalité désagréable en utilisant des termes moins agressifs ou en modifiant la structure de la phrase.",
+                        example: "« Son échec académique » au lieu de « Il a échoué lamentablement »."
+                    },
+                    {
+                        name: "La Périphrase atténuante",
+                        definition: "On remplace un mot direct par une expression plus longue qui en atténue la brutalité ou l'impact émotionnel.",
+                        example: "« Les personnes du troisième âge » au lieu de « les vieux »."
+                    }
+                ],
+                observation: [
+                    "<strong>1.</strong> Ce n'est pas mal ! (Litote : pour dire que c'est excellent) - Molière",
+                    "<strong>2.</strong> Ce n'est pas rien de réussir cet examen. (Litote : c'est très important)",
+                    "<strong>3.</strong> Elle n'est pas laide. (Litote : elle est belle) - Corneille",
+                    "<strong>4.</strong> Il nous a quittés. (Euphémisme : pour dire qu'il est mort) - Expression courante",
+                    "<strong>5.</strong> Les personnes en difficulté financière. (Euphémisme : pour désigner les pauvres) - Langage administratif"
+                ],
+                questions: [
+                    { q: "La litote exprime-t-elle le même sens en disant plus ou en disant moins ?", r: "moins" },
+                    { q: "Quand on dit 'Ce n'est pas mal', cela veut vraiment dire que c'est excellent ou mauvais ?", r: "excellent" },
+                    { q: "L'euphémisme cherche-t-il à adoucir ou à amplifier une réalité brutale ?", r: "adoucir" },
+                    { q: "Quel mot plus direct et brutal l'euphémisme 'Il nous a quittés' remplace-t-il ?", r: "mort" },
+                    { q: "Quel est l'objectif principal de l'atténuation : clarté brutale ou pudeur délicate ?", r: "pudeur" }
+                ],
+                concept: "L'atténuation regroupe <strong>la litote</strong> (dire moins pour suggérer plus avec une structure négative) et <strong>l'euphémisme</strong> (remplacer un terme brutal par une expression plus douce). Ces figures servent à <strong>préserver la pudeur, l'élégance et la psychologie</strong> des personnages qui cachent leurs émotions. Application Bac : Dans Le Cid, « Je ne te hais point » exprime un amour profond par litote. Dans Le Dernier Jour d'un Condamné, Hugo utilise l'euphémisme pour critiquer l'horreur de l'exécution.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Litote - Dire moins",
+                        phrases: [
+                            "Ce travail n'est pas mauvais du tout, il montre une grande maîtrise.",
+                            "Il n'est pas courageux, cet homme qui affronte continuellement ses peurs.",
+                            "Ce moment n'est pas oublié, il reste gravé à jamais dans les cœurs.",
+                            "Elle ne fait pas d'erreurs, ce qui en ferait une personne exceptionnelle.",
+                            "Ce jour n'est pas heureux pour celui qui vient de recevoir une grande joie."
+                        ],
+                        answers: ["mauvais", "courageux", "oublié", "erreurs", "heureux"]
+                    },
+                    { 
+                        title: "Ex.2 : Euphémisme - Adoucir",
+                        phrases: [
+                            "Les personnes du troisième âge méritent notre respect et nos soins.",
+                            "Il nous a quittés après une longue vie bien remplie.",
+                            "Les sans-abri ont besoin d'un soutien social urgent et efficace.",
+                            "Cette restructuration a entraîné une réduction d'effectifs inévitable.",
+                            "Les pays en développement progressent graduellement vers la prospérité."
+                        ],
+                        answers: ["âge", "mort", "pauvres", "licenciements", "pauvres"]
+                    },
+                    { 
+                        title: "Ex.3 : Reconnaissance - Litote ou Euphémisme",
+                        phrases: [
+                            "Ce n'est pas désagréable à lire, ce roman captivant et profond.",
+                            "Les travailleurs migrants accomplissent un travail de grande valeur.",
+                            "Il n'est pas sans talent, ce musicien qui fascine les foules.",
+                            "Les dégâts collatéraux ont affecté les civils innocents.",
+                            "Elle ne manque pas de charme, cette femme envoûtante et mystérieuse."
+                        ],
+                        answers: ["litote", "euphémisme", "litote", "euphémisme", "litote"]
+                    }
+                ]
+            },
+            {
+                id: 7,
+                title: "L'Assonance et l'Allitération",
+                description: "Répétition de sons pour des effets musicaux",
+                icon: "🎵",
+                category: "Insistance",
+                observation: [
+                    "<strong>1.</strong> Pour qui sont ces serpents qui sifflent sur vos têtes ? (Racine - Allitération /s/)",
+                    "<strong>2.</strong> Mes sens sont égarés dans l'extase éternelle. (Allitération /s/)",
+                    "<strong>3.</strong> Que le son doux du vent nous berce doucement. (Assonance /o/)",
+                    "<strong>4.</strong> La mer mère nous mollit de mousse. (Allitération /m/)",
+                    "<strong>5.</strong> L'eau éternelle erre à travers l'été étoilé. (Assonance /e/)"
+                ],
+                questions: [
+                    { q: "Quel son consonantique exactement se répète dans 'Pour qui sont ces serpents qui sifflent' ?", r: "s" },
+                    { q: "L'assonance répète-t-elle des consonnes ou des voyelles identiques ?", r: "voyelle" },
+                    { q: "L'allitération répète-t-elle des consonnes ou des voyelles identiques ?", r: "consonne" },
+                    { q: "Quel est l'effet principal créé par la répétition systématique de sons identiques ?", r: "rythme" },
+                    { q: "Quelle voyelle prédomine et se répète dans la phrase 3 'Que le son doux du vent' ?", r: "o" }
+                ],
+                concept: "L'assonance <strong>répète des voyelles</strong> identiques pour une musicalité douce. L'allitération <strong>répète des consonnes</strong> pour un effet rythmique et frappant. Ces figures créent une dimension sonore à la poésie.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Allitération (/s/)",
+                        phrases: [
+                            "Sous le ciel serein, les serpents glissaient silencieusement.",
+                            "Les sages savants scrutent les secrets des siècles sombres.",
+                            "Superbement sur le sable scintillant, le soleil somnolent s'endort.",
+                            "La surface sale semble soupirer sous le silence stérile.",
+                            "Plusieurs saints saints se sentaient soudainement saisis de stupeur."
+                        ],
+                        answers: ["s", "s", "s", "s", "s"]
+                    },
+                    { 
+                        title: "Ex.2 : Assonance (/o/)",
+                        phrases: [
+                            "Un long rondo dos mons, un beau nom d'or profond.",
+                            "Au creux du fond, l'écho doux du cor résonne seul.",
+                            "Lo, nob mol som, non grot os dol.",
+                            "Tomber dans le fonds profond, c'est perdre son or.",
+                            "Notre mort dot coron rond sol or non."
+                        ],
+                        answers: ["o", "o", "o", "o", "o"]
+                    },
+                    { 
+                        title: "Ex.3 : Reconnaissance",
+                        phrases: [
+                            "Murmure mou, mer mère molle, mouche montante.",
+                            "Belle, beige beauté berçant bébé blond.",
+                            "Lent loin lune lumière lisse lisse.",
+                            "Éclat éclatant, été éternel, élève élevé.",
+                            "Chère chapelle chaude, chant charmant chuchotant."
+                        ],
+                        answers: ["m", "b", "l", "é", "ch"]
+                    }
+                ]
+            },
+            {
+                id: 8,
+                title: "Le Paradoxe",
+                description: "Affirmation qui contredit la logique commune",
+                icon: "❓",
+                category: "Opposition",
+                observation: [
+                    "<strong>1.</strong> Il faut dépenser pour économiser. (Paradoxe économique)",
+                    "<strong>2.</strong> Moins j'ai, plus je suis riche. (Paradoxe de sagesse)",
+                    "<strong>3.</strong> Je sais que je ne sais rien. (Socrate - Paradoxe philosophique)",
+                    "<strong>4.</strong> Pour vivre heureux, il faut renoncer au bonheur. (Paradoxe émotionnel)",
+                    "<strong>5.</strong> La mort nous enseigne à vivre vraiment. (Paradoxe existentiel)"
+                ],
+                questions: [
+                    { q: "Pourquoi l'affirmation 'dépenser pour économiser' est-elle un paradoxe : explique la contradiction logique.", r: "contradiction" },
+                    { q: "Le paradoxe contredit-il la logique commune ou la logique absolue et universelle ?", r: "commune" },
+                    { q: "Qui a énoncé la célèbre phrase philosophique 'Je sais que je ne sais rien' ?", r: "socrate" },
+                    { q: "Un paradoxe peut-il renfermer une vérité philosophique ou une sagesse profonde ?", r: "oui" },
+                    { q: "Quelle est la valeur principale du paradoxe en philosophie : divertissement ou sagesse ?", r: "sagesse" }
+                ],
+                concept: "Le paradoxe <strong>énonce une vérité qui semble contredire la logique</strong>. Il révèle des contradictions qui soulèvent des questions profondes. Le paradoxe remet en question nos certitudes.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Reconnaître le paradoxe",
+                        phrases: [
+                            "Pour trouver la paix, il faut accepter la guerre intérieure.",
+                            "En donnant tout, on ne perd rien.",
+                            "Le silence crie plus fort que les mots.",
+                            "Vivre, c'est apprendre à mourir chaque jour.",
+                            "Être libre, c'est accepter les limites de sa liberté."
+                        ],
+                        answers: ["paix", "tout", "silence", "vivre", "libre"]
+                    },
+                    { 
+                        title: "Ex.2 : Sens du paradoxe",
+                        phrases: [
+                            "La certitude absolue mène au doute perpétuel.",
+                            "Celui qui refuse de souffrir souffre davantage.",
+                            "Ignorer son ignorance est la plus grande sagesse.",
+                            "Moins on agit, plus on accomplit.",
+                            "En oubliant le passé, on le répète éternellement."
+                        ],
+                        answers: ["certitude", "souffrir", "ignorance", "agit", "oubli"]
+                    },
+                    { 
+                        title: "Ex.3 : Approfondissement",
+                        phrases: [
+                            "Pour être soi-même, il faut d'abord renoncer à ce que l'on croit être.",
+                            "La vérité se cache dans le mensonge, le mensonge dans la vérité.",
+                            "Aimer, c'est vouloir le bonheur de l'autre, même si cela nous détruit.",
+                            "Le progrès consiste à revenir aux origines oubliées.",
+                            "Vaincre l'ennemi, c'est devenir cet ennemi qu'on combattait."
+                        ],
+                        answers: ["être", "vérité", "aimer", "progrès", "vaincre"]
+                    }
+                ]
+            },
+            {
+                id: 9,
+                title: "L'Accumulation",
+                description: "Juxtaposition de termes pour créer un effet de surcharge",
+                icon: "📦",
+                category: "Exagération",
+                observation: [
+                    "<strong>1.</strong> Des murs, des tours, des remparts s'effondrent. (Accumulation matérielle)",
+                    "<strong>2.</strong> Rage, fureur, colère, vengeance bouillonnent dans son cœur. (Accumulation émotionnelle)",
+                    "<strong>3.</strong> Or, argent, diamants, perles s'étalaient sur les étagères dorées. (Accumulation de richesses)",
+                    "<strong>4.</strong> Lire, écrire, compter, calculer, raisonner sont les fonctions de l'école. (Accumulation d'actions)",
+                    "<strong>5.</strong> Bonheur, joie, félicité, béatitude nous envahirent. (Accumulation d'états affectifs)"
+                ],
+                questions: [
+                    { q: "Combien de termes exactement s'accumulent dans la première phrase 'Des murs, des tours, des remparts' ?", r: "trois" },
+                    { q: "L'accumulation crée un effet d'intensité, d'amplification ou de...", r: "surcharge" },
+                    { q: "Dans la phrase 2 'Rage, fureur, colère, vengeance', quel champ sémantique ou domaine domine ?", r: "colère" },
+                    { q: "L'énumération et l'accumulation sont-elles exactement identiques ou différentes ?", r: "différentes" },
+                    { q: "L'accumulation intensifie le sentiment d'amplification, d'insistance ou d'...", r: "amplification" }
+                ],
+                concept: "L'accumulation <strong>juxtapose des termes de même nature</strong> sans pausepour créer un effet de surcharge émotionnelle et d'intensification. Elle crée une dynamique croissante.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Accumulation d'objets",
+                        phrases: [
+                            "Livres, cahiers, stylos, crayons, gommes s'entassaient sur le bureau.",
+                            "Chaises, tables, lits, armoires, miroirs meublaient la vaste demeure.",
+                            "Fleurs, plantes, buissons, arbres, forêts verdoyaient à perte de vue.",
+                            "Assiettes, verres, fourchettes, couteaux, cuillères ornaient la grande table.",
+                            "Tableaux, sculptures, mosaïques, fresques décoraient les murs anciens."
+                        ],
+                        answers: ["surcharge", "meubles", "nature", "vaisselle", "art"]
+                    },
+                    { 
+                        title: "Ex.2 : Accumulation d'émotions",
+                        phrases: [
+                            "Peur, terreur, effroi, angoisse me paralysaient complètement.",
+                            "Amour, tendresse, affection, douceur remplissaient son cœur.",
+                            "Haine, aversion, dégoût, mépris emplissaient ses regards.",
+                            "Joie, rire, gaieté, allégresse se propageaient dans la foule.",
+                            "Tristesse, chagrin, douleur, peine enveloppaient l'atmosphère."
+                        ],
+                        answers: ["peur", "amour", "haine", "joie", "tristesse"]
+                    },
+                    { 
+                        title: "Ex.3 : Accumulation d'actions",
+                        phrases: [
+                            "Courir, sauter, danser, tourner, bondir - elle était insatiable.",
+                            "Écrire, rayer, corriger, recommencer, perfectionner - tel est le travail de l'écrivain.",
+                            "Planter, arroser, désherber, fertiliser, récolter - les étapes de la culture.",
+                            "Écouter, comprendre, apprendre, retenir, appliquer - la vraie formation.",
+                            "Chercher, trouver, analyser, conclure, publier - le chemin de la science."
+                        ],
+                        answers: ["mouvement", "écriture", "agriculture", "apprentissage", "recherche"]
+                    }
+                ]
+            },
+            {
+                id: 10,
+                title: "L'Antithèse",
+                description: "Opposition de deux idées ou concepts pour le contraste",
+                icon: "⚖️",
+                category: "Opposition",
+                observation: [
+                    "<strong>1.</strong> La vie n'est que la mort, et la mort est la vie. (Poésie métaphysique)",
+                    "<strong>2.</strong> Jour et nuit, bien et mal, amour et haine s'affrontent éternellement. (Poésie cosmique)",
+                    "<strong>3.</strong> Parler c'est trahir, se taire c'est mourir. (Dilemme philosophique)",
+                    "<strong>4.</strong> Il est pauvre en richesse mais riche en sagesse. (Proverbe philosophique)",
+                    "<strong>5.</strong> Moins on parle, plus on pense. (Proverbe de sagesse)"
+                ],
+                questions: [
+                    { q: "Dans la phrase 2, quels concepts ou idées contraires s'affrontent directement ?", r: "jour et nuit" },
+                    { q: "L'antithèse crée un effet de contraste, d'opposition ou d'...", r: "contraste" },
+                    { q: "Identifiez les deux termes précisément opposés dans 'La vie n'est que la mort, et la mort est la vie'.", r: "vie et mort" },
+                    { q: "Le dilemme 'parler c'est trahir, se taire c'est mourir' est-il exprimé par antithèse ou oxymore ?", r: "antithèse" },
+                    { q: "Quelle différence distingue l'antithèse de l'oxymore : fusion ou confrontation ?", r: "confrontation" }
+                ],
+                concept: "L'antithèse <strong>juxtapose deux idées contraires</strong> pour créer un <strong>contraste frappant</strong>. Elle met en lumière les contradictions et amplifie le message. Différente de l'oxymore, elle ne fusionne pas les opposés mais les confronte.",
+                exercices: [
+                    { 
+                        title: "Ex.1 : Identification",
+                        phrases: [
+                            "Ici règne le silence absolu et profond, tandis que là-bas s'élève le bruit assourdissant et chaotique de la foule.",
+                            "L'été apporte la chaleur brûlante et accablante, alors que l'hiver impose le froid glacial et paralysant.",
+                            "Certains cherchent la richesse matérielle, tandis que d'autres recherchent la pauvreté spirituelle et la simplicité.",
+                            "Le soleil brille intensément et réchauffe la terre, puis la pluie tombe abondamment et la refroidit.",
+                            "Vivre intensément pour mourir heureux, ou mourir lentement pour vivre dans la peur constante."
+                        ],
+                        answers: ["silence", "chaleur", "richesse", "soleil", "vivre"]
+                    },
+                    { 
+                        title: "Ex.2 : Reconnaissance",
+                        phrases: [
+                            "Le ciel bleu et dégagé contraste avec la terre brune et stérile du désert aride.",
+                            "L'amour apporte la joie et l'espoir, tandis que la haine provoque la douleur et le désespoir.",
+                            "L'arbre est grand et majestueux, dominant le paysage avec ses branches étendues.",
+                            "Le jour apporte la lumière et la clarté, la nuit apporte l'obscurité et le mystère insondable.",
+                            "La fleur est belle et délicate, symbole de fragilité et de grâce naturelle."
+                        ],
+                        answers: ["ciel", "amour", "arbre", "jour", "fleur"]
+                    },
+                    { 
+                        title: "Ex.3 : Analyse",
+                        phrases: [
+                            "Fort comme un lion en apparence, faible comme un mouton dans son cœur véritable.",
+                            "Sage en paroles et en conseils prudents, mais complètement fou dans ses actes impulsifs.",
+                            "Rire de manière exubérante dehors, pleurer de désespoir en secret dedans.",
+                            "Gloire éclatante et honneur éternel versus honte profonde et humiliation passagère.",
+                            "La lumière radieuse du jour succède aux ténèbres impénétrables et froides de la nuit."
+                        ],
+                        answers: ["fort", "sage", "rire", "gloire", "lumière"]
+                    }
+                ]
+            }
+        ];
+
+        // STATE
+        let currentModule = null;
+        let currentCategory = "Tous";
+        let scores = JSON.parse(localStorage.getItem('moduleScores')) || {};
+        let totalPoints = parseInt(localStorage.getItem('totalPoints')) || 0;
+
+        // INITIALIZATION
+        function init() {
+            renderHome();
+            updateScore();
+        }
+
+        function renderHome() {
+            document.getElementById('homeView').classList.add('active');
+            document.getElementById('lessonView').classList.remove('active');
+            renderCategoryFilters();
+            renderModulesGrid();
+            updateProgress();
+        }
+
+        function renderCategoryFilters() {
+            const categories = ["Tous", "Analogie", "Opposition", "Substitution", "Exagération", "Atténuation", "Construction"];
+            const filterContainer = document.getElementById('categoryFilters');
+            
+            filterContainer.innerHTML = categories.map(cat => `
+                <button class="category-btn ${currentCategory === cat ? 'active' : ''}" onclick="filterByCategory('${cat}')">
+                    ${cat === 'Tous' ? '📚' : ''} ${cat}
+                </button>
+            `).join('');
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            renderCategoryFilters();
+            
+            // Si on clique sur une catégorie spécifique, afficher les sous-figures
+            if (category !== "Tous") {
+                showCategorySubfigures(category);
+                return;
+            }
+            
+            renderModulesGrid();
+        }
+
+        function showCategorySubfigures(category) {
+            // Définir les sous-figures par catégorie
+            const subfiguresByCategory = {
+                "Analogie": [
+                    {
+                        name: "La Comparaison",
+                        definition: "C'est la figure la plus simple. Elle rapproche deux idées à l'aide d'un outil de comparaison (comme, tel que, ressembler à, pareil à).",
+                        example: "« Sa mémoire est comme une boîte à merveilles. »"
+                    },
+                    {
+                        name: "La Métaphore",
+                        definition: "C'est une comparaison plus directe car elle supprime l'outil de comparaison. Le lien entre les deux éléments est sous-entendu.",
+                        example: "« Cette boîte est un magasin de trésors. »"
+                    },
+                    {
+                        name: "La Personnification",
+                        definition: "Elle consiste à attribuer des caractéristiques humaines (sentiments, gestes, paroles) à un objet, un animal ou une idée.",
+                        example: "« Le mur me regardait avec sévérité. »"
+                    },
+                    {
+                        name: "L'Allégorie",
+                        definition: "Elle rend une idée abstraite concrète en la représentant sous une forme vivante ou matérielle (souvent avec une majuscule).",
+                        example: "La Mort représentée comme une faucheuse qui attend le condamné."
+                    }
+                ],
+                "Opposition": [
+                    {
+                        name: "L'Antithèse",
+                        definition: "Elle consiste à rapprocher deux mots ou expressions de sens opposé au sein d'une même phrase ou d'un paragraphe pour souligner un contraste.",
+                        example: "« Je vis, je meurs ; je me brûle et me noie. »"
+                    },
+                    {
+                        name: "L'Oxymore",
+                        definition: "C'est une forme d'antithèse rapprochée : on unit deux mots de sens contraire dans un seul groupe de mots (souvent nom + adjectif).",
+                        example: "Une « obscure clarté » ou un « affreux bonheur »."
+                    },
+                    {
+                        name: "L'Ironie",
+                        definition: "On dit le contraire de ce que l'on pense, tout en faisant comprendre qu'on pense l'inverse. C'est l'outil principal de l'antiphrase.",
+                        example: "« C'est du propre ! » (pour dire que c'est sale)."
+                    },
+                    {
+                        name: "Le Paradoxe",
+                        definition: "C'est une proposition qui va contre l'opinion commune ou la logique apparente pour surprendre et faire réfléchir.",
+                        example: "« Les premiers seront les derniers. »"
+                    }
+                ],
+                "Substitution": [
+                    {
+                        name: "La Synecdoque",
+                        definition: "C'est une figure qui remplace le tout par une partie, ou la partie par le tout.",
+                        example: "« Une voile apparaît à l'horizon » (le navire). « Cent têtes couronnées » (les rois)."
+                    },
+                    {
+                        name: "La Métonymie",
+                        definition: "Elle remplace un mot par un autre terme lié au premier par une relation logique.",
+                        example: "« Boire un verre » (le contenant pour le contenu)."
+                    },
+                    {
+                        name: "La Périphrase",
+                        definition: "On remplace un mot par une expression plus longue qui en définit une caractéristique.",
+                        example: "« La ville lumière » (Paris)."
+                    }
+                ],
+                "Exagération": [
+                    {
+                        name: "L'Hyperbole",
+                        definition: "Figure de l'exagération qui emploie des termes dont le sens est trop fort pour frapper l'imagination.",
+                        example: "« Je meurs de soif. »"
+                    },
+                    {
+                        name: "La Gradation",
+                        definition: "Énumération de termes de force croissante ou décroissante.",
+                        example: "« Je marche, je cours, je vole ! »"
+                    },
+                    {
+                        name: "L'Accumulation",
+                        definition: "Énumération d'une longue liste de termes pour créer un effet de foisonnement.",
+                        example: "« Rage, fureur, colère, vengeance »"
+                    }
+                ],
+                "Insistance": [
+                    {
+                        name: "La Litote",
+                        definition: "Dire moins pour suggérer plus avec une structure négative.",
+                        example: "« Ce n'est pas mal » (pour dire que c'est excellent)."
+                    },
+                    {
+                        name: "L'Euphémisme",
+                        definition: "Remplacer une expression brutale par un terme plus doux.",
+                        example: "« Il nous a quittés » (pour dire qu'il est mort)."
+                    },
+                    {
+                        name: "L'Allitération",
+                        definition: "Répétition de consonnes identiques au début de mots successifs.",
+                        example: "« Pour qui sont ces serpents qui sifflent sur vos têtes ? »"
+                    },
+                    {
+                        name: "L'Assonance",
+                        definition: "Répétition de voyelles identiques dans des mots successifs.",
+                        example: "« Que le son doux du vent nous berce doucement. »"
+                    }
+                ]
+            };
+
+            if (subfiguresByCategory[category]) {
+                document.getElementById('modalTitle').innerText = category;
+                const subfigures = subfiguresByCategory[category];
+                const content = subfigures.map((sub, idx) => `
+                    <div class="subfigure-item">
+                        <div class="subfigure-number">${idx + 1}</div>
+                        <div class="subfigure-title">${sub.name}</div>
+                        <div class="subfigure-definition">${sub.definition}</div>
+                        <div class="subfigure-example">📖 ${sub.example}</div>
+                    </div>
+                `).join('') + '<div class="modal-copyright">© <strong>Prof. Mohamed EL KHOUMSSI</strong></div>';
+                document.getElementById('subfiguresContent').innerHTML = content;
+                document.getElementById('subfiguresModal').classList.add('active');
+            }
+        }
+
+        function renderModulesGrid() {
+            const grid = document.getElementById('modulesGrid');
+            grid.innerHTML = modules.map(m => {
+                const isCompleted = scores[m.id];
+                return `
+                    <div class="module-card" onclick="selectModule(${m.id})">
+                        <div class="module-number">${m.id}</div>
+                        <div class="module-title">${m.title}</div>
+                        <div class="module-desc">${m.description}</div>
+                        <div class="module-status">
+                            ${isCompleted ? '<span class="status-badge"><i class="fas fa-check-circle"></i> Complété</span>' : '<span style="color: var(--text-secondary); font-size: 0.85rem;">Cliquez pour commencer</span>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectModule(id) {
+            currentModule = modules.find(m => m.id === id);
+            renderLesson();
+        }
+
+        function showSubfiguresModal(module) {
+            document.getElementById('modalTitle').innerText = module.title;
+            const content = module.subfigures.map((sub, idx) => `
+                <div class="subfigure-item">
+                    <div class="subfigure-number">${idx + 1}</div>
+                    <div class="subfigure-title">${sub.name}</div>
+                    <div class="subfigure-definition">${sub.definition}</div>
+                    <div class="subfigure-example">📖 ${sub.example}</div>
+                </div>
+            `).join('');
+            document.getElementById('subfiguresContent').innerHTML = content + '<div class="modal-copyright">© <strong>Prof. Mohamed EL KHOUMSSI</strong></div>';
+            document.getElementById('subfiguresModal').classList.add('active');
+        }
+
+        function closeSubfiguresModal() {
+            document.getElementById('subfiguresModal').classList.remove('active');
+            renderLesson();
+        }
+
+        function renderOralActivity(id) {
+            const activity = oralActivities.find(a => a.id === id);
+            if (!activity) return;
+
+            document.getElementById('homeView').classList.remove('active');
+            document.getElementById('lessonView').classList.add('active');
+            
+            const m = activity;
+            document.getElementById('lessonTitle').innerText = `${m.title}`;
+            document.getElementById('lessonDesc').innerText = `Compréhension et analyse du dialogue`;
+
+            let content = `
+                <div class="lesson-step">
+                    <div class="step-title">
+                        <div class="step-icon">🎙️</div>
+                        I. DIALOGUE À ÉCOUTER
+                    </div>
+                    ${m.dialogue}
+                </div>
+
+                <div class="lesson-step">
+                    <div class="step-title">
+                        <div class="step-icon">🔍</div>
+                        II. EXPRESSIONS À ANALYSER (4 Questions)
+                    </div>
+                    <div style="background: rgba(255, 193, 7, 0.15); padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 20px;">
+                        <div style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7;">
+                            <strong>Consigne :</strong> Analysez les expressions extraites du dialogue. Écrivez votre réponse selon la consigne donnée.
+                            <div style="margin-top: 10px; color: var(--accent); font-weight: 600;">Points : 2 points par réponse correcte = 8 points</div>
+                        </div>
+                    </div>
+                    ${m.expressions.map((expr, i) => `
+                        <div class="question-block" style="background: rgba(24, 119, 242, 0.08); padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary); margin-bottom: 15px;">
+                            <div style="font-size: 0.9rem; color: var(--accent); font-weight: 700; margin-bottom: 12px; font-style: italic; padding: 10px; background: rgba(255, 193, 7, 0.1); border-radius: 4px;">"${expr.phrase}"</div>
+                            <div class="question-text">${expr.question}</div>
+                            <div class="question-input-group">
+                                <input type="text" id="oral-expr-${id}-${i}" placeholder="Votre réponse...">
+                                <button class="btn-check" onclick="checkAnswer('oral-expr-${id}-${i}', '${expr.answer}', 'f-oral-expr-${id}-${i}')">Vérifier</button>
+                            </div>
+                            <div id="f-oral-expr-${id}-${i}" class="feedback"></div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="lesson-step">
+                    <div class="step-title">
+                        <div class="step-icon">❓</div>
+                        III. QCM - COMPRÉHENSION (10 Questions)
+                    </div>
+                    <div style="background: rgba(255, 193, 7, 0.15); padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 20px;">
+                        <div style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7;">
+                            <strong>Consigne :</strong> Répondez aux 10 questions à choix multiples sur le dialogue. Sélectionnez la bonne réponse.
+                            <div style="margin-top: 10px; color: var(--accent); font-weight: 600;">Points : 1 point par réponse correcte = 10 points</div>
+                        </div>
+                    </div>
+                    ${m.qcm.map((question, qIdx) => `
+                        <div class="question-block" style="background: rgba(24, 119, 242, 0.08); padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary); margin-bottom: 15px;">
+                            <div class="question-text">Question ${qIdx + 1}: ${question.q}</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+                                ${question.options.map((opt, oIdx) => `
+                                    <button class="qcm-option" id="qcm-${id}-${qIdx}-${oIdx}" onclick="selectQCM('qcm-${id}-${qIdx}', ${oIdx}, ${question.answer}, 'f-qcm-${id}-${qIdx}', ${id})" style="padding: 12px; border: 2px solid rgba(255, 193, 7, 0.3); background: rgba(255, 255, 255, 0.02); color: var(--text-secondary); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: left; font-size: 0.9rem;">
+                                        ${opt}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            <div id="f-qcm-${id}-${qIdx}" class="feedback" style="margin-top: 12px;"></div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="lesson-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-microphone"></i></div>
+                        <div class="stat-content">
+                            <h3>Activité</h3>
+                            <div class="stat-value">Orale ${id}/10</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-content">
+                            <h3>Points Possibles</h3>
+                            <div class="stat-value">18</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-content">
+                            <h3>Score</h3>
+                            <div class="stat-value" id="oralScore">0</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('lessonContent').innerHTML = content;
+        }
+
+        function selectQCM(questionId, selectedIdx, correctIdx, feedbackId, activityId) {
+            const feedback = document.getElementById(feedbackId);
+            const allOptions = document.querySelectorAll(`[id^="${questionId}-"]`);
+            
+            allOptions.forEach(opt => opt.style.opacity = '0.5');
+            document.getElementById(`${questionId}-${selectedIdx}`).style.opacity = '1';
+
+            if (selectedIdx === correctIdx) {
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> ✓ Correct !';
+                feedback.className = 'feedback correct';
+                document.getElementById(`${questionId}-${selectedIdx}`).style.borderColor = 'var(--success)';
+                document.getElementById(`${questionId}-${selectedIdx}`).style.background = 'rgba(16, 185, 129, 0.1)';
+                addPoints(1);
+                updateOralScore();
+            } else {
+                feedback.innerHTML = `<i class="fas fa-times-circle"></i> ✗ Mauvaise réponse. Bonne réponse : option ${correctIdx + 1}`;
+                feedback.className = 'feedback wrong';
+                document.getElementById(`${questionId}-${selectedIdx}`).style.borderColor = 'var(--danger)';
+                document.getElementById(`${questionId}-${selectedIdx}`).style.background = 'rgba(248, 113, 113, 0.1)';
+                document.getElementById(`${questionId}-${correctIdx}`).style.borderColor = 'var(--success)';
+                document.getElementById(`${questionId}-${correctIdx}`).style.background = 'rgba(16, 185, 129, 0.1)';
+            }
+            
+            allOptions.forEach(opt => opt.disabled = true);
+        }
+
+        function updateOralScore() {
+            const scoreEl = document.getElementById('oralScore');
+            if (scoreEl) {
+                scoreEl.innerText = totalPoints;
+            }
+        }
+
+        function renderLesson() {
+            document.getElementById('homeView').classList.remove('active');
+            document.getElementById('lessonView').classList.add('active');
+            document.getElementById('lessonView').className = `lesson-view active module-${currentModule.id}`;
+            
+            const m = currentModule;
+            document.getElementById('lessonTitle').innerText = `MODULE ${m.id} : ${m.title}`;
+            document.getElementById('lessonDesc').innerText = m.description;
+
+            let content = ``;
+
+            // Ajouter la barre de prévisualisation des sous-figures si disponibles
+            if (m.subfigures) {
+                content += `
+                    <div style="margin-bottom: 30px; text-align: center;">
+                        <button class="btn-check" onclick="showSubfiguresModal(window.currentModule)" style="background: linear-gradient(135deg, #f97316, #fbbf24); font-size: 1rem; padding: 12px 30px; border: none; color: white; cursor: pointer;">
+                            <i class="fas fa-book-open"></i> Voir les sous-figures
+                        </button>
+                    </div>
+                    <div class="subfigures-preview">
+                        ${m.subfigures.map((sub, idx) => `
+                            <div class="subfigure-preview-card subfigure-card-${idx + 1}">
+                                <div class="subfigure-preview-title">${sub.name}</div>
+                                <div class="subfigure-preview-desc">${sub.definition.substring(0, 75)}...</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            content += `
+                <div class="lesson-step">
+                    <div class="step-title">
+                        <div class="step-icon">📖</div>
+                        I. OBSERVATION - Citations
+                    </div>
+                    <div class="corpus-list">
+                        ${m.observation.map(o => `<div class="corpus-item">${o}</div>`).join('')}
+                    </div>
+                    ${m.questions.map((q, i) => `
+                        <div class="question-block">
+                            <div class="question-text">Question ${i + 1}: ${q.q}</div>
+                            <div class="question-input-group">
+                                <input type="text" id="q-${i}" placeholder="Votre réponse...">
+                                <button class="btn-check" onclick="checkAnswer('q-${i}', '${q.r}', 'f-${i}')">Vérifier</button>
+                            </div>
+                            <div id="f-${i}" class="feedback"></div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="lesson-step">
+                    <div class="step-title">
+                        <div class="step-icon">💡</div>
+                        II. CONCEPTUALISATION
+                    </div>
+                    <div class="concept-box">${m.concept}</div>
+                </div>
+
+                <div class="lesson-step">
+                    <div class="step-title">
+                        <div class="step-icon">✏️</div>
+                        III. EXERCICES - 15 Phrases à Analyser
+                    </div>
+                    <div style="background: rgba(255, 193, 7, 0.15); padding: 20px; border-radius: 10px; border-left: 4px solid var(--accent); margin-bottom: 20px;">
+                        <div style="font-weight: 700; color: var(--accent); margin-bottom: 10px; font-size: 0.95rem;">📋 CONSIGNES DE L'EXERCICE</div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7;">
+                            <div style="margin-bottom: 8px;"><strong>Objectif :</strong> Analyser 15 phrases et identifier l'élément clé demandé pour chaque exercice.</div>
+                            <div style="margin-bottom: 8px;"><strong>Méthode :</strong> Lisez attentivement la phrase, repérez la figure de style, puis écrivez votre réponse dans le champ.</div>
+                            <div style="margin-bottom: 8px;"><strong>Type de réponses attendues :</strong> Mots clés, termes opposés, concepts, ou actions spécifiques mentionnées dans la phrase.</div>
+                            <div style="margin-bottom: 8px;"><strong>Points :</strong> Chaque réponse correcte rapporte 3 points. Total possible : 45 points.</div>
+                            <div><strong>Validation :</strong> Cliquez sur ✓ pour vérifier votre réponse. La réponse attendue s'affichera si vous vous trompez.</div>
+                        </div>
+                    </div>
+                    <div class="exercise-grid">
+                        ${m.exercices.map((ex, idx) => `
+                            <div class="exercise-box">
+                                <div class="exercise-title"><i class="fas fa-tasks"></i> ${ex.title}</div>
+                                <div style="background: rgba(24, 119, 242, 0.1); padding: 12px; border-radius: 6px; margin-bottom: 15px; font-size: 0.85rem; color: var(--text-secondary); border-left: 3px solid var(--primary);">
+                                    <strong>Consigne :</strong> Identifiez le terme ou concept clé pour chaque phrase.
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 15px;">
+                                    ${ex.phrases.map((p, pIdx) => `
+                                        <div style="background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(24, 119, 242, 0.2);">
+                                            <div style="font-size: 0.8rem; color: #888; font-weight: 600; margin-bottom: 8px; text-transform: uppercase;">Phrase ${pIdx + 1} / 5</div>
+                                            <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; font-style: italic; line-height: 1.6; padding: 10px; background: rgba(0, 0, 0, 0.2); border-radius: 4px;">"${p}"</div>
+                                            <div style="font-size: 0.8rem; color: var(--accent); font-weight: 600; margin-bottom: 10px; background: rgba(255, 193, 7, 0.1); padding: 8px; border-radius: 4px;">❓ Quel est le mot/concept clé ?</div>
+                                            <div class="question-input-group" style="gap: 8px;">
+                                                <input type="text" id="ex-${idx}-${pIdx}" placeholder="Écrivez votre réponse..." style="flex: 1;">
+                                                <button class="btn-check" onclick="checkExercisePhrase('ex-${idx}-${pIdx}', '${ex.answers[pIdx]}', 'f-ex-${idx}-${pIdx}', ${m.id})" style="flex-shrink: 0;">✓ Vérifier</button>
+                                            </div>
+                                            <div id="f-ex-${idx}-${pIdx}" class="feedback"></div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="lesson-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-book"></i></div>
+                        <div class="stat-content">
+                            <h3>Module</h3>
+                            <div class="stat-value">${m.id}/10</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-content">
+                            <h3>Votre Score</h3>
+                            <div class="stat-value" id="moduleScore">${scores[m.id] || 0}</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+                        <div class="stat-content">
+                            <h3>Exercices</h3>
+                            <div class="stat-value">${m.exercices.length * 5}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('lessonContent').innerHTML = content;
+        }
+
+        function checkAnswer(id, expected, feedbackId) {
+            const value = document.getElementById(id).value.toLowerCase().trim();
+            const feedback = document.getElementById(feedbackId);
+            const input = document.getElementById(id);
+
+            // Normalize expected answer(s)
+            let expectedArray = Array.isArray(expected) ? expected : [expected];
+            expectedArray = expectedArray.map(e => e.toLowerCase().trim());
+
+            // STRICT CHECK: Match exactly or contains key word (but not loose matching)
+            const isCorrect = expectedArray.some(exp => {
+                // Exact match
+                if (value === exp) return true;
+                // Check if user answer is at least 70% accurate
+                if (exp.length > 5 && value.length > 2) {
+                    const words = exp.split(' ');
+                    const matchedWords = words.filter(word => value.includes(word.slice(0, -1)) || value.includes(word));
+                    return matchedWords.length >= Math.ceil(words.length * 0.6);
+                }
+                return false;
+            });
+
+            if (isCorrect) {
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> ✓ Correct !';
+                feedback.className = 'feedback correct';
+                input.classList.add('correct');
+                input.disabled = true;
+                addPoints(5);
+            } else {
+                feedback.innerHTML = `<i class="fas fa-times-circle"></i> ✗ Attendu : <strong>${expectedArray.join(' / ')}</strong>`;
+                feedback.className = 'feedback wrong';
+                input.classList.add('wrong');
+            }
+        }
+
+        function checkExercise(id, expected, feedbackId, moduleId) {
+            const value = document.getElementById(id).value.toLowerCase().trim();
+            const feedback = document.getElementById(feedbackId);
+            const input = document.getElementById(id);
+
+            if (value === expected.toLowerCase()) {
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> ✓ Excellent !';
+                feedback.className = 'feedback correct';
+                input.classList.add('correct');
+                addPoints(5);
+                
+                // Mark module as complete if all exercises are done
+                setTimeout(() => {
+                    if (!scores[moduleId]) {
+                        scores[moduleId] = 20;
+                        localStorage.setItem('moduleScores', JSON.stringify(scores));
+                        document.getElementById('moduleScore').innerText = 20;
+                        addPoints(20);
+                        updateProgress();
+                    }
+                }, 500);
+            } else {
+                feedback.innerHTML = `<i class="fas fa-times-circle"></i> ✗ Réponse : <strong>${expected}</strong>`;
+                feedback.className = 'feedback wrong';
+                input.classList.add('wrong');
+            }
+        }
+
+        function checkExercisePhrase(id, expected, feedbackId, moduleId) {
+            const value = document.getElementById(id).value.toLowerCase().trim();
+            const feedback = document.getElementById(feedbackId);
+            const input = document.getElementById(id);
+
+            // Normalize both values
+            const expectedNorm = expected.toLowerCase().trim();
+            
+            // STRICT CHECK: Exact match ONLY for exercises
+            const isCorrect = value === expectedNorm;
+
+            if (isCorrect) {
+                feedback.innerHTML = '<i class="fas fa-check-circle"></i> ✓ Correct !';
+                feedback.className = 'feedback correct';
+                input.classList.add('correct');
+                input.disabled = true;
+                addPoints(3);
+            } else {
+                feedback.innerHTML = `<i class="fas fa-times-circle"></i> ✗ Attendu : <strong>${expected}</strong>`;
+                feedback.className = 'feedback wrong';
+                input.classList.add('wrong');
+            }
+        }
+
+        function addPoints(points) {
+            totalPoints += points;
+            localStorage.setItem('totalPoints', totalPoints);
+            updateScore();
+        }
+
+        function updateScore() {
+            document.getElementById('totalScore').innerText = totalPoints;
+        }
+
+        function updateProgress() {
+            const completed = Object.keys(scores).length;
+            const total = modules.length;
+            const percent = (completed / total) * 100;
+            
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').innerText = `${completed} / ${total} modules complétés`;
+        }
+
+        function showOralActivitiesView() {
+            document.getElementById('homeView').classList.remove('active');
+            document.getElementById('lessonView').classList.add('active');
+            
+            document.getElementById('lessonTitle').innerText = `🎙️ ACTIVITÉS ORALES - 10 Dialogues`;
+            document.getElementById('lessonDesc').innerText = `Écoutez les dialogues, analysez les expressions et répondez aux questions`;
+
+            let content = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                    ${oralActivities.map(activity => `
+                        <div class="module-card" onclick="renderOralActivity(${activity.id})">
+                            <div class="module-number">${activity.id}</div>
+                            <div class="module-title">${activity.title}</div>
+                            <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 15px; line-height: 1.6;">
+                                <i class="fas fa-check-circle" style="color: var(--success);"></i> Dialogue avec expressions<br>
+                                <i class="fas fa-tasks" style="color: var(--accent);"></i> 4 analyses + 10 QCM
+                            </div>
+                            <div style="font-size: 0.85rem; color: var(--accent); font-weight: 600; background: rgba(255, 193, 7, 0.1); padding: 8px; border-radius: 4px; text-align: center;">
+                                📌 18 points possibles
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('lessonContent').innerHTML = content;
+        }
+
+        function goHome() {
+            currentModule = null;
+            renderHome();
+        }
+
+        function downloadPage() {
+            // Créer un élément lien pour télécharger
+            const link = document.createElement('a');
+            link.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(document.documentElement.outerHTML);
+            link.download = `Machine_a_Langue_${new Date().toISOString().split('T')[0]}.html`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // INIT
+        init();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f57c13e428ae3b0',t:'MTc3NzczMjU1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
